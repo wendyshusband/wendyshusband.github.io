@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>kylin&#39;s blogs</title>
-  <subtitle>我们像无头苍蝇和原始人一样，满足于下一秒就可见的快乐和即刻的满足。</subtitle>
+  <subtitle>现代人像无头苍蝇一样，满足于下一秒就可见的快乐和即刻的满足。</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-09T04:34:47.439Z</updated>
+  <updated>2017-08-08T09:14:12.247Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,26 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>first test</title>
-    <link href="http://yoursite.com/2017/08/08/first-test/"/>
-    <id>http://yoursite.com/2017/08/08/first-test/</id>
-    <published>2017-08-08T09:43:58.000Z</published>
-    <updated>2017-08-09T04:34:47.439Z</updated>
-    
-    <content type="html"><![CDATA[<p>##大家好，我是<br>阿萨德撒的撒</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;##大家好，我是&lt;br&gt;阿萨德撒的撒&lt;/p&gt;
-
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>Hello World</title>
