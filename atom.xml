@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-10T12:38:05.724Z</updated>
+  <updated>2017-08-16T17:07:43.400Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,16 +16,75 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>分布式</title>
-    <link href="http://yoursite.com/2017/08/10/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    <id>http://yoursite.com/2017/08/10/分布式/</id>
+    <title>storm资源汇总</title>
+    <link href="http://yoursite.com/2017/08/10/storm%E8%B5%84%E6%BA%90%E6%B1%87%E6%80%BB/"/>
+    <id>http://yoursite.com/2017/08/10/storm资源汇总/</id>
     <published>2017-08-10T12:36:59.000Z</published>
-    <updated>2017-08-10T12:38:05.724Z</updated>
+    <updated>2017-08-16T17:07:43.400Z</updated>
+    
+    <content type="html"><![CDATA[<p>Apache storm 的一些网络资源汇总。<br><a id="more"></a></p>
+<h2 id="storm入门"><a href="#storm入门" class="headerlink" title="storm入门"></a>storm入门</h2><p><a href="http://storm.apache.org/" target="_blank" rel="external">官网地址</a></p>
+<p><a href="https://github.com/apache/storm" target="_blank" rel="external">源码地址</a></p>
+<p><a href="http://dl.acm.org/citation.cfm?id=2595641" target="_blank" rel="external">storm@twitter</a></p>
+<p><a href="https://yq.aliyun.com/articles/25772" target="_blank" rel="external">部署教程</a></p>
+<p><a href="https://github.com/apache/storm/blob/v1.0.1/conf/defaults.yaml" target="_blank" rel="external">Default configuration</a></p>
+<p><a href="https://my.oschina.net/tkl/blog/719618" target="_blank" rel="external">storm配置项</a></p>
+<h2 id="相关博客"><a href="#相关博客" class="headerlink" title="相关博客"></a>相关博客</h2><ol>
+<li><p>fxjwind的博文，有部分源码解读是老版本的storm。1.0.X的版本之后会有一些变动的地方（如worker如何接收数据）。但作为storm源码阅读的辅助，这些博文还是相当牛逼的。向fxjwind大神致敬。 <a href="http://www.cnblogs.com/fxjwind/category/455987.html" target="_blank" rel="external">http://www.cnblogs.com/fxjwind/category/455987.html</a></p>
+</li>
+<li><p>徽沪一郎 Blog - Apache Storm 源码走读系列。很cool的博客。 <a href="http://www.cnblogs.com/hseagle/p/3756862.html" target="_blank" rel="external">http://www.cnblogs.com/hseagle/p/3756862.html</a></p>
+</li>
+</ol>
+<h2 id="Some-important-concept"><a href="#Some-important-concept" class="headerlink" title="Some important concept"></a>Some important concept</h2><ol>
+<li><p><a href="http://www.michael-noll.com/blog/2013/06/21/understanding-storm-internal-message-buffers/" target="_blank" rel="external">Understanding the Internal Message Buffers of Storm</a></p>
+</li>
+<li><p><a href="http://www.michael-noll.com/blog/2012/10/16/understanding-the-parallelism-of-a-storm-topology/" target="_blank" rel="external">Understanding the Parallelism of a Storm Topology</a></p>
+</li>
+<li><p><a href="https://github.com/weyo/Storm-Documents/blob/master/Manual/zh/Guaranteeing-Message-Processing.md" target="_blank" rel="external">Guaranteeing Message Processing</a></p>
+</li>
+<li><p><a href="http://www.cnblogs.com/foreach-break/p/storm_at_least_once.html" target="_blank" rel="external">At least once</a></p>
+</li>
+<li><p><a href="https://github.com/nathanmarz/storm/wiki/Trident-tutorial" target="_blank" rel="external">storm trident</a></p>
+</li>
+<li><p><a href="http://storm.apache.org/releases/1.0.3/Metrics.html" target="_blank" rel="external">Storm Metrics</a></p>
+</li>
+<li><p><a href="http://ifeve.com/storm-distributed-rpc/" target="_blank" rel="external">DRPC详解，中文版译文</a></p>
+</li>
+<li><p><a href="https://my.oschina.net/HIJAY/blog/487125" target="_blank" rel="external">storm在zookeeper上的目录结构</a></p>
+</li>
+<li><p><a href="http://www.jasongj.com/2015/03/10/KafkaColumn1/" target="_blank" rel="external">kafka原理</a></p>
+</li>
+</ol>
+<h2 id="storm-scheduler"><a href="#storm-scheduler" class="headerlink" title="storm scheduler"></a>storm scheduler</h2><p>storm 有多个不同的调度器。包括 DefaultScheduler, IsolationScheduler, MultitenantScheduler, ResourceAwareScheduler等。<a href="http://storm.apache.org/releases/1.0.3/Storm-Scheduler.htm" target="_blank" rel="external">http://storm.apache.org/releases/1.0.3/Storm-Scheduler.htm</a></p>
+<h2 id="相关项目"><a href="#相关项目" class="headerlink" title="相关项目"></a>相关项目</h2><ol>
+<li><p><a href="https://zookeeper.apache.org/" target="_blank" rel="external">zookeeper</a></p>
+</li>
+<li><p><a href="https://thrift.apache.org/" target="_blank" rel="external">thrift</a>，推荐<a href="http://dongxicheng.org/search-engine/thrift-framework-intro/" target="_blank" rel="external">董的博客</a>。</p>
+</li>
+<li><p><a href="https://github.com/ADSC-Cloud/resa-drs" target="_blank" rel="external">Dynamic Resource Scheduling</a>，该项目支持storm在运行时动态调整资源。</p>
+</li>
+<li><p><a href="https://github.com/yahoo/storm-yarn" target="_blank" rel="external">storm on yarn</a>，利用资源调度框架YARN来调度storm资源。</p>
+</li>
+<li><p><a href="https://github.com/wendyshusband/storm-On-Docker-Swarm" target="_blank" rel="external">storm on docker</a>,在docker swarm集群里部署storm。</p>
+</li>
+<li><p><a href="https://github.com/alibaba/jstorm" target="_blank" rel="external">Jstorm</a>，alibaba开源的Java版本及优化版本的类storm流处理系统。</p>
+</li>
+</ol>
+<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><p>感谢<a href="https://github.com/troyding" target="_blank" rel="external">troyding</a>，他的文章让我有了写这篇博客的想法。我的文章是基于他的<a href="https://github.com/troyding/resa/blob/master/doc/online-resources.md" target="_blank" rel="external">工作</a>完成的。<br>本文将持续更新。</p>
+]]></content>
     
     <summary type="html">
     
+      &lt;p&gt;Apache storm 的一些网络资源汇总。&lt;br&gt;
+    
     </summary>
     
+      <category term="storm学习总结" scheme="http://yoursite.com/categories/storm%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="storm" scheme="http://yoursite.com/tags/storm/"/>
+    
+      <category term="分布式" scheme="http://yoursite.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   
