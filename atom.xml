@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-19T03:24:38.154Z</updated>
+  <updated>2017-08-23T15:45:22.816Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,52 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>leetcode-Longest Substring Without Repeating Characters</title>
+    <link href="http://yoursite.com/2017/08/23/leetcode-Longest%20Substring%20Without%20Repeating%20Characters/"/>
+    <id>http://yoursite.com/2017/08/23/leetcode-Longest Substring Without Repeating Characters/</id>
+    <published>2017-08-23T14:53:38.000Z</published>
+    <updated>2017-08-23T15:45:22.816Z</updated>
+    
+    <content type="html"><![CDATA[<p>寻找最长无重复子串的最优解法<br><a id="more"></a><br>leetcode 原题：<br>Given a string, find the length of the longest substring without repeating characters.</p>
+<p>Examples:</p>
+<p>Given “abcabcbb”, the answer is “abc”, which the length is 3.</p>
+<p>Given “bbbbb”, the answer is “b”, with the length of 1.</p>
+<p>Given “pwwkew”, the answer is “wke”, with the length of 3. Note that the answer must be a substring, “pwke” is a subsequence and not a substring.</p>
+<p>网上有很多不同类型的解法，这里不做一一介绍，提供一个时间复杂度O(n)，空间复杂度O(1)的解法如下：</p>
+<p>思路：</p>
+<ol>
+<li><p>该问题的通常解法是遍历每个字符起始的子串，找出结果。在计算过程中使用hash存储中间结果。通过遍历的方式时间复杂度为O(n^2)。</p>
+</li>
+<li><p>可以考虑使用DP，因为对于字符串中的一个字符而言，如果其与 <em>其前面字符结尾的最长不重复子串</em> 中的字符没有重复的话。那么就可以将其加入到最长不重复子串中，则以当前字符结尾的子串长度为其前面找到的子串长度+1。若有重复，如果有重复，且重复位置在上一个最长子串起始位置之后，那么就与该起始位置之后的稍短的子串构成新的子串或者单独成一个新子串。dp表中记录以每个字符结尾的最长不重复子串。<br>例如：有字符串abccd,有dp[0]=1,dp[1]=2,dp[2]=3。那么当找到第二个c时，此时以第一个c结尾的最长不重复子串长度为dp[2]=3（abc），发现有重复，则修改：dp[3]=1。找到d时，与前面的不重复子串没有相同字符，故dp[4]=2。<br>这样的dp算法的时间复杂度为O(n^2)。因为每次我们都需要“回头”去寻找重复元素的位置。</p>
+</li>
+<li><p>怎么样才能不回头找呢？用hash咯。可以用hash记录元素是否出现过，key为元素值，value为元素上一次出现的位置。同时可以发现，其实我们不需要维护一张DP表，因为我们只需要记住以当前元素的前一个元素结尾的最长不重复子串的长度即可。所以可以进一步优化空间使用从O(n) -&gt; O(1)。</p>
+</li>
+</ol>
+<p>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line"></div><div class="line">    public int lengthOfLongestSubstring(String s) &#123;</div><div class="line">        if (s == null || s.length() &lt;= 0)</div><div class="line">            return 0;</div><div class="line">        int maxLen = 1;</div><div class="line">        int lastIndex = 0;</div><div class="line">        int current = 1;</div><div class="line">        HashMap&lt;Character,Integer&gt; map = new HashMap&lt;&gt;();</div><div class="line">        map.put(s.charAt(0),0);</div><div class="line">        for (int i=1; i&lt;s.length(); i++) &#123;</div><div class="line">            if (map.get(s.charAt(i)) == null) &#123;</div><div class="line">                map.put(s.charAt(i), i);</div><div class="line">                current++;</div><div class="line">            &#125; else if (lastIndex &lt;= map.get(s.charAt(i))) &#123;</div><div class="line">                current = i - map.get(s.charAt(i));</div><div class="line">                lastIndex = map.get(s.charAt(i))+1;</div><div class="line">                map.put(s.charAt(i), i);</div><div class="line">            &#125; else &#123;</div><div class="line">                current++;</div><div class="line">                map.put(s.charAt(i), i);</div><div class="line">            &#125;</div><div class="line">            if (current &gt; maxLen) &#123;</div><div class="line">                maxLen = current;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return maxLen;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>参考：<br><a href="http://xfhnever.com/2014/10/30/algorithm-lnrs/" target="_blank" rel="external">http://xfhnever.com/2014/10/30/algorithm-lnrs/</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;寻找最长无重复子串的最优解法&lt;br&gt;
+    
+    </summary>
+    
+      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="leetcode" scheme="http://yoursite.com/tags/leetcode/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>《二十二》观后感</title>
     <link href="http://yoursite.com/2017/08/19/%E3%80%8A%E4%BA%8C%E5%8D%81%E4%BA%8C%E8%A7%82%E5%90%8E%E6%84%9F%E3%80%8B/"/>
     <id>http://yoursite.com/2017/08/19/《二十二观后感》/</id>
     <published>2017-08-19T02:32:50.000Z</published>
-    <updated>2017-08-19T03:24:38.154Z</updated>
+    <updated>2017-08-19T03:29:55.451Z</updated>
     
     <content type="html"><![CDATA[<p>电影《二十二》观后感，有剧透，不喜勿看。<br><a id="more"></a></p>
 <p>第一次看电影，全场安静无声音，灯亮后没有人离开，全部安静的坐着静静的听完片尾曲才慢慢离开。</p>
@@ -54,7 +95,7 @@
     <link href="http://yoursite.com/2017/08/17/Spring%E5%AD%A6%E4%B9%A0(1)/"/>
     <id>http://yoursite.com/2017/08/17/Spring学习(1)/</id>
     <published>2017-08-17T04:43:56.000Z</published>
-    <updated>2017-08-17T16:07:53.104Z</updated>
+    <updated>2017-08-19T07:11:06.162Z</updated>
     
     <content type="html"><![CDATA[<p>Spring基本概念<br><a id="more"></a></p>
 <h2 id="Inversion-of-Control-And-Dependency-Injection"><a href="#Inversion-of-Control-And-Dependency-Injection" class="headerlink" title="Inversion of Control And Dependency Injection"></a>Inversion of Control And Dependency Injection</h2><h3 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h3><p>IOC是一种设计的思想，在程序设计时并不直接在某个对象内部去new一个其他对象，而是使用一个IOC容器来创建这些对象。使用IOC容器来控制对象，主要控制外部资源的获取。</p>
@@ -67,6 +108,11 @@
                 <div class="image-caption"></div>
             </figure>
 <h3 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h3><p>应用依赖于IOC容器。因为其需要IOC容器来提供外部资源。IOC将这些外部资源注入某个对象。</p>
+<p>其实依赖注入只是一种装配对象的手段，设计的类结构才是基础，如果设计的类结构不支持依赖注入，Spring IoC容器也注入不了任何东西。</p>
+<h4 id="循环依赖"><a href="#循环依赖" class="headerlink" title="循环依赖"></a>循环依赖</h4><p>很显然，循环依赖是指的，当创建A时，需要B，就去创建B，创建B时发现需要A。此时就有问题了，因为A还没创建完成，然后就去新建一个A，这样就会陷入死循环。</p>
+<h2 id="Aspect-Orient-Programming-面向切面编程"><a href="#Aspect-Orient-Programming-面向切面编程" class="headerlink" title="Aspect Orient Programming 面向切面编程"></a>Aspect Orient Programming 面向切面编程</h2><p><a href="http://jinnianshilongnian.iteye.com/blog/1418596" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1418596</a></p>
+<p>在进行OOP开发时，都是基于对组件（比如类）进行开发，然后对组件进行组合，OOP最大问题就是无法解耦组件进行开发，比如我们上边举例，而AOP就是为了克服这个问题而出现的，它来进行这种耦合的分离。AOP为开发者提供一种进行横切关注点。<br><em>（比如日志关注点横切了支付关注点）</em> 分离并织入的机制，把横切关注点分离，然后通过某种技术织入到系统中，从而无耦合的完成了我们的功能。</p>
+<p>关注点：可以认为是所关注的任何东西，比如上边的支付组件；<br>关注点分离：将问题细化从而单独部分，即可以理解为不可再分割的组件，如上边的日志组件和支付组件；<br>横切关注点：一个组件无法完成需要的功能，需要其他组件协作完成，如日志组件横切于支付组件；</p>
 ]]></content>
     
     <summary type="html">

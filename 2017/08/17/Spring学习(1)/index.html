@@ -29,7 +29,7 @@
 <meta property="og:description" content="Spring基本概念">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://sishuok.com/forum/upload/2012/2/19/6fdf1048726cc2edcac4fca685f050ac__2.JPG">
-<meta property="og:updated_time" content="2017-08-17T16:07:53.104Z">
+<meta property="og:updated_time" content="2017-08-19T07:11:06.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring学习笔记(1)-基本概念">
 <meta name="twitter:description" content="Spring基本概念">
@@ -164,7 +164,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Inversion-of-Control-And-Dependency-Injection"><span class="post-toc-number">1.</span> <span class="post-toc-text">Inversion of Control And Dependency Injection</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IOC"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">IOC</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DI"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">DI</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Inversion-of-Control-And-Dependency-Injection"><span class="post-toc-number">1.</span> <span class="post-toc-text">Inversion of Control And Dependency Injection</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IOC"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">IOC</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DI"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">DI</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#循环依赖"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">循环依赖</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Aspect-Orient-Programming-面向切面编程"><span class="post-toc-number">2.</span> <span class="post-toc-text">Aspect Orient Programming 面向切面编程</span></a></li></ol>
         </nav>
     </aside>
     
@@ -200,6 +200,11 @@
                 <div class="image-caption"></div>
             </figure>
 <h3 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h3><p>应用依赖于IOC容器。因为其需要IOC容器来提供外部资源。IOC将这些外部资源注入某个对象。</p>
+<p>其实依赖注入只是一种装配对象的手段，设计的类结构才是基础，如果设计的类结构不支持依赖注入，Spring IoC容器也注入不了任何东西。</p>
+<h4 id="循环依赖"><a href="#循环依赖" class="headerlink" title="循环依赖"></a>循环依赖</h4><p>很显然，循环依赖是指的，当创建A时，需要B，就去创建B，创建B时发现需要A。此时就有问题了，因为A还没创建完成，然后就去新建一个A，这样就会陷入死循环。</p>
+<h2 id="Aspect-Orient-Programming-面向切面编程"><a href="#Aspect-Orient-Programming-面向切面编程" class="headerlink" title="Aspect Orient Programming 面向切面编程"></a>Aspect Orient Programming 面向切面编程</h2><p><a href="http://jinnianshilongnian.iteye.com/blog/1418596" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1418596</a></p>
+<p>在进行OOP开发时，都是基于对组件（比如类）进行开发，然后对组件进行组合，OOP最大问题就是无法解耦组件进行开发，比如我们上边举例，而AOP就是为了克服这个问题而出现的，它来进行这种耦合的分离。AOP为开发者提供一种进行横切关注点。<br><em>（比如日志关注点横切了支付关注点）</em> 分离并织入的机制，把横切关注点分离，然后通过某种技术织入到系统中，从而无耦合的完成了我们的功能。</p>
+<p>关注点：可以认为是所关注的任何东西，比如上边的支付组件；<br>关注点分离：将问题细化从而单独部分，即可以理解为不可再分割的组件，如上边的日志组件和支付组件；<br>横切关注点：一个组件无法完成需要的功能，需要其他组件协作完成，如日志组件横切于支付组件；</p>
 
         </div>
 
@@ -207,7 +212,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2017-08-17T16:07:53.104Z" itemprop="dateUpdated">2017-08-18 00:07:53</time>
+    最后更新时间：<time datetime="2017-08-19T07:11:06.162Z" itemprop="dateUpdated">2017-08-19 15:11:06</time>
 </span><br>
 
 
