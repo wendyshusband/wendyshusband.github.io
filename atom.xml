@@ -117,13 +117,13 @@
       <category term="Storm学习总结" scheme="http://yoursite.com/categories/Storm%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     
     
+      <category term="Distributed system" scheme="http://yoursite.com/tags/Distributed-system/"/>
+    
       <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
     
       <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
     
       <category term="Flink" scheme="http://yoursite.com/tags/Flink/"/>
-    
-      <category term="Distributed system" scheme="http://yoursite.com/tags/Distributed-system/"/>
     
   </entry>
   
@@ -309,9 +309,9 @@
       <category term="Storm学习总结" scheme="http://yoursite.com/categories/Storm%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
-    
       <category term="Distributed system" scheme="http://yoursite.com/tags/Distributed-system/"/>
+    
+      <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
     
   </entry>
   
