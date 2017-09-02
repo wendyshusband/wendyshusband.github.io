@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Serialize binary tree and Deserialize binary tree | kylin&#39;s blogs | 独立之精神，自由之思想。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#077060">
+    
+    
+    <meta name="keywords" content="Binary tree">
+    <meta name="description" content="面试题一道。序列化与反序列化二叉树">
+<meta name="keywords" content="Binary tree">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Serialize binary tree and Deserialize binary tree">
+<meta property="og:url" content="http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/index.html">
+<meta property="og:site_name" content="kylin&#39;s blogs">
+<meta property="og:description" content="面试题一道。序列化与反序列化二叉树">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-09-01T15:44:21.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Serialize binary tree and Deserialize binary tree">
+<meta name="twitter:description" content="面试题一道。序列化与反序列化二叉树">
+    
+        <link rel="alternate" type="application/atom+xml" title="kylin&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.11">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/logo.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">kylin</h5>
+          <a href="mailto:tkl449@126.com" title="tkl449@126.com" class="mail">tkl449@126.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                时间轴
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/wendyshusband" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/atom.xml" target="_blank" >
+                <i class="icon icon-lg icon-rss"></i>
+                RSS订阅
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Serialize binary tree and Deserialize binary tree</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Serialize binary tree and Deserialize binary tree</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-09-01T15:30:03.000Z" itemprop="datePublished" class="page-time">
+  2017-09-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Algorithm/">Algorithm</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-Serialize binary tree and Deserialize binary tree"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Serialize binary tree and Deserialize binary tree</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-09-01 23:30:03" datetime="2017-09-01T15:30:03.000Z"  itemprop="datePublished">2017-09-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Algorithm/">Algorithm</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>面试题一道。序列化与反序列化二叉树<br><a id="more"></a></p>
+<p><a href="https://www.nowcoder.com/questionTerminal/cf7e25aa97c04cc1a68c8f040e71fb84" target="_blank" rel="external">牛客网真题链接</a></p>
+<p>定义：</p>
+<ol>
+<li>序列化： 将数据结构或对象转换成二进制串的过程。</li>
+<li>反序列化：将在序列化过程中所生成的二进制串转换成数据结构或者对象的过程。</li>
+</ol>
+<p>思路：</p>
+<ol>
+<li><p>序列化：将二叉树转化成一个字符串，每个节点用分隔符分开。由于二叉树的结构可以由其先序遍历和中序遍历结果来决定。一开始想到用二者的结合，后来觉得太麻烦了。不如直接就用一个，只要把整棵树用特殊字符将空值填充称完全二叉树就行了。有了这个思想，其实不管什么遍历，都可以实现序列化。</p>
+</li>
+<li><p>反序列化：模拟遍历。</p>
+</li>
+</ol>
+<p>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line">package interview.leetcode;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by 44931 on 2017/9/1.</div><div class="line"> */</div><div class="line">public class Solution2 &#123;</div><div class="line">    int index = -1;</div><div class="line"></div><div class="line">    public static class TreeNode &#123;</div><div class="line">        int val = 0;</div><div class="line">        TreeNode left = null;</div><div class="line">        TreeNode right = null;</div><div class="line"></div><div class="line">        public TreeNode(int val) &#123;</div><div class="line">            this.val = val;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    String Serialize(TreeNode root, StringBuffer stringBuffer) &#123;</div><div class="line"></div><div class="line">        if (null == root) &#123;</div><div class="line">            return String.valueOf(stringBuffer.append(&quot;#,&quot;));</div><div class="line">        &#125;</div><div class="line">        stringBuffer.append(String.valueOf(root.val)+&quot;,&quot;);</div><div class="line">        Serialize(root.left, stringBuffer);</div><div class="line">        Serialize(root.right, stringBuffer);</div><div class="line">        return String.valueOf(stringBuffer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    String Serialize(TreeNode root) &#123;</div><div class="line">        StringBuffer stringBuffer = new StringBuffer();</div><div class="line">        return Serialize(root, stringBuffer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    TreeNode Deserialize(String str) &#123;</div><div class="line">        index++;</div><div class="line">        int len = str.length();</div><div class="line">        if(index &gt;= len)&#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        String[] strr = str.split(&quot;,&quot;);</div><div class="line">        TreeNode node = null;</div><div class="line">        if(!strr[index].equals(&quot;#&quot;))&#123;</div><div class="line">            node = new TreeNode(Integer.valueOf(strr[index]));</div><div class="line">            node.left = Deserialize(str);</div><div class="line">            node.right = Deserialize(str);</div><div class="line">        &#125;</div><div class="line">            return node;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    TreeNode Deserialize(String[] temp) &#123;</div><div class="line">        index++;</div><div class="line">        if (temp.length &lt; 1 || index &lt; 0 || temp.length &lt; index || temp[index].equals(&quot;#&quot;)) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        TreeNode root = new TreeNode(Integer.valueOf(temp[index]));</div><div class="line">        root.left = Deserialize(temp);</div><div class="line">        root.right = Deserialize(temp);</div><div class="line">        return root;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void frontSearch(TreeNode node) &#123;</div><div class="line">        if (node == null) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        System.out.println(node.val);</div><div class="line">        frontSearch(node.left);</div><div class="line">        frontSearch(node.right);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Solution2 solution2 = new Solution2();</div><div class="line">        TreeNode n1 = new TreeNode(1);</div><div class="line">        TreeNode n2 = new TreeNode(2);</div><div class="line">        TreeNode n3 = new TreeNode(3);</div><div class="line">        TreeNode n4 = new TreeNode(4);</div><div class="line">        TreeNode n5 = new TreeNode(5);</div><div class="line">        TreeNode n6 = new TreeNode(6);</div><div class="line">        TreeNode n7 = new TreeNode(7);</div><div class="line">        TreeNode n8 = new TreeNode(8);</div><div class="line">        TreeNode n9 = new TreeNode(9);</div><div class="line"></div><div class="line">        n1.left = n2;</div><div class="line">        n1.right = n3;</div><div class="line">        n2.left = n4;</div><div class="line">        n2.right = n5;</div><div class="line">        n3.left = n6;</div><div class="line">        n3.right = n7;</div><div class="line">        n4.left = n8;</div><div class="line">        n4.right = n9;</div><div class="line">        System.out.println(solution2.Serialize(n1));</div><div class="line">        frontSearch(solution2.Deserialize(solution2.Serialize(n1)));</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-09-01T15:44:21.800Z" itemprop="dateUpdated">2017-09-01 23:44:21</time>
+</span><br>
+
+
+        
+        原创文章，转载请注明出处。 本文链接：<a href="/2017/09/01/Serialize binary tree and Deserialize binary tree/" target="_blank" rel="external">http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/logo.jpg" alt="kylin">
+            kylin
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Binary-tree/">Binary tree</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/&title=《Serialize binary tree and Deserialize binary tree》 — kylin's blogs&pic=http://yoursite.com/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/&title=《Serialize binary tree and Deserialize binary tree》 — kylin's blogs&source=面试题一道。序列化与反序列化二叉树" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Serialize binary tree and Deserialize binary tree》 — kylin's blogs&url=http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/09/01/leetcode-Letter Combinations of a Phone Number/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">leetcode-Letter Combinations of a Phone Number</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'freedogs';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <!--
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            -->
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>kylin &copy; 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>	
+</footer>
+
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/&title=《Serialize binary tree and Deserialize binary tree》 — kylin's blogs&pic=http://yoursite.com/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/&title=《Serialize binary tree and Deserialize binary tree》 — kylin's blogs&source=面试题一道。序列化与反序列化二叉树" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Serialize binary tree and Deserialize binary tree》 — kylin's blogs&url=http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/09/01/Serialize binary tree and Deserialize binary tree/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.11"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.11" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'kylin's blogs';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'kylin's blogs';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
