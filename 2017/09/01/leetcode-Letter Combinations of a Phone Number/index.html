@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="kylin&#39;s blogs">
 <meta property="og:description" content="很有意思的一道题。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-01T15:44:53.900Z">
+<meta property="og:updated_time" content="2017-09-02T15:47:38.518Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode-Letter Combinations of a Phone Number">
 <meta name="twitter:description" content="很有意思的一道题。">
@@ -184,7 +184,7 @@
 <p>A mapping of digit to letters (just like on the telephone buttons) is given below.</p>
 <p>Input:Digit string “23”<br>Output: [“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf”].<br>Note:<br>Although the above answer is in lexicographical order, your answer could be in any order you want.</p>
 <p>给定一个数字字符串，每个数字和字母的映射参考功能机的键盘。求有多少种不同的字母组合。</p>
-<p>这个题其实很简单。每个数字对应3-4个字母，有n个数字，输出所有可能的组合。数字顺序不能调换，是一个组合问题而不是排列问题。很直观的就想到使用递归的方法。提取第i个数字对应的字母(使用字典咯)，针对每个字母递归进入第i+1个数字直到i=n,返回当前生成的字符串。</p>
+<p>这个题其实很简单。每个数字对应3-4个字母，有n个数字，输出所有可能的组合。数字顺序不能调换，是一个组合问题而不是排列问题。很直观的就想到使用回溯，递归的方法。提取第i个数字对应的字母(使用字典咯)，针对每个字母递归进入第i+1个数字直到i=n,返回当前生成的字符串。</p>
 <p>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">     public List&lt;String&gt; letterCombinations(String digits) &#123;</div><div class="line">        ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();</div><div class="line">        if (digits.isEmpty()) &#123;</div><div class="line">            return list;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        String[] dict = new String[]&#123;&quot; &quot;, &quot;&quot;, &quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;, &quot;jkl&quot;, &quot;mno&quot;, &quot;pqrs&quot;, &quot;tuv&quot;, &quot;wxyz&quot;&#125;;</div><div class="line">        letterCombinationsRecursion(digits, dict, 0, &quot;&quot;, list);</div><div class="line">        return list;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void letterCombinationsRecursion(String digits, String[] dict, int level, String out, ArrayList&lt;String&gt; list) &#123;</div><div class="line">        if (level == digits.length()) &#123;</div><div class="line">            list.add(out);</div><div class="line">        &#125; else &#123;</div><div class="line">            String str = dict[digits.charAt(level) - &apos;0&apos;];</div><div class="line">            for (int i=0; i&lt;str.length(); i++) &#123;</div><div class="line">                out += str.charAt(i);</div><div class="line">                letterCombinationsRecursion(digits, dict, level+1, out, list);</div><div class="line">                out = out.substring(0,out.length()-1);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>思考：看到这类限定性很强，或者枚举空间很小的题，总是会松懈，这样不行，做事要严谨一点。不要什么都想着用字典啊之类的暴力的方法，多想一些漂亮的数学上的解法。<br>更多解法：<a href="http://www.cnblogs.com/grandyang/p/4452220.html" target="_blank" rel="external">here</a></p>
 
@@ -194,7 +194,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2017-09-01T15:44:53.900Z" itemprop="dateUpdated">2017-09-01 23:44:53</time>
+    最后更新时间：<time datetime="2017-09-02T15:47:38.518Z" itemprop="dateUpdated">2017-09-02 23:47:38</time>
 </span><br>
 
 
