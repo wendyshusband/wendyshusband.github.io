@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>kylin&#39;s blogs</title>
-  <subtitle>独立之精神，自由之思想。</subtitle>
+  <title>Kylin&#39;s blogs</title>
+  <subtitle>知我者，谓我心忧；不知我者，谓我何求。</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
@@ -57,7 +57,7 @@
     <link href="http://yoursite.com/2017/09/01/leetcode-Letter%20Combinations%20of%20a%20Phone%20Number/"/>
     <id>http://yoursite.com/2017/09/01/leetcode-Letter Combinations of a Phone Number/</id>
     <published>2017-09-01T09:12:38.000Z</published>
-    <updated>2017-09-02T15:47:38.518Z</updated>
+    <updated>2017-09-04T07:17:15.937Z</updated>
     
     <content type="html"><![CDATA[<p>很有意思的一道题。<br><a id="more"></a><br>leetcode 原题：<br>Given a digit string, return all possible letter combinations that the number could represent.</p>
 <p>A mapping of digit to letters (just like on the telephone buttons) is given below.</p>
