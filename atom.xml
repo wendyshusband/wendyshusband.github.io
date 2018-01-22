@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.tangkailin.cn/"/>
-  <updated>2018-01-19T17:11:24.622Z</updated>
+  <updated>2018-01-22T15:17:24.020Z</updated>
   <id>http://blog.tangkailin.cn/</id>
   
   <author>
@@ -14,6 +14,73 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Storm中的分布式缓存</title>
+    <link href="http://blog.tangkailin.cn/2018/01/20/Storm%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98/"/>
+    <id>http://blog.tangkailin.cn/2018/01/20/Storm中的分布式缓存/</id>
+    <published>2018-01-20T02:50:56.000Z</published>
+    <updated>2018-01-22T15:17:24.020Z</updated>
+    
+    <content type="html"><![CDATA[<p> Storm中的分布式缓存<br><a id="more"></a></p>
+<p><br>原文地址：<a href="http://storm.apache.org/releases/1.1.1/distcache-blobstore.html" target="_blank" rel="external">http://storm.apache.org/releases/1.1.1/distcache-blobstore.html</a><br><br></p>
+
+<p>翻译水平有限，欢迎各位指正。</p>
+
+<h2 id="Storm-分布式缓存API"><a href="#Storm-分布式缓存API" class="headerlink" title="Storm 分布式缓存API"></a>Storm 分布式缓存API</h2><p>    Storm中的分布式缓存的主要用途在于存储那些在topology生命周期中会产生变化且数量众多的文件（即blobs,在本文档中，blobs和“分布式缓存中文件”的意义等价），如位置数据、字典数据等。blobs的典型的应用场景包括短语识别、实体提取、文档分类、URL地址重写、定位/地址检测等。这些blobs数据的大小从几KB到几GB不等。对于那些不会动态更新的小数据集合，我们将其直接打包在topology的jar包中是可行的，但是对于那些大型的数据集合，打包再提交的启动时间将会非常大。在这个例子中，使用分布式缓存能大大提高topology的启动速度，特别要指出的是，同一个submitter提交的文件，会一直驻留在缓存中。这样的设计使得缓存中的数据可以重复利用。<br><br></p>
+
+<p>在topology启动时，用户指定好哪些文件是topology所需要的。topology开始运行后，用户可以随时请求blobs并且更新其到新的版本。blobs的更新基于最终一致性模型（eventual consistency model）。如果topology想要知道其访问的文件的具体版本，这需要用户自己来实现相应信息的查询功能。缓存文件的置换使用 Least-Recently Used (LRU)算法，supervisor将基于这一算法对缓存文件进行置换。此外，blobs是可以压缩的，用户可以在使用其之前将其解压。<br><br></p>
+
+<h2 id="使用分布式缓存的动机"><a href="#使用分布式缓存的动机" class="headerlink" title="使用分布式缓存的动机"></a>使用分布式缓存的动机</h2><ul>
+<li>允许在topology之间共享blobs。</li>
+<li>允许从命令行对blob进行更新。</li>
+</ul>
+<h2 id="分布式缓存的实现"><a href="#分布式缓存的实现" class="headerlink" title="分布式缓存的实现"></a>分布式缓存的实现</h2><p>目前的BlobStore包括两个实现：LocalFsBlobStore 和HdfsBlobStore。详细接口请参考附录A。</p>
+
+<p>###LocalFsBlobStore </p>
+<p><img src="http://storm.apache.org/releases/1.1.1/images/local_blobstore.png" alt=""></p>
+<p>Blobstore的本地文件系统实现如上面的时间线图中所示。<br><br>blob的使用包括创建blob、下载blob以及在topology中使用blob。主要的步骤如下所示：<br><br>####创建Blob的命令<br><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm blobstore create --file README.txt --acl o::rwa --replication-factor 4 key1</div></pre></td></tr></table></figure><br><br>上面的命令创建了一个名为“key1”的blob，对应于文件readme.txt，对所有用户的访问权限为读(r)、写(w)、管理(a)。此外，该文件包含4个拷贝。<br><br>#### topology提交及Blob映射<br><br>用户可以使用下面的命令来提交topology。该命令包括拓扑映射配置。该配置包含两个键“key1”和“key2”，其中键“key1”具有一个名为“blob_file”的没有被压缩的本地文件名映射。<br><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">storm jar /home/y/lib/storm-starter/current/storm-starter-jar-with-dependencies.jar </div><div class="line">org.apache.storm.starter.clj.word_count test_topo -c topology.blobstore.map='&#123;"key1":&#123;"localname":"blob_file", "uncompress":"false"&#125;,"key2":&#123;&#125;&#125;'</div></pre></td></tr></table></figure><br><br>####Blob创建进程<br>Blob通过ClientBlobStore接口进行创建。附录B中包含了ClientBlobStore中的所有接口。ClientBlobStore的一个具体实现是NimbusBlobStore。在使用本地文件系统的情况下，客户端调用nimbus来创建本地文件系统中的blob。nimbus使用本地文件系统实现来创建这些blob。当用户提交一个topology，包括jar、配置文件以及代码文件都被作为blob提交到blobstore中。<br><br>####Supervisor下载blob<br>最终，在topology运行时，同一个NimbusBlobStore thrift客户端上传的blob,通过nimbus分配到指定的supervisor，supervisor接受到分配指令后，即会下载对应的blob。supervisor通过NimbusBlobStore client直接下载topology的jar、conf blobs等。<br><br></p>
+
+<p>###HdfsBlobStore<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://storm.apache.org/releases/1.1.1/images/hdfs_blobstore.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>HdfsBlobStore 的blob创建和下载过程的实现和Local file system上的实现类似，唯一的区别在于支持对blobstore的多个拷贝。实现数据的多个拷贝是HDFS的天生技能，这也使得该模式下，我们不需要把blob的状态存储都在zookeeper中。另一方面，本地文件系统的blobstore需要将状态存储在zookeeper中，以便能和nimbus HA一起协同工作。Nimbus HA允许本地文件系统无缝地实现多拷贝这一特性，将状态存储在zookeeper的运行topology数据中，并在不同的Nimbus上同步这些blob。改模式下，最终supervisor使用HdfsClientBlobStore来与HdfsBlobStore 进行通信。</p>
+
+<p>##其他特性及相关文档</p>
+<p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">storm jar /home/y/lib/storm-starter/current/storm-starter-jar-with-dependencies.jar org.apache.storm.starter.clj.word_count test_topo </div><div class="line">-c topology.blobstore.map='&#123;"key1":&#123;"localname":"blob_file", "uncompress":"false"&#125;,"key2":&#123;&#125;&#125;'</div></pre></td></tr></table></figure><br><br>###压缩<br>BlobStore允许用户将<em>uncompress</em>配置项指定为true或false。这个配置可以在topology.blobstore.map中指定。上面的命令表示允许用户上传压缩文件，如tar/zip。在本地文件系统blobstore中，压缩的blob存储在nimbus节点上。本地化代码负责对blob进行解压，并将其存储在supervisor节点上。在用户逻辑开始执行之前，supervisor节点上blob的符号链接（Symbolic links）将会在worker中被创建。<br><br>###本地文件名称映射<br><br>除了压缩之外，在不同的supervisor节点上，本地化器(localizer)可在将blob映射为一个本地化的名称。<br><br>###BlobStore的一些具体实现细节<br><br>BlobStore基于哈希函数创建blobs. Blob通常存储在BlobStore指定的目录中（配置项blobstore.dir）。默认配置为<em>storm.local.dir/blobs</em><br><br>一旦提交了一个文件，BlobStore将读取configs，并为blob创建一个带有所有访问控制细节的元数据。在访问blob时，元数据通常用于授权。blob的哈希值基于blob数据的key和版本号生成。blob数据默认放置在<em>storm.local.dir/blobs/data</em>目录下。通常会生成放置在一个正数命名的目录来放置，如193,822。<br><br>一旦topology启动，storm.conf, storm.ser和storm.code相关的blobs将会首先被下载，其他的命令行上上传的所有blob都使用本地化器来解压，并将它们映射到<em>topology.blobstore.map</em>指定的本地名称。supervisor通过检查版本的变化定期更新blob。动态地更新blob使它成为一个非常有用的特性。<br><br>对于本地文件系统，supervisor节点上的分布式缓存被设置为1024mb（软限制），同时，根据LRU策略，将会在每600秒内清除任何超过软限制的内容。<br><br>另一方面，HDFS BlobStore的实现通过消除在nimbus上存储blob的负担来更好地处理负载，从而避免它成为一个瓶颈。此外，它还提供了blob的无缝拷贝，本地文件系统BlobStore在复制blob时效率不高，并且受到nimbus的数量的限制。此外，在没有使用nimbus存储blob的情况下，supervisor直接与HDFS BlobStore进行通信，从而减少了对nimbus的负载和依赖性。<br><br></p>
+
+<h2 id="高可用的Nimbus"><a href="#高可用的Nimbus" class="headerlink" title="高可用的Nimbus"></a>高可用的Nimbus</h2><h3 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h3><p>目前，nimbus是一个在单个机器上运行的进程。在大多数情况下，nimbus失败是暂时的，并且可以通过执行监督的进程来重新启动。然而，当磁盘出现故障或者网络分区出现时，nimbus就会宕机。这种情况下，已经启动的topology能够正常运行，但是无法提交新的topology，且无法对运行着的topology进行kill、deactivated或activated等操作。此时，如果supervisor节点出现故障，则不会执行topology资源重新分配，从而导致性能下降或topology故障。当前的解决方案是，启动多台nimbus来避免单点故障。</p>
+
+<h3 id="高可用Nimbus的要求："><a href="#高可用Nimbus的要求：" class="headerlink" title="高可用Nimbus的要求："></a>高可用Nimbus的要求：</h3><ul>
+<li>增加nimbus的总体可用性。</li>
+<li>允许nimbus主机随时离开并加入集群。一个新加入的主机应该自动加入可用的nimbus名单。</li>
+<li>在nimbus失败的情况下，不需要进行拓扑重新提交。</li>
+<li>任何正在执行的topology都不应丢失。</li>
+</ul>
+<h4 id="集群领导选举（Leader-Election）"><a href="#集群领导选举（Leader-Election）" class="headerlink" title="集群领导选举（Leader Election）"></a>集群领导选举（Leader Election）</h4><p>nimbus包含以下接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ILeaderElector</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * queue up for leadership lock. The call returns immediately and the caller                     </span></div><div class="line"><span class="comment">     * must check isLeader() to perform any leadership action.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addToLeaderLockQueue</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Removes the caller from the leader lock queue. If the caller is leader</span></div><div class="line"><span class="comment">     * also releases the lock.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">removeFromLeaderLockQueue</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> true if the caller currently has the leader lock.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isLeader</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the current leader's address , throws exception if noone has has    lock.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function">InetSocketAddress <span class="title">getLeaderAddress</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * </span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> list of current nimbus addresses, includes leader.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function">List&lt;InetSocketAddress&gt; <span class="title">getAllNimbusAddresses</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一旦一个可用的nimbus出现，即调用addToLeaderLockQueue函数，将其加入可用nimbus名单。领导选举算法将从Queue中选出一个节点作为leader，若此时topology的代码、jar或者blob有丢失，则会从其他的正在运行的nimbus节点下载这些数据。</p>
+<p>（未完待续）</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt; Storm中的分布式缓存&lt;br&gt;
+    
+    </summary>
+    
+      <category term="翻译" scheme="http://blog.tangkailin.cn/categories/%E7%BF%BB%E8%AF%91/"/>
+    
+    
+      <category term="Distributed system" scheme="http://blog.tangkailin.cn/tags/Distributed-system/"/>
+    
+      <category term="Storm" scheme="http://blog.tangkailin.cn/tags/Storm/"/>
+    
+  </entry>
   
   <entry>
     <title>关于Big-data的一点总结</title>
@@ -118,7 +185,7 @@
     <link href="http://blog.tangkailin.cn/2017/08/30/Storm,%20Flink%E5%92%8Cspark%20Streaming%E4%B8%AD%E7%9A%84backpressure%E6%9C%BA%E5%88%B6%E6%AF%94%E8%BE%83/"/>
     <id>http://blog.tangkailin.cn/2017/08/30/Storm, Flink和spark Streaming中的backpressure机制比较/</id>
     <published>2017-08-30T15:22:56.000Z</published>
-    <updated>2017-09-02T15:46:41.626Z</updated>
+    <updated>2018-01-20T13:44:51.326Z</updated>
     
     <content type="html"><![CDATA[<p> Storm, Spark streaming, Flink中的backpressure机制比较。<br><a id="more"></a></p>
 <p><br>backpressure是分布式流处理系统中一种有效的流量控制手段，为了防止负载过大，计算瓶颈等对整个系统带来的影响。backpressure基本上是每个流处理系统都应该考虑的一种流量控制手段。流量控制的方法有很多种，有兴趣的可以去看看网络中是怎么控制流量的。分布式流其实和网络流的本质是一样的。<br></p><br><p><br>本文先分别讨论各个系统的backpressure机制，然后再总结三者的异同。<br></p>
