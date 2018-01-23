@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://storm.apache.org/releases/1.1.1/images/local_blobstore.png">
 <meta property="og:image" content="http://storm.apache.org/releases/1.1.1/images/hdfs_blobstore.png">
-<meta property="og:updated_time" content="2018-01-22T15:17:24.020Z">
+<meta property="og:updated_time" content="2018-01-23T16:02:44.127Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Storm中的分布式缓存">
 <meta name="twitter:description" content="Storm中的分布式缓存">
@@ -165,7 +165,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Storm-分布式缓存API"><span class="post-toc-number">1.</span> <span class="post-toc-text">Storm 分布式缓存API</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用分布式缓存的动机"><span class="post-toc-number">2.</span> <span class="post-toc-text">使用分布式缓存的动机</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分布式缓存的实现"><span class="post-toc-number">3.</span> <span class="post-toc-text">分布式缓存的实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#高可用的Nimbus"><span class="post-toc-number">4.</span> <span class="post-toc-text">高可用的Nimbus</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#问题描述："><span class="post-toc-number">4.1.</span> <span class="post-toc-text">问题描述：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#高可用Nimbus的要求："><span class="post-toc-number">4.2.</span> <span class="post-toc-text">高可用Nimbus的要求：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#集群领导选举（Leader-Election）"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">集群领导选举（Leader Election）</span></a></li></ol></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Storm-分布式缓存API"><span class="post-toc-number">1.</span> <span class="post-toc-text">Storm 分布式缓存API</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用分布式缓存的动机"><span class="post-toc-number">2.</span> <span class="post-toc-text">使用分布式缓存的动机</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分布式缓存的实现"><span class="post-toc-number">3.</span> <span class="post-toc-text">分布式缓存的实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#高可用的Nimbus"><span class="post-toc-number">4.</span> <span class="post-toc-text">高可用的Nimbus</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#问题描述"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">问题描述</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#高可用Nimbus的要求"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">高可用Nimbus的要求</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#集群领导选举（Leader-Election）"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">集群领导选举（Leader Election）</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Nimbus状态存储"><span class="post-toc-number">5.</span> <span class="post-toc-text">Nimbus状态存储</span></a></li></ol>
         </nav>
     </aside>
     
@@ -221,9 +221,9 @@
 <p>##其他特性及相关文档</p>
 <p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">storm jar /home/y/lib/storm-starter/current/storm-starter-jar-with-dependencies.jar org.apache.storm.starter.clj.word_count test_topo </div><div class="line">-c topology.blobstore.map='&#123;"key1":&#123;"localname":"blob_file", "uncompress":"false"&#125;,"key2":&#123;&#125;&#125;'</div></pre></td></tr></table></figure><br><br>###压缩<br>BlobStore允许用户将<em>uncompress</em>配置项指定为true或false。这个配置可以在topology.blobstore.map中指定。上面的命令表示允许用户上传压缩文件，如tar/zip。在本地文件系统blobstore中，压缩的blob存储在nimbus节点上。本地化代码负责对blob进行解压，并将其存储在supervisor节点上。在用户逻辑开始执行之前，supervisor节点上blob的符号链接（Symbolic links）将会在worker中被创建。<br><br>###本地文件名称映射<br><br>除了压缩之外，在不同的supervisor节点上，本地化器(localizer)可在将blob映射为一个本地化的名称。<br><br>###BlobStore的一些具体实现细节<br><br>BlobStore基于哈希函数创建blobs. Blob通常存储在BlobStore指定的目录中（配置项blobstore.dir）。默认配置为<em>storm.local.dir/blobs</em><br><br>一旦提交了一个文件，BlobStore将读取configs，并为blob创建一个带有所有访问控制细节的元数据。在访问blob时，元数据通常用于授权。blob的哈希值基于blob数据的key和版本号生成。blob数据默认放置在<em>storm.local.dir/blobs/data</em>目录下。通常会生成放置在一个正数命名的目录来放置，如193,822。<br><br>一旦topology启动，storm.conf, storm.ser和storm.code相关的blobs将会首先被下载，其他的命令行上上传的所有blob都使用本地化器来解压，并将它们映射到<em>topology.blobstore.map</em>指定的本地名称。supervisor通过检查版本的变化定期更新blob。动态地更新blob使它成为一个非常有用的特性。<br><br>对于本地文件系统，supervisor节点上的分布式缓存被设置为1024mb（软限制），同时，根据LRU策略，将会在每600秒内清除任何超过软限制的内容。<br><br>另一方面，HDFS BlobStore的实现通过消除在nimbus上存储blob的负担来更好地处理负载，从而避免它成为一个瓶颈。此外，它还提供了blob的无缝拷贝，本地文件系统BlobStore在复制blob时效率不高，并且受到nimbus的数量的限制。此外，在没有使用nimbus存储blob的情况下，supervisor直接与HDFS BlobStore进行通信，从而减少了对nimbus的负载和依赖性。<br><br></p>
 
-<h2 id="高可用的Nimbus"><a href="#高可用的Nimbus" class="headerlink" title="高可用的Nimbus"></a>高可用的Nimbus</h2><h3 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h3><p>目前，nimbus是一个在单个机器上运行的进程。在大多数情况下，nimbus失败是暂时的，并且可以通过执行监督的进程来重新启动。然而，当磁盘出现故障或者网络分区出现时，nimbus就会宕机。这种情况下，已经启动的topology能够正常运行，但是无法提交新的topology，且无法对运行着的topology进行kill、deactivated或activated等操作。此时，如果supervisor节点出现故障，则不会执行topology资源重新分配，从而导致性能下降或topology故障。当前的解决方案是，启动多台nimbus来避免单点故障。</p>
+<h2 id="高可用的Nimbus"><a href="#高可用的Nimbus" class="headerlink" title="高可用的Nimbus"></a>高可用的Nimbus</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>目前，nimbus是一个在单个机器上运行的进程。在大多数情况下，nimbus失败是暂时的，并且可以通过执行监督的进程来重新启动。然而，当磁盘出现故障或者网络分区出现时，nimbus就会宕机。这种情况下，已经启动的topology能够正常运行，但是无法提交新的topology，且无法对运行着的topology进行kill、deactivated或activated等操作。此时，如果supervisor节点出现故障，则不会执行topology资源重新分配，从而导致性能下降或topology故障。当前的解决方案是，启动多台nimbus来避免单点故障。</p>
 
-<h3 id="高可用Nimbus的要求："><a href="#高可用Nimbus的要求：" class="headerlink" title="高可用Nimbus的要求："></a>高可用Nimbus的要求：</h3><ul>
+<h3 id="高可用Nimbus的要求"><a href="#高可用Nimbus的要求" class="headerlink" title="高可用Nimbus的要求"></a>高可用Nimbus的要求</h3><ul>
 <li>增加nimbus的总体可用性。</li>
 <li>允许nimbus主机随时离开并加入集群。一个新加入的主机应该自动加入可用的nimbus名单。</li>
 <li>在nimbus失败的情况下，不需要进行拓扑重新提交。</li>
@@ -232,7 +232,8 @@
 <h4 id="集群领导选举（Leader-Election）"><a href="#集群领导选举（Leader-Election）" class="headerlink" title="集群领导选举（Leader Election）"></a>集群领导选举（Leader Election）</h4><p>nimbus包含以下接口：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ILeaderElector</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * queue up for leadership lock. The call returns immediately and the caller                     </span></div><div class="line"><span class="comment">     * must check isLeader() to perform any leadership action.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addToLeaderLockQueue</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Removes the caller from the leader lock queue. If the caller is leader</span></div><div class="line"><span class="comment">     * also releases the lock.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">removeFromLeaderLockQueue</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> true if the caller currently has the leader lock.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isLeader</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the current leader's address , throws exception if noone has has    lock.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function">InetSocketAddress <span class="title">getLeaderAddress</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * </span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> list of current nimbus addresses, includes leader.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function">List&lt;InetSocketAddress&gt; <span class="title">getAllNimbusAddresses</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>一旦一个可用的nimbus出现，即调用addToLeaderLockQueue函数，将其加入可用nimbus名单。领导选举算法将从Queue中选出一个节点作为leader，若此时topology的代码、jar或者blob有丢失，则会从其他的正在运行的nimbus节点下载这些数据。</p>
-<p>（未完待续）</p>
+<p>The first implementation will be Zookeeper based. If the zookeeper connection is lost/reset resulting in loss of lock or the spot in queue the implementation will take care of updating the state such that isLeader() will reflect the current status. The leader like actions must finish in less than minimumOf(connectionTimeout, SessionTimeout) to ensure the lock was held by nimbus for the entire duration of the action (Not sure if we want to just state this expectation and ensure that zk configurations are set high enough which will result in higher failover time or we actually want to create some sort of rollback mechanism for all actions, the second option needs a lot of code). If a nimbus that is not leader receives a request that only a leader can perform, it will throw a RunTimeException.</p>
+<h2 id="Nimbus状态存储"><a href="#Nimbus状态存储" class="headerlink" title="Nimbus状态存储"></a>Nimbus状态存储</h2><p>（未完待续）</p>
 
         </div>
 
@@ -240,7 +241,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-01-22T15:17:24.020Z" itemprop="dateUpdated">2018-01-22 23:17:24</time>
+    最后更新时间：<time datetime="2018-01-23T16:02:44.127Z" itemprop="dateUpdated">2018-01-24 00:02:44</time>
 </span><br>
 
 
@@ -320,7 +321,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/01/23/deploy-storm-on-docker/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">deploy-storm-on-docker</h4>
+      </a>
+    </div>
   
 
   
@@ -338,23 +346,31 @@
     
 
 
+
+
+
+
+
+
+
+
+
 <section class="comments" id="comments">
-    <div id="disqus_thread"></div>
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
     <script>
-    var disqus_shortname = 'freedogs';
-    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+        var gitment = new Gitment({
+            owner: 'wendyshusband',
+            repo: 'gitment',
+            oauth: {
+                client_id: 'd3be5523251d505d47a6',
+                client_secret: 'a74e7cb1a9db1320fc210e6cf12af7590211746f',
+            },
+        })
+        gitment.render('comments')
     </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </section>
-
-
-
-
-
-
-
-
-
 
 
 

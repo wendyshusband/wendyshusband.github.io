@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Running-mapreduce-job-into-Docker-container | CollinT | 知我者，谓我心忧；不知我者，谓我何求。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#077060">
+    
+    
+    <meta name="keywords" content="Distributed system,Map Reduce,Docker">
+    <meta name="description" content="Welcome to contribute to  our documentation on github.">
+<meta name="keywords" content="Distributed system,Map Reduce,Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Running-mapreduce-job-into-Docker-container">
+<meta property="og:url" content="http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/index.html">
+<meta property="og:site_name" content="CollinT">
+<meta property="og:description" content="Welcome to contribute to  our documentation on github.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-01-23T15:02:58.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Running-mapreduce-job-into-Docker-container">
+<meta name="twitter:description" content="Welcome to contribute to  our documentation on github.">
+    
+        <link rel="alternate" type="application/atom+xml" title="CollinT" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.11">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/logo.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">CollinT</h5>
+          <a href="mailto:tkl449@126.com" title="tkl449@126.com" class="mail">tkl449@126.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                时间轴
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/wendyshusband" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/atom.xml" target="_blank" >
+                <i class="icon icon-lg icon-rss"></i>
+                RSS订阅
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Running-mapreduce-job-into-Docker-container</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Running-mapreduce-job-into-Docker-container</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-01-23T15:02:58.000Z" itemprop="datePublished" class="page-time">
+  2018-01-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/大数据学习总结/">大数据学习总结</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-Running-mapreduce-job-into-Docker-container"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Running-mapreduce-job-into-Docker-container</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-01-23 23:02:58" datetime="2018-01-23T15:02:58.000Z"  itemprop="datePublished">2018-01-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/大数据学习总结/">大数据学习总结</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Welcome to contribute to  our <a href="https://github.com/ADSC-Resa/documentation" target="_blank" rel="external">documentation</a> on github.</p>
+<a id="more"></a>
+<p>The Hadoop 2.6 release contains a new feature that allows to launch Docker container directly as YARN container, called the DCE (Docker container executor). Running a Hadoop job is not an easy thing, User need to solve a lot of problem, such as complex problem of dependency. Using DCE let the developers package their applications and all of dependencies into a Docker container in order to provide a consistent environment for execution and also provides isolation from other applications installed on host. Because of the official reference document is relatively simple, and ignored a lot of details, this tutorial will describe the detail of DCE configuration and some problems needing attention.</p>
+<p>#Prerequisite </p>
+<p>Your Hadoop version must be 2.7.i at minimum. The distro and version of Linux in your Docker image can be quite different from that of your Nodemanager. However, if you are using the MapReduce framework, then your Docker image will need to be configured for running Hadoop. Obviously, Java is in need, and the following environment variables must be defined in the image:  JAVA_HOME, HADOOP_COMMON_PATH, HADOOP_HDFS_HOME, HADOOP_MAPRED_HOME, HADOOP_YARN_HOME, and HADOOP_CONF_DIR.<br>Before running the DCE, please make sure that your host has installed Hadoop and Docker.</p>
+<p>#Experimental Environment </p>
+<p>You will have 3 machines running Ubuntu Server 14.04, each of which will be running a Docker daemon and Hadoop 2.7.3 inside. Besides we are using <a href="https://hub.docker.com/r/sequenceiq/hadoop-docker/" target="_blank" rel="external">sequenceiq/hadoop-docker2.4.1</a> image that developed by <a href="http://sequenceiq.com/" target="_blank" rel="external">sequenceiq</a>. This image already contains all of required environmental dependencies. Of course, you can also using your own Docker image</p>
+<p>#Experimental Procedure </p>
+<p>##Step 1：Pull the Docker image</p>
+<p>You can use the following command to pull image:</p>
+<blockquote>
+<p>docker pull sequenceiq/hadoop-docker:2.4.1 </p>
+</blockquote>
+<p>and, you can type the following command to inspect the running environment into the Docker container:</p>
+<blockquote>
+<p>docker run -it sequenceiq/hadoop-docker:2.7.1 /etc/bootstrap.sh -bash  </p>
+</blockquote>
+<p>If nothing has gone wrong, you should now find the Hadoop directory into /usr/local that inside the container. </p>
+<p>##Step 2：Configure the yarn-site.xml on the host</p>
+<p>You need to add the following contents into yarn-site.xml:</p>
+<blockquote>
+<p>\<property\><br>      \<name\>yarn.nodemanager.docker-container-executor.exec-name\</name\><br>       \<value\>/usr/bin/docker\</value\><br>\</property\><br>\<property\><br>       \<name\>yarn.nodemanager.container-executor.class\</name\><br>       \<value\>org.apache.hadoop.yarn.server.nodemanager.DockerContainerExecutor\</value\><br>\</property\>  </p>
+</blockquote>
+<p>The first configuration items <em>yarn.nodemanager.docker-container-executor.exec-name</em> is configure the path of the Docker executable file. And the second items <em>yarn.nodemanager.docker-container-executor.class</em> is configure the DockerContainerExecutor as container executor rather than the default container executor into YARN. </p>
+<p>##Step 3：Restart the YARN and HDFS on the host</p>
+<blockquote>
+<p>./sbin/stop-all.sh<br>./sbin/start-all.sh </p>
+</blockquote>
+<p>##Step 4：Submit a MapReduce job </p>
+<p>Here, we are using the hadoop-mapreduce-examples-2.7.3.jar π calculation.<br>Type following command:</p>
+<blockquote>
+<p>bin/Hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar pi<br>-D mapreduce.map.env=”yarn.nodemanager.docker-container-executor.image-name=sequenceiq/hadoop-docker:2.4.1”<br>-D mapreduce.reduce.env=”yarn.nodemanager.docker-container-executor.image-name=sequenceiq/hadoop-docker:2.4.1”<br>-D yarn.app.mapreduce.am.env=”yarn.nodemanager.docker-container-executor.image-name=sequenceiq/hadoop-docker:2.4.1” 5 10</p>
+</blockquote>
+<p>Currently you cannot configure any of the Docker settings with the job configuration. You can provide Mapper, Reducer, and ApplicationMaster environment overrides for the docker images, using the following 3 JVM properties respectively(only for MR jobs):<br>-mapreduce.map.env: You can override the mapper’s image by passing yarn.nodemanager.docker-container-executor.image-name=your_image_name to this JVM property.<br>-mapreduce.reduce.env: You can override the reducer’s image by passing yarn.nodemanager.docker-container-executor.image-name=your_image_name to this JVM property.<br>-yarn.app.mapreduce.am.env: You can override the ApplicationMaster’s image by passing yarn.nodemanager.docker-container-executor.image-name=your_image_name to this JVM property.</p>
+<p>If noting has gone wrong, you can <em>docker ps</em> command to affirm Docker container is running. And you can find that the name of Docker container is same as the default YARN container name that show on the terminal. </p>
+<p>#Need to be aware of problem in the experiment</p>
+<ol>
+<li>Don`t use Hadoop 3.0.0 or higher version, There will be some puzzling error.</li>
+<li>Error: No such image or container<br>This error may be because of the Docker image version do not match the Hadoop version on the host. And you can refer to log file of Nodemanager.</li>
+<li>Diagnostics: Container image must not be null<br>Two reasons led to this error:<br>A.  The Hadoop running no hosts do not support using DCE as YARN container.<br>B.  The configuration of YARN is wrong or when you submit job, you forget configure for DCE.<br>Note. DCE and default YARN container can’t be use at same time in cluster. </li>
+<li>Error: No such image , container or task<br>This error is not that simple. You can refer to error log file (stderr) of MapReduce job. If you find message about <em>Error: Could not find or load main class org.apache.-hadoop.mapreduce.v2.app.MRAppMaster</em>. You can add the library path that is inside the Docker container to the classpath of MapReduce job in mapred-site.xml. If you find message about <em>Exception in thread “main” java.lang.NoClassDefFoundError:-org/apache/hadoop/service/CompositeService</em>. You need also add the library path that is inside the Docker container to the classpath of YARN in yarn -site.xml.</li>
+<li>The MR job is stuck in the accepted.<br>You can refer to log file of Nodemanager. This error maybe result from resource that schedule by YARN is not enough, then you need to increase the number of resource in yarn-site.xml. May also result from the Docker container can’t get the PID, at this time, please read this <a href="http://blog.sequenceiq.com/blog/2015/01/07/yarn-containers-docker/" target="_blank" rel="external">article</a> seriously.  </li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-01-23T15:02:58.536Z" itemprop="dateUpdated">2018-01-23 23:02:58</time>
+</span><br>
+
+
+        
+        原创文章，转载请注明出处。 本文链接：<a href="/2018/01/23/Running-mapreduce-job-into-Docker-container/" target="_blank" rel="external">http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.tangkailin.cn">
+            <img src="/img/logo.jpg" alt="CollinT">
+            CollinT
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Distributed-system/">Distributed system</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Map-Reduce/">Map Reduce</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/&title=《Running-mapreduce-job-into-Docker-container》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/&title=《Running-mapreduce-job-into-Docker-container》 — CollinT&source=Welcome to contribute to  our documentation on github." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Running-mapreduce-job-into-Docker-container》 — CollinT&url=http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/&via=http://blog.tangkailin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/01/23/deploy-storm-on-docker/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">deploy-storm-on-docker</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'wendyshusband',
+            repo: 'gitment',
+            oauth: {
+                client_id: 'd3be5523251d505d47a6',
+                client_secret: 'a74e7cb1a9db1320fc210e6cf12af7590211746f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <!--
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            -->
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>CollinT &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>	
+</footer>
+
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/&title=《Running-mapreduce-job-into-Docker-container》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/&title=《Running-mapreduce-job-into-Docker-container》 — CollinT&source=Welcome to contribute to  our documentation on github." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Running-mapreduce-job-into-Docker-container》 — CollinT&url=http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/&via=http://blog.tangkailin.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.11"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.11" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'CollinT';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'CollinT';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
