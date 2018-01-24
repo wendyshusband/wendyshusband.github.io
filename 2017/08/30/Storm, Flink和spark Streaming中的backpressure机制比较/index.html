@@ -195,7 +195,13 @@
 <h2 id="Storm"><a href="#Storm" class="headerlink" title="Storm"></a>Storm</h2><p>storm的backpressure功能流程如下：</p><br><p>在worker中会有一个backpressure线程，实时的监控executor的receive queue或者worker的transfer queue的状态，一旦发现某一queue中的数据量超过一个阈值（由 <strong>backpressure.disruptor.high.watermark</strong> 配置，默认为0.9），即触发backpressure，此时backpressure线程会将这当前topology的信息写入zookeeper，watcher检测到zookeeper中的数据变化，则立马通知所有worker进入backpressure状态，上游spout停止发送数据,直到queue中的数据量低于一个阈值（由 <strong>backpressure.disruptor.low.watermark</strong> 配置，默认为0.4）。所有worker退出backpressure状态，spout正常发送数据。</p><br>executor.clj中代码段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(if (and (not (.isFull transfer-queue))</div><div class="line">                     (not throttle-on)</div><div class="line">                     (not reached-max-spout-pending))</div><div class="line">                 (fast-list-iter [^ISpout spout spouts] (.nextTuple spout))))</div></pre></td></tr></table></figure><br><br><p>不了解disruptor queue在storm中的使用的可以参考：<a href="http://www.michael-noll.com/blog/2012/10/16/understanding-the-parallelism-of-a-storm-topology/" target="_blank" rel="external">Understanding the Parallelism of a Storm Topology</a><br></p><br><p><br>storm中的backpressure还是相当暴力的。这样子其实整个系统都处在一个不稳定的状态，堵住了马上就不发送任何数据进来，直到疏通了，开始发送，然后慢慢堵住，直到触发backpressure。<br></p>
 
 <p>storm backpressure具体内容参考：<a href="https://github.com/apache/storm/pull/700" target="_blank" rel="external">storm-886</a></p>
-<p><img src="http://ovjcsnet2.bkt.clouddn.com/stormbackpressure.jpg" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ovjcsnet2.bkt.clouddn.com/stormbackpressure.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <h2 id="Flink"><a href="#Flink" class="headerlink" title="Flink"></a>Flink</h2><p>Flink是新一代的流处理系统，其backpressure的实现方式相比于storm有很大的区别。其不再借助zookeeper或者其他的外部组件来实现backpressure。而是在其内部数据传输时用一种类似阻塞队列的方式很合理，很漂亮的实现了这一功能。</p><br><p>具体流程已经有人写了很好的<a href="http://wuchong.me/blog/2016/04/26/flink-internals-how-to-handle-backpressure/" target="_blank" rel="external">博文</a>了,我就不再多次一举了。</p>
 
 <h2 id="Spark-Streaming"><a href="#Spark-Streaming" class="headerlink" title="Spark Streaming"></a>Spark Streaming</h2><p>待研究。</p>

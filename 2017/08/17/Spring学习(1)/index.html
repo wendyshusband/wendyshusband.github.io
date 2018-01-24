@@ -192,7 +192,13 @@
             <p>Spring基本概念<br><a id="more"></a></p>
 <h2 id="Inversion-of-Control-And-Dependency-Injection"><a href="#Inversion-of-Control-And-Dependency-Injection" class="headerlink" title="Inversion of Control And Dependency Injection"></a>Inversion of Control And Dependency Injection</h2><h3 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h3><p>IOC是一种设计的思想，在程序设计时并不直接在某个对象内部去new一个其他对象，而是使用一个IOC容器来创建这些对象。使用IOC容器来控制对象，主要控制外部资源的获取。</p>
 <p>所谓inversion，指的就是由容器来帮忙创建及注入依赖对象。依赖对象的获取由主动变为被动，这是一个反转。应用被动的等待IOC容器来创建注入它所需要的资源。</p>
-<p><img src="http://sishuok.com/forum/upload/2012/2/19/6fdf1048726cc2edcac4fca685f050ac__2.JPG" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://sishuok.com/forum/upload/2012/2/19/6fdf1048726cc2edcac4fca685f050ac__2.JPG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <h3 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h3><p>应用依赖于IOC容器。因为其需要IOC容器来提供外部资源。IOC将这些外部资源注入某个对象。</p>
 <p>其实依赖注入只是一种装配对象的手段，设计的类结构才是基础，如果设计的类结构不支持依赖注入，Spring IoC容器也注入不了任何东西。</p>
 <h4 id="循环依赖"><a href="#循环依赖" class="headerlink" title="循环依赖"></a>循环依赖</h4><p>很显然，循环依赖是指的，当创建A时，需要B，就去创建B，创建B时发现需要A。此时就有问题了，因为A还没创建完成，然后就去新建一个A，这样就会陷入死循环。</p>

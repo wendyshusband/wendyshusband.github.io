@@ -187,7 +187,13 @@
 <a id="more"></a>
 <p>This guide reference <a href="http://highscalability.com/blog/2016/4/25/the-joy-of-deploying-apache-storm-on-docker-swarm.html" target="_blank" rel="external">The joy of deploying Apache Storm on Docker Swarm</a> in <a href="http://www.baqend.com/" target="_blank" rel="external">Baqend Tech</a>.And we describe some of the detail and principles about every step in this tutorial.If you have already have a good use of Linux,Docker swarm and Apache storm,you can use script given in the article above for rapid deployment. This tutorial is targeted at beginner novice.We will manual configuration on each machine and you will be more clear understand the principle in the process of deployment .</p>
 <p>So let’s begin :</p>
-<p>#Overall Architecture<br><img src="https://github.com/ADSC-Resa/documentation/wiki/1.png" alt=""></p>
+<p>#Overall Architecture<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://github.com/ADSC-Resa/documentation/wiki/1.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
 <p>You’ll have 3 machines running Ubuntu Server 14.04, each of which will be running a Docker daemon with several containers inside. As shown in figure above ,we use ubuntu1 as manager of Docker swarm. The Nimbus and UI containers will be spawned on the manager node (Ubuntu 1).Beside ,remember to open port 8080 for UI container.<br>When swarm is in place ,you’ll create an overlay network (stormnet) to enable communication between Docker container hosted on the different swarm nodes. Finally, you will set up a full-fledged storm cluster that uses the existing zookeeper ensemble for coordination and stormnet for inter-node communication. This involves discovery service of Docker swarm ,you can read <a href="https://technologyconversations.com/2015/09/08/service-discovery-zookeeper-vs-etcd-vs-consul/" target="_blank" rel="external">here</a>.<br>We are using hostnames dmir1,dmir2 and dmir3 for the three Ubuntu machines. Using alias rather than an IP address can have better fault tolerance. At the time of the actual deployment ,remember to replace your own domain name. Three zookeeper severs are deployed here, of course,using one zookeeper is also possible. </p>
 <p>#Install Docker</p>
 <p>Using your favorite way to connect three machines and install Docker on each machine. You can reference <a href="https://docs.docker.com/engine/installation/linux/ubuntulinux/" target="_blank" rel="external">here</a> to install Docker. After the installation is complete,we should test to ensure that the installation is successful.</p>
@@ -237,7 +243,13 @@
 </blockquote>
 <p>This will do it for the current session and also make sure it will be done again when we log into the machine next time.<br>Now everything should be up and running. Type in <em>docker info</em> to check cluster status on the manager node. </p>
 <p>You should see 3 running workers similar to this:</p>
-<p><img src="https://github.com/ADSC-Resa/documentation/wiki/2.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://github.com/ADSC-Resa/documentation/wiki/2.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>The important part is the line with Status: Healthy for each node. If you observe something like Status: Pending or if not all nodes show up, even though you are not experiencing any errors elsewhere, try restarting the manager container like so:</p>
 <blockquote>
 <p>docker restart $(docker ps -a –no-trunc –filter “label=role=manager)</p>

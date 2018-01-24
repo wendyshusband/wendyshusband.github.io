@@ -88,7 +88,13 @@
 <a id="more"></a>
 <p>This guide reference <a href="http://highscalability.com/blog/2016/4/25/the-joy-of-deploying-apache-storm-on-docker-swarm.html" target="_blank" rel="external">The joy of deploying Apache Storm on Docker Swarm</a> in <a href="http://www.baqend.com/" target="_blank" rel="external">Baqend Tech</a>.And we describe some of the detail and principles about every step in this tutorial.If you have already have a good use of Linux,Docker swarm and Apache storm,you can use script given in the article above for rapid deployment. This tutorial is targeted at beginner novice.We will manual configuration on each machine and you will be more clear understand the principle in the process of deployment .</p>
 <p>So let’s begin :</p>
-<p>#Overall Architecture<br><img src="https://github.com/ADSC-Resa/documentation/wiki/1.png" alt=""></p>
+<p>#Overall Architecture<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://github.com/ADSC-Resa/documentation/wiki/1.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
 <p>You’ll have 3 machines running Ubuntu Server 14.04, each of which will be running a Docker daemon with several containers inside. As shown in figure above ,we use ubuntu1 as manager of Docker swarm. The Nimbus and UI containers will be spawned on the manager node (Ubuntu 1).Beside ,remember to open port 8080 for UI container.<br>When swarm is in place ,you’ll create an overlay network (stormnet) to enable communication between Docker container hosted on the different swarm nodes. Finally, you will set up a full-fledged storm cluster that uses the existing zookeeper ensemble for coordination and stormnet for inter-node communication. This involves discovery service of Docker swarm ,you can read <a href="https://technologyconversations.com/2015/09/08/service-discovery-zookeeper-vs-etcd-vs-consul/" target="_blank" rel="external">here</a>.<br>We are using hostnames dmir1,dmir2 and dmir3 for the three Ubuntu machines. Using alias rather than an IP address can have better fault tolerance. At the time of the actual deployment ,remember to replace your own domain name. Three zookeeper severs are deployed here, of course,using one zookeeper is also possible. </p>
 <p>#Install Docker</p>
 <p>Using your favorite way to connect three machines and install Docker on each machine. You can reference <a href="https://docs.docker.com/engine/installation/linux/ubuntulinux/" target="_blank" rel="external">here</a> to install Docker. After the installation is complete,we should test to ensure that the installation is successful.</p>
@@ -138,7 +144,13 @@
 </blockquote>
 <p>This will do it for the current session and also make sure it will be done again when we log into the machine next time.<br>Now everything should be up and running. Type in <em>docker info</em> to check cluster status on the manager node. </p>
 <p>You should see 3 running workers similar to this:</p>
-<p><img src="https://github.com/ADSC-Resa/documentation/wiki/2.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://github.com/ADSC-Resa/documentation/wiki/2.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>The important part is the line with Status: Healthy for each node. If you observe something like Status: Pending or if not all nodes show up, even though you are not experiencing any errors elsewhere, try restarting the manager container like so:</p>
 <blockquote>
 <p>docker restart $(docker ps -a –no-trunc –filter “label=role=manager)</p>
@@ -237,7 +249,13 @@
 <p><img src="http://storm.apache.org/releases/1.1.1/images/local_blobstore.png" alt=""></p>
 <p>Blobstore的本地文件系统实现如上面的时间线图中所示。<br><br>blob的使用包括创建blob、下载blob以及在topology中使用blob。主要的步骤如下所示：<br><br>####创建Blob的命令<br><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm blobstore create --file README.txt --acl o::rwa --replication-factor 4 key1</div></pre></td></tr></table></figure><br><br>上面的命令创建了一个名为“key1”的blob，对应于文件readme.txt，对所有用户的访问权限为读(r)、写(w)、管理(a)。此外，该文件包含4个拷贝。<br><br>#### topology提交及Blob映射<br><br>用户可以使用下面的命令来提交topology。该命令包括拓扑映射配置。该配置包含两个键“key1”和“key2”，其中键“key1”具有一个名为“blob_file”的没有被压缩的本地文件名映射。<br><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">storm jar /home/y/lib/storm-starter/current/storm-starter-jar-with-dependencies.jar </div><div class="line">org.apache.storm.starter.clj.word_count test_topo -c topology.blobstore.map='&#123;"key1":&#123;"localname":"blob_file", "uncompress":"false"&#125;,"key2":&#123;&#125;&#125;'</div></pre></td></tr></table></figure><br><br>####Blob创建进程<br>Blob通过ClientBlobStore接口进行创建。附录B中包含了ClientBlobStore中的所有接口。ClientBlobStore的一个具体实现是NimbusBlobStore。在使用本地文件系统的情况下，客户端调用nimbus来创建本地文件系统中的blob。nimbus使用本地文件系统实现来创建这些blob。当用户提交一个topology，包括jar、配置文件以及代码文件都被作为blob提交到blobstore中。<br><br>####Supervisor下载blob<br>最终，在topology运行时，同一个NimbusBlobStore thrift客户端上传的blob,通过nimbus分配到指定的supervisor，supervisor接受到分配指令后，即会下载对应的blob。supervisor通过NimbusBlobStore client直接下载topology的jar、conf blobs等。<br><br></p>
 
-<p>###HdfsBlobStore<br><img src="http://storm.apache.org/releases/1.1.1/images/hdfs_blobstore.png" alt=""></p>
+<p>###HdfsBlobStore<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://storm.apache.org/releases/1.1.1/images/hdfs_blobstore.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
 <p>HdfsBlobStore 的blob创建和下载过程的实现和Local file system上的实现类似，唯一的区别在于支持对blobstore的多个拷贝。实现数据的多个拷贝是HDFS的天生技能，这也使得该模式下，我们不需要把blob的状态存储都在zookeeper中。另一方面，本地文件系统的blobstore需要将状态存储在zookeeper中，以便能和nimbus HA一起协同工作。Nimbus HA允许本地文件系统无缝地实现多拷贝这一特性，将状态存储在zookeeper的运行topology数据中，并在不同的Nimbus上同步这些blob。改模式下，最终supervisor使用HdfsClientBlobStore来与HdfsBlobStore 进行通信。</p>
 
 <p>##其他特性及相关文档</p>
@@ -308,7 +326,7 @@
     <link href="http://blog.tangkailin.cn/2017/09/01/Serialize%20binary%20tree%20and%20Deserialize%20binary%20tree/"/>
     <id>http://blog.tangkailin.cn/2017/09/01/Serialize binary tree and Deserialize binary tree/</id>
     <published>2017-09-01T15:30:03.000Z</published>
-    <updated>2017-09-01T15:44:21.800Z</updated>
+    <updated>2018-01-24T02:35:21.640Z</updated>
     
     <content type="html"><![CDATA[<p>面试题一道。序列化与反序列化二叉树<br><a id="more"></a></p>
 <p><a href="https://www.nowcoder.com/questionTerminal/cf7e25aa97c04cc1a68c8f040e71fb84" target="_blank" rel="external">牛客网真题链接</a></p>
@@ -333,7 +351,7 @@
     
     </summary>
     
-      <category term="Algorithm" scheme="http://blog.tangkailin.cn/categories/Algorithm/"/>
+      <category term="算法" scheme="http://blog.tangkailin.cn/categories/%E7%AE%97%E6%B3%95/"/>
     
     
       <category term="Binary tree" scheme="http://blog.tangkailin.cn/tags/Binary-tree/"/>
@@ -345,7 +363,7 @@
     <link href="http://blog.tangkailin.cn/2017/09/01/leetcode-Letter%20Combinations%20of%20a%20Phone%20Number/"/>
     <id>http://blog.tangkailin.cn/2017/09/01/leetcode-Letter Combinations of a Phone Number/</id>
     <published>2017-09-01T09:12:38.000Z</published>
-    <updated>2017-09-04T07:17:15.937Z</updated>
+    <updated>2018-01-24T02:35:10.850Z</updated>
     
     <content type="html"><![CDATA[<p>很有意思的一道题。<br><a id="more"></a><br>leetcode 原题：<br>Given a digit string, return all possible letter combinations that the number could represent.</p>
 <p>A mapping of digit to letters (just like on the telephone buttons) is given below.</p>
@@ -362,7 +380,7 @@
     
     </summary>
     
-      <category term="Algorithm" scheme="http://blog.tangkailin.cn/categories/Algorithm/"/>
+      <category term="算法" scheme="http://blog.tangkailin.cn/categories/%E7%AE%97%E6%B3%95/"/>
     
     
       <category term="String" scheme="http://blog.tangkailin.cn/tags/String/"/>
@@ -384,7 +402,13 @@
 <h2 id="Storm"><a href="#Storm" class="headerlink" title="Storm"></a>Storm</h2><p>storm的backpressure功能流程如下：</p><br><p>在worker中会有一个backpressure线程，实时的监控executor的receive queue或者worker的transfer queue的状态，一旦发现某一queue中的数据量超过一个阈值（由 <strong>backpressure.disruptor.high.watermark</strong> 配置，默认为0.9），即触发backpressure，此时backpressure线程会将这当前topology的信息写入zookeeper，watcher检测到zookeeper中的数据变化，则立马通知所有worker进入backpressure状态，上游spout停止发送数据,直到queue中的数据量低于一个阈值（由 <strong>backpressure.disruptor.low.watermark</strong> 配置，默认为0.4）。所有worker退出backpressure状态，spout正常发送数据。</p><br>executor.clj中代码段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(if (and (not (.isFull transfer-queue))</div><div class="line">                     (not throttle-on)</div><div class="line">                     (not reached-max-spout-pending))</div><div class="line">                 (fast-list-iter [^ISpout spout spouts] (.nextTuple spout))))</div></pre></td></tr></table></figure><br><br><p>不了解disruptor queue在storm中的使用的可以参考：<a href="http://www.michael-noll.com/blog/2012/10/16/understanding-the-parallelism-of-a-storm-topology/" target="_blank" rel="external">Understanding the Parallelism of a Storm Topology</a><br></p><br><p><br>storm中的backpressure还是相当暴力的。这样子其实整个系统都处在一个不稳定的状态，堵住了马上就不发送任何数据进来，直到疏通了，开始发送，然后慢慢堵住，直到触发backpressure。<br></p>
 
 <p>storm backpressure具体内容参考：<a href="https://github.com/apache/storm/pull/700" target="_blank" rel="external">storm-886</a></p>
-<p><img src="http://ovjcsnet2.bkt.clouddn.com/stormbackpressure.jpg" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ovjcsnet2.bkt.clouddn.com/stormbackpressure.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <h2 id="Flink"><a href="#Flink" class="headerlink" title="Flink"></a>Flink</h2><p>Flink是新一代的流处理系统，其backpressure的实现方式相比于storm有很大的区别。其不再借助zookeeper或者其他的外部组件来实现backpressure。而是在其内部数据传输时用一种类似阻塞队列的方式很合理，很漂亮的实现了这一功能。</p><br><p>具体流程已经有人写了很好的<a href="http://wuchong.me/blog/2016/04/26/flink-internals-how-to-handle-backpressure/" target="_blank" rel="external">博文</a>了,我就不再多次一举了。</p>
 
 <h2 id="Spark-Streaming"><a href="#Spark-Streaming" class="headerlink" title="Spark Streaming"></a>Spark Streaming</h2><p>待研究。</p>
@@ -441,7 +465,7 @@
     
     </summary>
     
-      <category term="Algorithm" scheme="http://blog.tangkailin.cn/categories/Algorithm/"/>
+      <category term="算法" scheme="http://blog.tangkailin.cn/categories/%E7%AE%97%E6%B3%95/"/>
     
     
       <category term="String" scheme="http://blog.tangkailin.cn/tags/String/"/>
@@ -494,7 +518,13 @@
     <content type="html"><![CDATA[<p>Spring基本概念<br><a id="more"></a></p>
 <h2 id="Inversion-of-Control-And-Dependency-Injection"><a href="#Inversion-of-Control-And-Dependency-Injection" class="headerlink" title="Inversion of Control And Dependency Injection"></a>Inversion of Control And Dependency Injection</h2><h3 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h3><p>IOC是一种设计的思想，在程序设计时并不直接在某个对象内部去new一个其他对象，而是使用一个IOC容器来创建这些对象。使用IOC容器来控制对象，主要控制外部资源的获取。</p>
 <p>所谓inversion，指的就是由容器来帮忙创建及注入依赖对象。依赖对象的获取由主动变为被动，这是一个反转。应用被动的等待IOC容器来创建注入它所需要的资源。</p>
-<p><img src="http://sishuok.com/forum/upload/2012/2/19/6fdf1048726cc2edcac4fca685f050ac__2.JPG" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://sishuok.com/forum/upload/2012/2/19/6fdf1048726cc2edcac4fca685f050ac__2.JPG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <h3 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h3><p>应用依赖于IOC容器。因为其需要IOC容器来提供外部资源。IOC将这些外部资源注入某个对象。</p>
 <p>其实依赖注入只是一种装配对象的手段，设计的类结构才是基础，如果设计的类结构不支持依赖注入，Spring IoC容器也注入不了任何东西。</p>
 <h4 id="循环依赖"><a href="#循环依赖" class="headerlink" title="循环依赖"></a>循环依赖</h4><p>很显然，循环依赖是指的，当创建A时，需要B，就去创建B，创建B时发现需要A。此时就有问题了，因为A还没创建完成，然后就去新建一个A，这样就会陷入死循环。</p>
