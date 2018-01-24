@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.tangkailin.cn/"/>
-  <updated>2018-01-23T15:02:58.536Z</updated>
+  <updated>2018-01-23T16:03:36.057Z</updated>
   <id>http://blog.tangkailin.cn/</id>
   
   <author>
@@ -20,17 +20,14 @@
     <link href="http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/"/>
     <id>http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/</id>
     <published>2018-01-23T15:02:58.000Z</published>
-    <updated>2018-01-23T15:02:58.536Z</updated>
+    <updated>2018-01-23T16:03:36.057Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to contribute to  our <a href="https://github.com/ADSC-Resa/documentation" target="_blank" rel="external">documentation</a> on github.</p>
 <a id="more"></a>
 <p>The Hadoop 2.6 release contains a new feature that allows to launch Docker container directly as YARN container, called the DCE (Docker container executor). Running a Hadoop job is not an easy thing, User need to solve a lot of problem, such as complex problem of dependency. Using DCE let the developers package their applications and all of dependencies into a Docker container in order to provide a consistent environment for execution and also provides isolation from other applications installed on host. Because of the official reference document is relatively simple, and ignored a lot of details, this tutorial will describe the detail of DCE configuration and some problems needing attention.</p>
-<p>#Prerequisite </p>
-<p>Your Hadoop version must be 2.7.i at minimum. The distro and version of Linux in your Docker image can be quite different from that of your Nodemanager. However, if you are using the MapReduce framework, then your Docker image will need to be configured for running Hadoop. Obviously, Java is in need, and the following environment variables must be defined in the image:  JAVA_HOME, HADOOP_COMMON_PATH, HADOOP_HDFS_HOME, HADOOP_MAPRED_HOME, HADOOP_YARN_HOME, and HADOOP_CONF_DIR.<br>Before running the DCE, please make sure that your host has installed Hadoop and Docker.</p>
-<p>#Experimental Environment </p>
-<p>You will have 3 machines running Ubuntu Server 14.04, each of which will be running a Docker daemon and Hadoop 2.7.3 inside. Besides we are using <a href="https://hub.docker.com/r/sequenceiq/hadoop-docker/" target="_blank" rel="external">sequenceiq/hadoop-docker2.4.1</a> image that developed by <a href="http://sequenceiq.com/" target="_blank" rel="external">sequenceiq</a>. This image already contains all of required environmental dependencies. Of course, you can also using your own Docker image</p>
-<p>#Experimental Procedure </p>
-<p>##Step 1：Pull the Docker image</p>
+<h1 id="Prerequisite"><a href="#Prerequisite" class="headerlink" title="Prerequisite"></a>Prerequisite</h1><p>Your Hadoop version must be 2.7.i at minimum. The distro and version of Linux in your Docker image can be quite different from that of your Nodemanager. However, if you are using the MapReduce framework, then your Docker image will need to be configured for running Hadoop. Obviously, Java is in need, and the following environment variables must be defined in the image:  JAVA_HOME, HADOOP_COMMON_PATH, HADOOP_HDFS_HOME, HADOOP_MAPRED_HOME, HADOOP_YARN_HOME, and HADOOP_CONF_DIR.<br>Before running the DCE, please make sure that your host has installed Hadoop and Docker.</p>
+<h1 id="Experimental-Environment"><a href="#Experimental-Environment" class="headerlink" title="Experimental Environment"></a>Experimental Environment</h1><p>You will have 3 machines running Ubuntu Server 14.04, each of which will be running a Docker daemon and Hadoop 2.7.3 inside. Besides we are using <a href="https://hub.docker.com/r/sequenceiq/hadoop-docker/" target="_blank" rel="external">sequenceiq/hadoop-docker2.4.1</a> image that developed by <a href="http://sequenceiq.com/" target="_blank" rel="external">sequenceiq</a>. This image already contains all of required environmental dependencies. Of course, you can also using your own Docker image</p>
+<h1 id="Experimental-Procedure"><a href="#Experimental-Procedure" class="headerlink" title="Experimental Procedure"></a>Experimental Procedure</h1><p>##Step 1：Pull the Docker image</p>
 <p>You can use the following command to pull image:</p>
 <blockquote>
 <p>docker pull sequenceiq/hadoop-docker:2.4.1 </p>
@@ -40,25 +37,21 @@
 <p>docker run -it sequenceiq/hadoop-docker:2.7.1 /etc/bootstrap.sh -bash  </p>
 </blockquote>
 <p>If nothing has gone wrong, you should now find the Hadoop directory into /usr/local that inside the container. </p>
-<p>##Step 2：Configure the yarn-site.xml on the host</p>
-<p>You need to add the following contents into yarn-site.xml:</p>
+<h2 id="Step-2：Configure-the-yarn-site-xml-on-the-host"><a href="#Step-2：Configure-the-yarn-site-xml-on-the-host" class="headerlink" title="Step 2：Configure the yarn-site.xml on the host"></a>Step 2：Configure the yarn-site.xml on the host</h2><p>You need to add the following contents into yarn-site.xml:</p>
 <blockquote>
 <p>\<property\><br>      \<name\>yarn.nodemanager.docker-container-executor.exec-name\</name\><br>       \<value\>/usr/bin/docker\</value\><br>\</property\><br>\<property\><br>       \<name\>yarn.nodemanager.container-executor.class\</name\><br>       \<value\>org.apache.hadoop.yarn.server.nodemanager.DockerContainerExecutor\</value\><br>\</property\>  </p>
 </blockquote>
 <p>The first configuration items <em>yarn.nodemanager.docker-container-executor.exec-name</em> is configure the path of the Docker executable file. And the second items <em>yarn.nodemanager.docker-container-executor.class</em> is configure the DockerContainerExecutor as container executor rather than the default container executor into YARN. </p>
-<p>##Step 3：Restart the YARN and HDFS on the host</p>
-<blockquote>
+<h2 id="Step-3：Restart-the-YARN-and-HDFS-on-the-host"><a href="#Step-3：Restart-the-YARN-and-HDFS-on-the-host" class="headerlink" title="Step 3：Restart the YARN and HDFS on the host"></a>Step 3：Restart the YARN and HDFS on the host</h2><blockquote>
 <p>./sbin/stop-all.sh<br>./sbin/start-all.sh </p>
 </blockquote>
-<p>##Step 4：Submit a MapReduce job </p>
-<p>Here, we are using the hadoop-mapreduce-examples-2.7.3.jar π calculation.<br>Type following command:</p>
+<h2 id="Step-4：Submit-a-MapReduce-job"><a href="#Step-4：Submit-a-MapReduce-job" class="headerlink" title="Step 4：Submit a MapReduce job"></a>Step 4：Submit a MapReduce job</h2><p>Here, we are using the hadoop-mapreduce-examples-2.7.3.jar π calculation.<br>Type following command:</p>
 <blockquote>
 <p>bin/Hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar pi<br>-D mapreduce.map.env=”yarn.nodemanager.docker-container-executor.image-name=sequenceiq/hadoop-docker:2.4.1”<br>-D mapreduce.reduce.env=”yarn.nodemanager.docker-container-executor.image-name=sequenceiq/hadoop-docker:2.4.1”<br>-D yarn.app.mapreduce.am.env=”yarn.nodemanager.docker-container-executor.image-name=sequenceiq/hadoop-docker:2.4.1” 5 10</p>
 </blockquote>
 <p>Currently you cannot configure any of the Docker settings with the job configuration. You can provide Mapper, Reducer, and ApplicationMaster environment overrides for the docker images, using the following 3 JVM properties respectively(only for MR jobs):<br>-mapreduce.map.env: You can override the mapper’s image by passing yarn.nodemanager.docker-container-executor.image-name=your_image_name to this JVM property.<br>-mapreduce.reduce.env: You can override the reducer’s image by passing yarn.nodemanager.docker-container-executor.image-name=your_image_name to this JVM property.<br>-yarn.app.mapreduce.am.env: You can override the ApplicationMaster’s image by passing yarn.nodemanager.docker-container-executor.image-name=your_image_name to this JVM property.</p>
 <p>If noting has gone wrong, you can <em>docker ps</em> command to affirm Docker container is running. And you can find that the name of Docker container is same as the default YARN container name that show on the terminal. </p>
-<p>#Need to be aware of problem in the experiment</p>
-<ol>
+<h1 id="Need-to-be-aware-of-problem-in-the-experiment"><a href="#Need-to-be-aware-of-problem-in-the-experiment" class="headerlink" title="Need to be aware of problem in the experiment"></a>Need to be aware of problem in the experiment</h1><ol>
 <li>Don`t use Hadoop 3.0.0 or higher version, There will be some puzzling error.</li>
 <li>Error: No such image or container<br>This error may be because of the Docker image version do not match the Hadoop version on the host. And you can refer to log file of Nodemanager.</li>
 <li>Diagnostics: Container image must not be null<br>Two reasons led to this error:<br>A.  The Hadoop running no hosts do not support using DCE as YARN container.<br>B.  The configuration of YARN is wrong or when you submit job, you forget configure for DCE.<br>Note. DCE and default YARN container can’t be use at same time in cluster. </li>
@@ -85,23 +78,17 @@
   </entry>
   
   <entry>
-    <title>deploy-storm-on-docker</title>
+    <title>Deploy-storm-on-docker</title>
     <link href="http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/"/>
     <id>http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/</id>
     <published>2018-01-23T14:59:09.000Z</published>
-    <updated>2018-01-23T14:59:09.347Z</updated>
+    <updated>2018-01-23T16:03:36.057Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to contribute to  our <a href="https://github.com/ADSC-Resa/documentation" target="_blank" rel="external">documentation</a> on github.</p>
 <a id="more"></a>
 <p>This guide reference <a href="http://highscalability.com/blog/2016/4/25/the-joy-of-deploying-apache-storm-on-docker-swarm.html" target="_blank" rel="external">The joy of deploying Apache Storm on Docker Swarm</a> in <a href="http://www.baqend.com/" target="_blank" rel="external">Baqend Tech</a>.And we describe some of the detail and principles about every step in this tutorial.If you have already have a good use of Linux,Docker swarm and Apache storm,you can use script given in the article above for rapid deployment. This tutorial is targeted at beginner novice.We will manual configuration on each machine and you will be more clear understand the principle in the process of deployment .</p>
 <p>So let’s begin :</p>
-<p>#Overall Architecture<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://github.com/ADSC-Resa/documentation/wiki/1.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
+<p>#Overall Architecture<br><img src="https://github.com/ADSC-Resa/documentation/wiki/1.png" alt=""></p>
 <p>You’ll have 3 machines running Ubuntu Server 14.04, each of which will be running a Docker daemon with several containers inside. As shown in figure above ,we use ubuntu1 as manager of Docker swarm. The Nimbus and UI containers will be spawned on the manager node (Ubuntu 1).Beside ,remember to open port 8080 for UI container.<br>When swarm is in place ,you’ll create an overlay network (stormnet) to enable communication between Docker container hosted on the different swarm nodes. Finally, you will set up a full-fledged storm cluster that uses the existing zookeeper ensemble for coordination and stormnet for inter-node communication. This involves discovery service of Docker swarm ,you can read <a href="https://technologyconversations.com/2015/09/08/service-discovery-zookeeper-vs-etcd-vs-consul/" target="_blank" rel="external">here</a>.<br>We are using hostnames dmir1,dmir2 and dmir3 for the three Ubuntu machines. Using alias rather than an IP address can have better fault tolerance. At the time of the actual deployment ,remember to replace your own domain name. Three zookeeper severs are deployed here, of course,using one zookeeper is also possible. </p>
 <p>#Install Docker</p>
 <p>Using your favorite way to connect three machines and install Docker on each machine. You can reference <a href="https://docs.docker.com/engine/installation/linux/ubuntulinux/" target="_blank" rel="external">here</a> to install Docker. After the installation is complete,we should test to ensure that the installation is successful.</p>
@@ -151,13 +138,7 @@
 </blockquote>
 <p>This will do it for the current session and also make sure it will be done again when we log into the machine next time.<br>Now everything should be up and running. Type in <em>docker info</em> to check cluster status on the manager node. </p>
 <p>You should see 3 running workers similar to this:</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://github.com/ADSC-Resa/documentation/wiki/2.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="https://github.com/ADSC-Resa/documentation/wiki/2.png" alt=""></p>
 <p>The important part is the line with Status: Healthy for each node. If you observe something like Status: Pending or if not all nodes show up, even though you are not experiencing any errors elsewhere, try restarting the manager container like so:</p>
 <blockquote>
 <p>docker restart $(docker ps -a –no-trunc –filter “label=role=manager)</p>
@@ -235,7 +216,7 @@
     <link href="http://blog.tangkailin.cn/2018/01/20/Storm%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98/"/>
     <id>http://blog.tangkailin.cn/2018/01/20/Storm中的分布式缓存/</id>
     <published>2018-01-20T02:50:56.000Z</published>
-    <updated>2018-01-23T16:02:44.127Z</updated>
+    <updated>2018-01-23T16:03:36.057Z</updated>
     
     <content type="html"><![CDATA[<p> Storm中的分布式缓存<br><a id="more"></a></p>
 <p><br>原文地址：<a href="http://storm.apache.org/releases/1.1.1/distcache-blobstore.html" target="_blank" rel="external">http://storm.apache.org/releases/1.1.1/distcache-blobstore.html</a><br><br></p>
@@ -256,13 +237,7 @@
 <p><img src="http://storm.apache.org/releases/1.1.1/images/local_blobstore.png" alt=""></p>
 <p>Blobstore的本地文件系统实现如上面的时间线图中所示。<br><br>blob的使用包括创建blob、下载blob以及在topology中使用blob。主要的步骤如下所示：<br><br>####创建Blob的命令<br><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm blobstore create --file README.txt --acl o::rwa --replication-factor 4 key1</div></pre></td></tr></table></figure><br><br>上面的命令创建了一个名为“key1”的blob，对应于文件readme.txt，对所有用户的访问权限为读(r)、写(w)、管理(a)。此外，该文件包含4个拷贝。<br><br>#### topology提交及Blob映射<br><br>用户可以使用下面的命令来提交topology。该命令包括拓扑映射配置。该配置包含两个键“key1”和“key2”，其中键“key1”具有一个名为“blob_file”的没有被压缩的本地文件名映射。<br><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">storm jar /home/y/lib/storm-starter/current/storm-starter-jar-with-dependencies.jar </div><div class="line">org.apache.storm.starter.clj.word_count test_topo -c topology.blobstore.map='&#123;"key1":&#123;"localname":"blob_file", "uncompress":"false"&#125;,"key2":&#123;&#125;&#125;'</div></pre></td></tr></table></figure><br><br>####Blob创建进程<br>Blob通过ClientBlobStore接口进行创建。附录B中包含了ClientBlobStore中的所有接口。ClientBlobStore的一个具体实现是NimbusBlobStore。在使用本地文件系统的情况下，客户端调用nimbus来创建本地文件系统中的blob。nimbus使用本地文件系统实现来创建这些blob。当用户提交一个topology，包括jar、配置文件以及代码文件都被作为blob提交到blobstore中。<br><br>####Supervisor下载blob<br>最终，在topology运行时，同一个NimbusBlobStore thrift客户端上传的blob,通过nimbus分配到指定的supervisor，supervisor接受到分配指令后，即会下载对应的blob。supervisor通过NimbusBlobStore client直接下载topology的jar、conf blobs等。<br><br></p>
 
-<p>###HdfsBlobStore<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://storm.apache.org/releases/1.1.1/images/hdfs_blobstore.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
+<p>###HdfsBlobStore<br><img src="http://storm.apache.org/releases/1.1.1/images/hdfs_blobstore.png" alt=""></p>
 <p>HdfsBlobStore 的blob创建和下载过程的实现和Local file system上的实现类似，唯一的区别在于支持对blobstore的多个拷贝。实现数据的多个拷贝是HDFS的天生技能，这也使得该模式下，我们不需要把blob的状态存储都在zookeeper中。另一方面，本地文件系统的blobstore需要将状态存储在zookeeper中，以便能和nimbus HA一起协同工作。Nimbus HA允许本地文件系统无缝地实现多拷贝这一特性，将状态存储在zookeeper的运行topology数据中，并在不同的Nimbus上同步这些blob。改模式下，最终supervisor使用HdfsClientBlobStore来与HdfsBlobStore 进行通信。</p>
 
 <p>##其他特性及相关文档</p>
@@ -303,7 +278,7 @@
     <link href="http://blog.tangkailin.cn/2018/01/16/%E5%85%B3%E4%BA%8EBig-data%E7%9A%84%E4%B8%80%E7%82%B9%E6%80%BB%E7%BB%93/"/>
     <id>http://blog.tangkailin.cn/2018/01/16/关于Big-data的一点总结/</id>
     <published>2018-01-16T15:48:59.000Z</published>
-    <updated>2018-01-19T17:11:24.622Z</updated>
+    <updated>2018-01-23T16:03:36.056Z</updated>
     
     <content type="html"><![CDATA[<p>关于Big-data的一点总结<br><a id="more"></a></p>
 <h2 id="大数据知识架构"><a href="#大数据知识架构" class="headerlink" title="大数据知识架构"></a>大数据知识架构</h2><p>大数据是一个被炒烂了的概念。但大数据到目前为止也没有一个很清晰的定义出现。这种现象在计算机科学中其实十分常见，许多常见的概念如数据结构等，都是没有清晰定义的。这是因为作为一个工科类的学科，许多概念并不需要像基础学科那样，给出严谨的定义；此外，由于从业人群基数大，五花八门的概念层出不穷，这些概念难免会出现重叠之处，这也是计算机学科概念难以定义的一个主要原因。大数据作为一个新出的概念，也避免不了这样的命运。本文希望能够基于我个人的理解以及知识储备，谈一谈我对大数据的简单理解。如果有不妥或者不当之处，希望各位指点，多多交流。</p><br><p>大数据时代的到来，最重要的还是人们意识到了数据的重要性。正如我们以前没有意识到古董价值时，可以拿明代的碗来下面吃一样，只是原来我们没有发现数据的价值，没有搜集数据的意识而已，并非到了如今这个时代，才有这么多的数据出现。此外，大数据包含了哪些东西，如下图所示，我认为大数据理应包含三个部分。<br><br>- 计算能力。<br>- ​ 计算方法。<br>- 其他辅助工具。<br><br>首先是计算能力。应对海量数据的处理。有强大的计算能力支撑是很重要的一环。你1PB数据要跑一年才能跑出结果，再大的数据量也失去了意义。计算能力体现在快速的进行复杂计算（如Deep Learning）和快速的处理海量数据（如Distributed system）。要做到这两点并不容易，现行的一些方法大体思路分为两块：一块是并行化处理，包括并行计算和分布式计算等方式；另一块是针对特定应用使用特定的硬件设计来进行优化，包括高层次综合（如FPGA）以及TPU，寒武纪等。当然，前沿的还有革命性的量子计算，打破冯诺依曼体系的现代计算机结构的新型计算机。<br><br>其次是计算方法，这里的计算方法指的是如何利用海量数据。我认为大数据量的出现和机器学习以及深度学习的大火是相辅相成的。有了大量数据，大规模的ML，DL才能得以实现；而有了DL和ML，海量数据的价值才能被充分的挖掘（希望未来能有更先进的技术挖掘出更多的信息。）<br><br>最后，是大数据相关的一些技术。包括数据采集技术，如爬虫，传感器等等；数据检索技术，如ELK等；数据仓库技术，用于存储海量数据（多说一句，个人认为OLAP与OLTP唯一的区别在于，一个是动态的，一个是静态的。静态的OLTP只能存储数据，而动态的OLAP可以动态的对数据进行复杂的分析）；数据安全，如差分隐私等；以及大规模系统的运维、管理、组织、部署，如DevOps，容器技术等；都是为了方便技术人员或者从业人员更好的利用数据，更好的、更方便的使用系统而诞生的。这些技术并不一定都是用于大数据领域。<br><br></p>
@@ -409,13 +384,7 @@
 <h2 id="Storm"><a href="#Storm" class="headerlink" title="Storm"></a>Storm</h2><p>storm的backpressure功能流程如下：</p><br><p>在worker中会有一个backpressure线程，实时的监控executor的receive queue或者worker的transfer queue的状态，一旦发现某一queue中的数据量超过一个阈值（由 <strong>backpressure.disruptor.high.watermark</strong> 配置，默认为0.9），即触发backpressure，此时backpressure线程会将这当前topology的信息写入zookeeper，watcher检测到zookeeper中的数据变化，则立马通知所有worker进入backpressure状态，上游spout停止发送数据,直到queue中的数据量低于一个阈值（由 <strong>backpressure.disruptor.low.watermark</strong> 配置，默认为0.4）。所有worker退出backpressure状态，spout正常发送数据。</p><br>executor.clj中代码段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(if (and (not (.isFull transfer-queue))</div><div class="line">                     (not throttle-on)</div><div class="line">                     (not reached-max-spout-pending))</div><div class="line">                 (fast-list-iter [^ISpout spout spouts] (.nextTuple spout))))</div></pre></td></tr></table></figure><br><br><p>不了解disruptor queue在storm中的使用的可以参考：<a href="http://www.michael-noll.com/blog/2012/10/16/understanding-the-parallelism-of-a-storm-topology/" target="_blank" rel="external">Understanding the Parallelism of a Storm Topology</a><br></p><br><p><br>storm中的backpressure还是相当暴力的。这样子其实整个系统都处在一个不稳定的状态，堵住了马上就不发送任何数据进来，直到疏通了，开始发送，然后慢慢堵住，直到触发backpressure。<br></p>
 
 <p>storm backpressure具体内容参考：<a href="https://github.com/apache/storm/pull/700" target="_blank" rel="external">storm-886</a></p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://ovjcsnet2.bkt.clouddn.com/stormbackpressure.jpg" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://ovjcsnet2.bkt.clouddn.com/stormbackpressure.jpg" alt=""></p>
 <h2 id="Flink"><a href="#Flink" class="headerlink" title="Flink"></a>Flink</h2><p>Flink是新一代的流处理系统，其backpressure的实现方式相比于storm有很大的区别。其不再借助zookeeper或者其他的外部组件来实现backpressure。而是在其内部数据传输时用一种类似阻塞队列的方式很合理，很漂亮的实现了这一功能。</p><br><p>具体流程已经有人写了很好的<a href="http://wuchong.me/blog/2016/04/26/flink-internals-how-to-handle-backpressure/" target="_blank" rel="external">博文</a>了,我就不再多次一举了。</p>
 
 <h2 id="Spark-Streaming"><a href="#Spark-Streaming" class="headerlink" title="Spark Streaming"></a>Spark Streaming</h2><p>待研究。</p>
@@ -525,13 +494,7 @@
     <content type="html"><![CDATA[<p>Spring基本概念<br><a id="more"></a></p>
 <h2 id="Inversion-of-Control-And-Dependency-Injection"><a href="#Inversion-of-Control-And-Dependency-Injection" class="headerlink" title="Inversion of Control And Dependency Injection"></a>Inversion of Control And Dependency Injection</h2><h3 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h3><p>IOC是一种设计的思想，在程序设计时并不直接在某个对象内部去new一个其他对象，而是使用一个IOC容器来创建这些对象。使用IOC容器来控制对象，主要控制外部资源的获取。</p>
 <p>所谓inversion，指的就是由容器来帮忙创建及注入依赖对象。依赖对象的获取由主动变为被动，这是一个反转。应用被动的等待IOC容器来创建注入它所需要的资源。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://sishuok.com/forum/upload/2012/2/19/6fdf1048726cc2edcac4fca685f050ac__2.JPG" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://sishuok.com/forum/upload/2012/2/19/6fdf1048726cc2edcac4fca685f050ac__2.JPG" alt=""></p>
 <h3 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h3><p>应用依赖于IOC容器。因为其需要IOC容器来提供外部资源。IOC将这些外部资源注入某个对象。</p>
 <p>其实依赖注入只是一种装配对象的手段，设计的类结构才是基础，如果设计的类结构不支持依赖注入，Spring IoC容器也注入不了任何东西。</p>
 <h4 id="循环依赖"><a href="#循环依赖" class="headerlink" title="循环依赖"></a>循环依赖</h4><p>很显然，循环依赖是指的，当创建A时，需要B，就去创建B，创建B时发现需要A。此时就有问题了，因为A还没创建完成，然后就去新建一个A，这样就会陷入死循环。</p>

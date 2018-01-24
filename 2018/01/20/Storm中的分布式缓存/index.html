@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://storm.apache.org/releases/1.1.1/images/local_blobstore.png">
 <meta property="og:image" content="http://storm.apache.org/releases/1.1.1/images/hdfs_blobstore.png">
-<meta property="og:updated_time" content="2018-01-23T16:02:44.127Z">
+<meta property="og:updated_time" content="2018-01-23T16:03:36.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Storm中的分布式缓存">
 <meta name="twitter:description" content="Storm中的分布式缓存">
@@ -209,13 +209,7 @@
 <p><img src="http://storm.apache.org/releases/1.1.1/images/local_blobstore.png" alt=""></p>
 <p>Blobstore的本地文件系统实现如上面的时间线图中所示。<br><br>blob的使用包括创建blob、下载blob以及在topology中使用blob。主要的步骤如下所示：<br><br>####创建Blob的命令<br><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm blobstore create --file README.txt --acl o::rwa --replication-factor 4 key1</div></pre></td></tr></table></figure><br><br>上面的命令创建了一个名为“key1”的blob，对应于文件readme.txt，对所有用户的访问权限为读(r)、写(w)、管理(a)。此外，该文件包含4个拷贝。<br><br>#### topology提交及Blob映射<br><br>用户可以使用下面的命令来提交topology。该命令包括拓扑映射配置。该配置包含两个键“key1”和“key2”，其中键“key1”具有一个名为“blob_file”的没有被压缩的本地文件名映射。<br><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">storm jar /home/y/lib/storm-starter/current/storm-starter-jar-with-dependencies.jar </div><div class="line">org.apache.storm.starter.clj.word_count test_topo -c topology.blobstore.map='&#123;"key1":&#123;"localname":"blob_file", "uncompress":"false"&#125;,"key2":&#123;&#125;&#125;'</div></pre></td></tr></table></figure><br><br>####Blob创建进程<br>Blob通过ClientBlobStore接口进行创建。附录B中包含了ClientBlobStore中的所有接口。ClientBlobStore的一个具体实现是NimbusBlobStore。在使用本地文件系统的情况下，客户端调用nimbus来创建本地文件系统中的blob。nimbus使用本地文件系统实现来创建这些blob。当用户提交一个topology，包括jar、配置文件以及代码文件都被作为blob提交到blobstore中。<br><br>####Supervisor下载blob<br>最终，在topology运行时，同一个NimbusBlobStore thrift客户端上传的blob,通过nimbus分配到指定的supervisor，supervisor接受到分配指令后，即会下载对应的blob。supervisor通过NimbusBlobStore client直接下载topology的jar、conf blobs等。<br><br></p>
 
-<p>###HdfsBlobStore<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://storm.apache.org/releases/1.1.1/images/hdfs_blobstore.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
+<p>###HdfsBlobStore<br><img src="http://storm.apache.org/releases/1.1.1/images/hdfs_blobstore.png" alt=""></p>
 <p>HdfsBlobStore 的blob创建和下载过程的实现和Local file system上的实现类似，唯一的区别在于支持对blobstore的多个拷贝。实现数据的多个拷贝是HDFS的天生技能，这也使得该模式下，我们不需要把blob的状态存储都在zookeeper中。另一方面，本地文件系统的blobstore需要将状态存储在zookeeper中，以便能和nimbus HA一起协同工作。Nimbus HA允许本地文件系统无缝地实现多拷贝这一特性，将状态存储在zookeeper的运行topology数据中，并在不同的Nimbus上同步这些blob。改模式下，最终supervisor使用HdfsClientBlobStore来与HdfsBlobStore 进行通信。</p>
 
 <p>##其他特性及相关文档</p>
@@ -241,7 +235,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-01-23T16:02:44.127Z" itemprop="dateUpdated">2018-01-24 00:02:44</time>
+    最后更新时间：<time datetime="2018-01-23T16:03:36.057Z" itemprop="dateUpdated">2018-01-24 00:03:36</time>
 </span><br>
 
 
@@ -326,7 +320,7 @@
     <div class="waves-block waves-effect prev">
       <a href="/2018/01/23/deploy-storm-on-docker/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">deploy-storm-on-docker</h4>
+        <h4 class="title">Deploy-storm-on-docker</h4>
       </a>
     </div>
   
@@ -364,8 +358,8 @@
             owner: 'wendyshusband',
             repo: 'gitment',
             oauth: {
-                client_id: 'd3be5523251d505d47a6',
-                client_secret: 'a74e7cb1a9db1320fc210e6cf12af7590211746f',
+                client_id: 'c96780c68ae9207abc4d',
+                client_secret: '5f2e7cecee60de4f69c69e66b7174e70ac76b54a',
             },
         })
         gitment.render('comments')

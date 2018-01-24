@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="CollinT">
 <meta property="og:description" content="Welcome to contribute to  our documentation on github.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-01-23T15:02:58.536Z">
+<meta property="og:updated_time" content="2018-01-23T16:03:36.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Running-mapreduce-job-into-Docker-container">
 <meta name="twitter:description" content="Welcome to contribute to  our documentation on github.">
@@ -159,6 +159,13 @@
 
 <div class="container body-wrap">
     
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Prerequisite"><span class="post-toc-number">1.</span> <span class="post-toc-text">Prerequisite</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Experimental-Environment"><span class="post-toc-number">2.</span> <span class="post-toc-text">Experimental Environment</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Experimental-Procedure"><span class="post-toc-number">3.</span> <span class="post-toc-text">Experimental Procedure</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Step-2：Configure-the-yarn-site-xml-on-the-host"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Step 2：Configure the yarn-site.xml on the host</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Step-3：Restart-the-YARN-and-HDFS-on-the-host"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Step 3：Restart the YARN and HDFS on the host</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Step-4：Submit-a-MapReduce-job"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">Step 4：Submit a MapReduce job</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Need-to-be-aware-of-problem-in-the-experiment"><span class="post-toc-number">4.</span> <span class="post-toc-text">Need to be aware of problem in the experiment</span></a></li></ol>
+        </nav>
+    </aside>
+    
 <article id="post-Running-mapreduce-job-into-Docker-container"
   class="post-article article-type-post fade" itemprop="blogPost">
 
@@ -183,12 +190,9 @@
             <p>Welcome to contribute to  our <a href="https://github.com/ADSC-Resa/documentation" target="_blank" rel="external">documentation</a> on github.</p>
 <a id="more"></a>
 <p>The Hadoop 2.6 release contains a new feature that allows to launch Docker container directly as YARN container, called the DCE (Docker container executor). Running a Hadoop job is not an easy thing, User need to solve a lot of problem, such as complex problem of dependency. Using DCE let the developers package their applications and all of dependencies into a Docker container in order to provide a consistent environment for execution and also provides isolation from other applications installed on host. Because of the official reference document is relatively simple, and ignored a lot of details, this tutorial will describe the detail of DCE configuration and some problems needing attention.</p>
-<p>#Prerequisite </p>
-<p>Your Hadoop version must be 2.7.i at minimum. The distro and version of Linux in your Docker image can be quite different from that of your Nodemanager. However, if you are using the MapReduce framework, then your Docker image will need to be configured for running Hadoop. Obviously, Java is in need, and the following environment variables must be defined in the image:  JAVA_HOME, HADOOP_COMMON_PATH, HADOOP_HDFS_HOME, HADOOP_MAPRED_HOME, HADOOP_YARN_HOME, and HADOOP_CONF_DIR.<br>Before running the DCE, please make sure that your host has installed Hadoop and Docker.</p>
-<p>#Experimental Environment </p>
-<p>You will have 3 machines running Ubuntu Server 14.04, each of which will be running a Docker daemon and Hadoop 2.7.3 inside. Besides we are using <a href="https://hub.docker.com/r/sequenceiq/hadoop-docker/" target="_blank" rel="external">sequenceiq/hadoop-docker2.4.1</a> image that developed by <a href="http://sequenceiq.com/" target="_blank" rel="external">sequenceiq</a>. This image already contains all of required environmental dependencies. Of course, you can also using your own Docker image</p>
-<p>#Experimental Procedure </p>
-<p>##Step 1：Pull the Docker image</p>
+<h1 id="Prerequisite"><a href="#Prerequisite" class="headerlink" title="Prerequisite"></a>Prerequisite</h1><p>Your Hadoop version must be 2.7.i at minimum. The distro and version of Linux in your Docker image can be quite different from that of your Nodemanager. However, if you are using the MapReduce framework, then your Docker image will need to be configured for running Hadoop. Obviously, Java is in need, and the following environment variables must be defined in the image:  JAVA_HOME, HADOOP_COMMON_PATH, HADOOP_HDFS_HOME, HADOOP_MAPRED_HOME, HADOOP_YARN_HOME, and HADOOP_CONF_DIR.<br>Before running the DCE, please make sure that your host has installed Hadoop and Docker.</p>
+<h1 id="Experimental-Environment"><a href="#Experimental-Environment" class="headerlink" title="Experimental Environment"></a>Experimental Environment</h1><p>You will have 3 machines running Ubuntu Server 14.04, each of which will be running a Docker daemon and Hadoop 2.7.3 inside. Besides we are using <a href="https://hub.docker.com/r/sequenceiq/hadoop-docker/" target="_blank" rel="external">sequenceiq/hadoop-docker2.4.1</a> image that developed by <a href="http://sequenceiq.com/" target="_blank" rel="external">sequenceiq</a>. This image already contains all of required environmental dependencies. Of course, you can also using your own Docker image</p>
+<h1 id="Experimental-Procedure"><a href="#Experimental-Procedure" class="headerlink" title="Experimental Procedure"></a>Experimental Procedure</h1><p>##Step 1：Pull the Docker image</p>
 <p>You can use the following command to pull image:</p>
 <blockquote>
 <p>docker pull sequenceiq/hadoop-docker:2.4.1 </p>
@@ -198,25 +202,21 @@
 <p>docker run -it sequenceiq/hadoop-docker:2.7.1 /etc/bootstrap.sh -bash  </p>
 </blockquote>
 <p>If nothing has gone wrong, you should now find the Hadoop directory into /usr/local that inside the container. </p>
-<p>##Step 2：Configure the yarn-site.xml on the host</p>
-<p>You need to add the following contents into yarn-site.xml:</p>
+<h2 id="Step-2：Configure-the-yarn-site-xml-on-the-host"><a href="#Step-2：Configure-the-yarn-site-xml-on-the-host" class="headerlink" title="Step 2：Configure the yarn-site.xml on the host"></a>Step 2：Configure the yarn-site.xml on the host</h2><p>You need to add the following contents into yarn-site.xml:</p>
 <blockquote>
 <p>\<property\><br>      \<name\>yarn.nodemanager.docker-container-executor.exec-name\</name\><br>       \<value\>/usr/bin/docker\</value\><br>\</property\><br>\<property\><br>       \<name\>yarn.nodemanager.container-executor.class\</name\><br>       \<value\>org.apache.hadoop.yarn.server.nodemanager.DockerContainerExecutor\</value\><br>\</property\>  </p>
 </blockquote>
 <p>The first configuration items <em>yarn.nodemanager.docker-container-executor.exec-name</em> is configure the path of the Docker executable file. And the second items <em>yarn.nodemanager.docker-container-executor.class</em> is configure the DockerContainerExecutor as container executor rather than the default container executor into YARN. </p>
-<p>##Step 3：Restart the YARN and HDFS on the host</p>
-<blockquote>
+<h2 id="Step-3：Restart-the-YARN-and-HDFS-on-the-host"><a href="#Step-3：Restart-the-YARN-and-HDFS-on-the-host" class="headerlink" title="Step 3：Restart the YARN and HDFS on the host"></a>Step 3：Restart the YARN and HDFS on the host</h2><blockquote>
 <p>./sbin/stop-all.sh<br>./sbin/start-all.sh </p>
 </blockquote>
-<p>##Step 4：Submit a MapReduce job </p>
-<p>Here, we are using the hadoop-mapreduce-examples-2.7.3.jar π calculation.<br>Type following command:</p>
+<h2 id="Step-4：Submit-a-MapReduce-job"><a href="#Step-4：Submit-a-MapReduce-job" class="headerlink" title="Step 4：Submit a MapReduce job"></a>Step 4：Submit a MapReduce job</h2><p>Here, we are using the hadoop-mapreduce-examples-2.7.3.jar π calculation.<br>Type following command:</p>
 <blockquote>
 <p>bin/Hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar pi<br>-D mapreduce.map.env=”yarn.nodemanager.docker-container-executor.image-name=sequenceiq/hadoop-docker:2.4.1”<br>-D mapreduce.reduce.env=”yarn.nodemanager.docker-container-executor.image-name=sequenceiq/hadoop-docker:2.4.1”<br>-D yarn.app.mapreduce.am.env=”yarn.nodemanager.docker-container-executor.image-name=sequenceiq/hadoop-docker:2.4.1” 5 10</p>
 </blockquote>
 <p>Currently you cannot configure any of the Docker settings with the job configuration. You can provide Mapper, Reducer, and ApplicationMaster environment overrides for the docker images, using the following 3 JVM properties respectively(only for MR jobs):<br>-mapreduce.map.env: You can override the mapper’s image by passing yarn.nodemanager.docker-container-executor.image-name=your_image_name to this JVM property.<br>-mapreduce.reduce.env: You can override the reducer’s image by passing yarn.nodemanager.docker-container-executor.image-name=your_image_name to this JVM property.<br>-yarn.app.mapreduce.am.env: You can override the ApplicationMaster’s image by passing yarn.nodemanager.docker-container-executor.image-name=your_image_name to this JVM property.</p>
 <p>If noting has gone wrong, you can <em>docker ps</em> command to affirm Docker container is running. And you can find that the name of Docker container is same as the default YARN container name that show on the terminal. </p>
-<p>#Need to be aware of problem in the experiment</p>
-<ol>
+<h1 id="Need-to-be-aware-of-problem-in-the-experiment"><a href="#Need-to-be-aware-of-problem-in-the-experiment" class="headerlink" title="Need to be aware of problem in the experiment"></a>Need to be aware of problem in the experiment</h1><ol>
 <li>Don`t use Hadoop 3.0.0 or higher version, There will be some puzzling error.</li>
 <li>Error: No such image or container<br>This error may be because of the Docker image version do not match the Hadoop version on the host. And you can refer to log file of Nodemanager.</li>
 <li>Diagnostics: Container image must not be null<br>Two reasons led to this error:<br>A.  The Hadoop running no hosts do not support using DCE as YARN container.<br>B.  The configuration of YARN is wrong or when you submit job, you forget configure for DCE.<br>Note. DCE and default YARN container can’t be use at same time in cluster. </li>
@@ -230,7 +230,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-01-23T15:02:58.536Z" itemprop="dateUpdated">2018-01-23 23:02:58</time>
+    最后更新时间：<time datetime="2018-01-23T16:03:36.057Z" itemprop="dateUpdated">2018-01-24 00:03:36</time>
 </span><br>
 
 
@@ -317,7 +317,7 @@
     <div class="waves-block waves-effect next">
       <a href="/2018/01/23/deploy-storm-on-docker/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">deploy-storm-on-docker</h4>
+        <h4 class="title">Deploy-storm-on-docker</h4>
       </a>
     </div>
   
@@ -346,8 +346,8 @@
             owner: 'wendyshusband',
             repo: 'gitment',
             oauth: {
-                client_id: 'd3be5523251d505d47a6',
-                client_secret: 'a74e7cb1a9db1320fc210e6cf12af7590211746f',
+                client_id: 'c96780c68ae9207abc4d',
+                client_secret: '5f2e7cecee60de4f69c69e66b7174e70ac76b54a',
             },
         })
         gitment.render('comments')

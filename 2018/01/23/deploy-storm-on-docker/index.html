@@ -13,7 +13,7 @@
     
     
     
-    <title>deploy-storm-on-docker | CollinT | 知我者，谓我心忧；不知我者，谓我何求。</title>
+    <title>Deploy-storm-on-docker | CollinT | 知我者，谓我心忧；不知我者，谓我何求。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#077060">
@@ -23,16 +23,16 @@
     <meta name="description" content="Welcome to contribute to  our documentation on github.">
 <meta name="keywords" content="Distributed system,Docker,Storm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="deploy-storm-on-docker">
+<meta property="og:title" content="Deploy-storm-on-docker">
 <meta property="og:url" content="http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/index.html">
 <meta property="og:site_name" content="CollinT">
 <meta property="og:description" content="Welcome to contribute to  our documentation on github.">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://github.com/ADSC-Resa/documentation/wiki/1.png">
 <meta property="og:image" content="https://github.com/ADSC-Resa/documentation/wiki/2.png">
-<meta property="og:updated_time" content="2018-01-23T14:59:09.347Z">
+<meta property="og:updated_time" content="2018-01-23T16:03:36.057Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="deploy-storm-on-docker">
+<meta name="twitter:title" content="Deploy-storm-on-docker">
 <meta name="twitter:description" content="Welcome to contribute to  our documentation on github.">
 <meta name="twitter:image" content="https://github.com/ADSC-Resa/documentation/wiki/1.png">
     
@@ -118,7 +118,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">deploy-storm-on-docker</div>
+        <div class="flex-col header-title ellipsis">Deploy-storm-on-docker</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -140,7 +140,7 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">deploy-storm-on-docker</h1>
+        <h1 class="title">Deploy-storm-on-docker</h1>
         <h5 class="subtitle">
             
                 <time datetime="2018-01-23T14:59:09.000Z" itemprop="datePublished" class="page-time">
@@ -166,7 +166,7 @@
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">deploy-storm-on-docker</h1>
+        <h1 class="post-card-title">Deploy-storm-on-docker</h1>
         <div class="post-meta">
             <time class="post-time" title="2018-01-23 22:59:09" datetime="2018-01-23T14:59:09.000Z"  itemprop="datePublished">2018-01-23</time>
 
@@ -187,13 +187,7 @@
 <a id="more"></a>
 <p>This guide reference <a href="http://highscalability.com/blog/2016/4/25/the-joy-of-deploying-apache-storm-on-docker-swarm.html" target="_blank" rel="external">The joy of deploying Apache Storm on Docker Swarm</a> in <a href="http://www.baqend.com/" target="_blank" rel="external">Baqend Tech</a>.And we describe some of the detail and principles about every step in this tutorial.If you have already have a good use of Linux,Docker swarm and Apache storm,you can use script given in the article above for rapid deployment. This tutorial is targeted at beginner novice.We will manual configuration on each machine and you will be more clear understand the principle in the process of deployment .</p>
 <p>So let’s begin :</p>
-<p>#Overall Architecture<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://github.com/ADSC-Resa/documentation/wiki/1.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
+<p>#Overall Architecture<br><img src="https://github.com/ADSC-Resa/documentation/wiki/1.png" alt=""></p>
 <p>You’ll have 3 machines running Ubuntu Server 14.04, each of which will be running a Docker daemon with several containers inside. As shown in figure above ,we use ubuntu1 as manager of Docker swarm. The Nimbus and UI containers will be spawned on the manager node (Ubuntu 1).Beside ,remember to open port 8080 for UI container.<br>When swarm is in place ,you’ll create an overlay network (stormnet) to enable communication between Docker container hosted on the different swarm nodes. Finally, you will set up a full-fledged storm cluster that uses the existing zookeeper ensemble for coordination and stormnet for inter-node communication. This involves discovery service of Docker swarm ,you can read <a href="https://technologyconversations.com/2015/09/08/service-discovery-zookeeper-vs-etcd-vs-consul/" target="_blank" rel="external">here</a>.<br>We are using hostnames dmir1,dmir2 and dmir3 for the three Ubuntu machines. Using alias rather than an IP address can have better fault tolerance. At the time of the actual deployment ,remember to replace your own domain name. Three zookeeper severs are deployed here, of course,using one zookeeper is also possible. </p>
 <p>#Install Docker</p>
 <p>Using your favorite way to connect three machines and install Docker on each machine. You can reference <a href="https://docs.docker.com/engine/installation/linux/ubuntulinux/" target="_blank" rel="external">here</a> to install Docker. After the installation is complete,we should test to ensure that the installation is successful.</p>
@@ -243,13 +237,7 @@
 </blockquote>
 <p>This will do it for the current session and also make sure it will be done again when we log into the machine next time.<br>Now everything should be up and running. Type in <em>docker info</em> to check cluster status on the manager node. </p>
 <p>You should see 3 running workers similar to this:</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://github.com/ADSC-Resa/documentation/wiki/2.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="https://github.com/ADSC-Resa/documentation/wiki/2.png" alt=""></p>
 <p>The important part is the line with Status: Healthy for each node. If you observe something like Status: Pending or if not all nodes show up, even though you are not experiencing any errors elsewhere, try restarting the manager container like so:</p>
 <blockquote>
 <p>docker restart $(docker ps -a –no-trunc –filter “label=role=manager)</p>
@@ -310,7 +298,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-01-23T14:59:09.347Z" itemprop="dateUpdated">2018-01-23 22:59:09</time>
+    最后更新时间：<time datetime="2018-01-23T16:03:36.057Z" itemprop="dateUpdated">2018-01-24 00:03:36</time>
 </span><br>
 
 
@@ -345,7 +333,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&title=《deploy-storm-on-docker》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&title=《Deploy-storm-on-docker》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -355,7 +343,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&title=《deploy-storm-on-docker》 — CollinT&source=Welcome to contribute to  our documentation on github." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&title=《Deploy-storm-on-docker》 — CollinT&source=Welcome to contribute to  our documentation on github." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -365,7 +353,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《deploy-storm-on-docker》 — CollinT&url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&via=http://blog.tangkailin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Deploy-storm-on-docker》 — CollinT&url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&via=http://blog.tangkailin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -433,8 +421,8 @@
             owner: 'wendyshusband',
             repo: 'gitment',
             oauth: {
-                client_id: 'd3be5523251d505d47a6',
-                client_secret: 'a74e7cb1a9db1320fc210e6cf12af7590211746f',
+                client_id: 'c96780c68ae9207abc4d',
+                client_secret: '5f2e7cecee60de4f69c69e66b7174e70ac76b54a',
             },
         })
         gitment.render('comments')
@@ -506,7 +494,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&title=《deploy-storm-on-docker》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&title=《Deploy-storm-on-docker》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -516,7 +504,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&title=《deploy-storm-on-docker》 — CollinT&source=Welcome to contribute to  our documentation on github." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&title=《Deploy-storm-on-docker》 — CollinT&source=Welcome to contribute to  our documentation on github." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -526,7 +514,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《deploy-storm-on-docker》 — CollinT&url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&via=http://blog.tangkailin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Deploy-storm-on-docker》 — CollinT&url=http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/&via=http://blog.tangkailin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
