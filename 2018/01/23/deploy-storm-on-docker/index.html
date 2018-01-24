@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://github.com/ADSC-Resa/documentation/wiki/1.png">
 <meta property="og:image" content="https://github.com/ADSC-Resa/documentation/wiki/2.png">
-<meta property="og:updated_time" content="2018-01-23T16:03:36.057Z">
+<meta property="og:updated_time" content="2018-01-24T02:37:11.499Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deploy-storm-on-docker">
 <meta name="twitter:description" content="Welcome to contribute to  our documentation on github.">
@@ -162,6 +162,13 @@
 
 <div class="container body-wrap">
     
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Overall-Architecture"><span class="post-toc-number">1.</span> <span class="post-toc-text">Overall Architecture</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Install-Docker"><span class="post-toc-number">2.</span> <span class="post-toc-text">Install Docker</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Create-etc-init-sh"><span class="post-toc-number">3.</span> <span class="post-toc-text">Create /etc/init.sh</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Create-swarm-worker"><span class="post-toc-number">4.</span> <span class="post-toc-text">Create swarm worker</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Start-Docker-swarm-cluster-and-zookeeper-server"><span class="post-toc-number">5.</span> <span class="post-toc-text">Start Docker swarm cluster and zookeeper server</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Setup-the-storm-cluster"><span class="post-toc-number">6.</span> <span class="post-toc-text">Setup the storm cluster</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Topology-Deployment"><span class="post-toc-number">7.</span> <span class="post-toc-text">Topology Deployment</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Killing-a-Topology"><span class="post-toc-number">8.</span> <span class="post-toc-text">Killing a Topology</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Topology-Rebalance"><span class="post-toc-number">9.</span> <span class="post-toc-text">Topology Rebalance</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Shutting-down-the-storm-cluster"><span class="post-toc-number">10.</span> <span class="post-toc-text">Shutting down the storm cluster</span></a></li></ol>
+        </nav>
+    </aside>
+    
 <article id="post-deploy-storm-on-docker"
   class="post-article article-type-post fade" itemprop="blogPost">
 
@@ -187,18 +194,16 @@
 <a id="more"></a>
 <p>This guide reference <a href="http://highscalability.com/blog/2016/4/25/the-joy-of-deploying-apache-storm-on-docker-swarm.html" target="_blank" rel="external">The joy of deploying Apache Storm on Docker Swarm</a> in <a href="http://www.baqend.com/" target="_blank" rel="external">Baqend Tech</a>.And we describe some of the detail and principles about every step in this tutorial.If you have already have a good use of Linux,Docker swarm and Apache storm,you can use script given in the article above for rapid deployment. This tutorial is targeted at beginner novice.We will manual configuration on each machine and you will be more clear understand the principle in the process of deployment .</p>
 <p>So let’s begin :</p>
-<p>#Overall Architecture<br><figure class="image-bubble">
+<h1 id="Overall-Architecture"><a href="#Overall-Architecture" class="headerlink" title="Overall Architecture"></a>Overall Architecture</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="https://github.com/ADSC-Resa/documentation/wiki/1.png" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
-            </figure></p>
+            </figure>
 <p>You’ll have 3 machines running Ubuntu Server 14.04, each of which will be running a Docker daemon with several containers inside. As shown in figure above ,we use ubuntu1 as manager of Docker swarm. The Nimbus and UI containers will be spawned on the manager node (Ubuntu 1).Beside ,remember to open port 8080 for UI container.<br>When swarm is in place ,you’ll create an overlay network (stormnet) to enable communication between Docker container hosted on the different swarm nodes. Finally, you will set up a full-fledged storm cluster that uses the existing zookeeper ensemble for coordination and stormnet for inter-node communication. This involves discovery service of Docker swarm ,you can read <a href="https://technologyconversations.com/2015/09/08/service-discovery-zookeeper-vs-etcd-vs-consul/" target="_blank" rel="external">here</a>.<br>We are using hostnames dmir1,dmir2 and dmir3 for the three Ubuntu machines. Using alias rather than an IP address can have better fault tolerance. At the time of the actual deployment ,remember to replace your own domain name. Three zookeeper severs are deployed here, of course,using one zookeeper is also possible. </p>
-<p>#Install Docker</p>
-<p>Using your favorite way to connect three machines and install Docker on each machine. You can reference <a href="https://docs.docker.com/engine/installation/linux/ubuntulinux/" target="_blank" rel="external">here</a> to install Docker. After the installation is complete,we should test to ensure that the installation is successful.</p>
-<p>#Create /etc/init.sh</p>
-<p>Create the file used to configure the Docker swarm worker.</p>
+<h1 id="Install-Docker"><a href="#Install-Docker" class="headerlink" title="Install Docker"></a>Install Docker</h1><p>Using your favorite way to connect three machines and install Docker on each machine. You can reference <a href="https://docs.docker.com/engine/installation/linux/ubuntulinux/" target="_blank" rel="external">here</a> to install Docker. After the installation is complete,we should test to ensure that the installation is successful.</p>
+<h1 id="Create-etc-init-sh"><a href="#Create-etc-init-sh" class="headerlink" title="Create /etc/init.sh"></a>Create /etc/init.sh</h1><p>Create the file used to configure the Docker swarm worker.</p>
 <p>In the terminal ,type :</p>
 <blockquote>
 <p>sudo touch /etc/init.sh<br>sudo vim /etc/init.sh</p>
@@ -208,8 +213,7 @@
 <p>#!/bin/bash<br># first script argument: the servers in the ZooKeeper ensemble:<br>ZOOKEEPER_SERVERS=$1<br># second script argument: the role of this node:<br># (“manager” for the Swarm manager node; leave empty else) ROLE=$2 # the IP<br>address of this machine:<br>PRIVATE_IP=$(/sbin/ifconfig eth0 | grep ‘inet addr:’ | cut -d: -f2 | awk ‘{ print &gt;$1}’)<br># define label for the manager node: if [[ $ROLE == “manager” ]];then LABELS=”–<br>label server=manager”;else LABELS=””;fi<br># define default options for Docker Swarm:<br>echo “DOCKER_OPTS=\”-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock –cluster&gt;-advertise eth0:2375 $LABELS –cluster-store zk://$ZOOKEEPER_SERVERS\”” | sudo<br>tee /etc/default/docker<br># restart the service to apply new options:<br>sudo service docker restart<br>echo “let’s wait a little…”<br>sleep 10<br># make this machine join the Docker Swarm cluster:<br>docker run -d –restart=always swarm join –advertise=$PRIVATE_IP:2375<br>zk://$ZOOKEEPER_SERVERS  </p>
 </blockquote>
 <p>In this shell file, we configure some detail for start a swarm worker. The first step , we defined three zookeeper server node ,through the ZOOKEEPER_SERVERS variable. The second step, we parse <em>/sbin/ifconfig eth0</em> to get the IP address of the machine($PRIVATE_IP). The third step, we mark the label “manager ” for swarm manager node. The fourth step, modify <em>/ect/default/docker</em>, including some content such as docker daemon listening port 2375,which can refer to the configuration of the docker on the <a href="https://docs.docker.com/" target="_blank" rel="external">https://docs.docker.com/</a>. The fifth step, restart Docker service. The last step, <em>docker run</em> a swarm worker container ,and use zookeeper as the service discovery.  </p>
-<p>#Create swarm worker</p>
-<p>In the terminal of Ubuntu1 ,type :</p>
+<h1 id="Create-swarm-worker"><a href="#Create-swarm-worker" class="headerlink" title="Create swarm worker"></a>Create swarm worker</h1><p>In the terminal of Ubuntu1 ,type :</p>
 <blockquote>
 <p>/bin/bash /etc/init.sh dmir1,dmir2,dmir3  manager</p>
 </blockquote>
@@ -218,8 +222,7 @@
 <p>/bin/bash /etc/init.sh dmir1,dmir2,dmir3</p>
 </blockquote>
 <p>set up your DNS in such a way that the first hostname in the list (dmir1) points towards the manager on Ubuntu 1 and the other two hostnames (dmir2 and dmir3) point towards the other two machines, i.e. Ubuntu 2 and Ubuntu 3.<br>Configure your security settings to allow connections between the machines on ports 2181, 2888, 3888 (zookeeper), 2375 (Docker Swarm) and 6627 (Storm, remote topology deployment).<br>If nothing has gone wrong, you should now have three Ubuntu servers, each running a Docker daemon. Ubuntu 1 should be reachable via dmir1 in your private network. Now, we can only configuration on Ubuntu1, it is going to be the only machine you will talk to from this point on.</p>
-<p>#Start Docker swarm cluster and zookeeper server </p>
-<p>Using <em>docker ps</em> to perform a quick heal check. If Docker is installed correctly, the terminal will show a list of the running Docker container (exactly 1 for swarm and nothing else ) </p>
+<h1 id="Start-Docker-swarm-cluster-and-zookeeper-server"><a href="#Start-Docker-swarm-cluster-and-zookeeper-server" class="headerlink" title="Start Docker swarm cluster and zookeeper server"></a>Start Docker swarm cluster and zookeeper server</h1><p>Using <em>docker ps</em> to perform a quick heal check. If Docker is installed correctly, the terminal will show a list of the running Docker container (exactly 1 for swarm and nothing else ) </p>
 <p>You are now good to launch one zookeeper node on every machine like this:</p>
 <blockquote>
 <p>docker -H tcp://dmir1:2375 run -d –restart=always -p 2181:2181 -p 2888:2888 -p<br>3888:3888 -v /var/lib/zookeeper:/var/lib/zookeeper -v /var/log/zookeeper:/var/log/zookeeper –name zk1 baqend/zookeeper dmir1,dmir2,dmir3 1<br>docker -H tcp://dmir2:2375 run -d –restart=always -p 2181:2181 -p 2888:2888 -p 3888:3888 -v /var/lib/zookeeper:/var/lib/zookeeper -v /var/log/zookeeper:/var/log/zookeeper –name zk2 baqend/zookeeper dmir1,dmir2,dmir3 2<br>docker -H tcp://dmir3:2375 run -d –restart=always -p 2181:2181 -p 2888:2888 -p 3888:3888 -v /var/lib/zookeeper:/var/lib/zookeeper -v /var/log/zookeeper:/var/log/zookeeper –name zk3 baqend/zookeeper dmir1,dmir2,dmir3 3  </p>
@@ -254,8 +257,7 @@
 <blockquote>
 <p>docker restart $(docker ps -a –no-trunc –filter “label=role=manager)</p>
 </blockquote>
-<p>#Setup the storm cluster </p>
-<p>First, create the overlay network stormnet. This network is guaranteed the mapping relationship between container and physical machine.you can reference <a href="https://docs.docker.com/engine/userguide/networking/get-started-overlay/" target="_blank" rel="external">here</a>.</p>
+<h1 id="Setup-the-storm-cluster"><a href="#Setup-the-storm-cluster" class="headerlink" title="Setup the storm cluster"></a>Setup the storm cluster</h1><p>First, create the overlay network stormnet. This network is guaranteed the mapping relationship between container and physical machine.you can reference <a href="https://docs.docker.com/engine/userguide/networking/get-started-overlay/" target="_blank" rel="external">here</a>.</p>
 <blockquote>
 <p>docker network create –driver overlay stormnet<br>docker network ls  </p>
 </blockquote>
@@ -274,20 +276,17 @@
 <p>docker run -d –label cluster=storm –label role=supervisor -e<br>affinity:role!=supervisor -e STORM_ZOOKEEPER_SERVERS=dmir1,dmir2,dmir3 –net<br>stormnet –restart=always baqend/storm supervisor -c supervisor.slots.ports=[6700]</p>
 </blockquote>
 <p>Since we do not care where exactly the individual supervisors are running, we did not specify any constraints or container names here. However, in order to prevent two supervisors from being hosted on one machine, we did specify a label <em>affinity : affinity : role!=supervisor</em>. If you need more supervisor containers, you’ll have to add additional Swarm worker nodes (Ubuntu 4, Ubuntu 5, …). Besides, the <em>-c supervisor.slots.ports=[6700]</em> provided one port 6700 for supervisor. Of course you can provide any number of port for supervisor. But we recommend that you use only one port, because the container is essentially a process on physical machine , no matter how much the port resources are the same.<br>Have a look at the Storm UI and make sure that you have supervisors running.</p>
-<p>#Topology Deployment</p>
-<p>Deploying a topology can now be done from any server that has a Docker daemon running and is in the same network as the manager machine. The following command assumes that your topology fatjar is a file called topology.jar in your current working directory:</p>
+<h1 id="Topology-Deployment"><a href="#Topology-Deployment" class="headerlink" title="Topology Deployment"></a>Topology Deployment</h1><p>Deploying a topology can now be done from any server that has a Docker daemon running and is in the same network as the manager machine. The following command assumes that your topology fatjar is a file called topology.jar in your current working directory:</p>
 <blockquote>
 <p>docker -H tcp://127.0.0.1:2375 run -it –rm -v $(readlink -m topology.jar)<br>:/topology.jar –net stormnet baqend/storm jar /topology.jar main.class arg1 arg2</p>
 </blockquote>
 <p>This command will spawn a Docker container, deploy the topology and then remove the container. You should provide the <em>-H tcp://127.0.0.1:2375</em> argument to make sure the container is started on the machine you are currently working on; if you left the scheduling to Docker Swarm, the deployment might fail because the spawning host does not necessarily have the topology file.By the way, we use <em>readlink -m topology.jar</em> which produces an absolute path fortopology.jar, because relative paths are not supported. You can also provide an absolute path directly, though.<br>Last but most important , <em>–net stormnet</em> is necessary, because you spawn a new container for deploy the topology, so this new container must under the stormnet ,otherwise it will return a <em>unknownhost error</em>.</p>
-<p>#Killing a Topology</p>
-<p>Killing the topology can either be done via the Storm web UI interactively or, assuming the running topology is called runningTopology, like this:</p>
+<h1 id="Killing-a-Topology"><a href="#Killing-a-Topology" class="headerlink" title="Killing a Topology"></a>Killing a Topology</h1><p>Killing the topology can either be done via the Storm web UI interactively or, assuming the running topology is called runningTopology, like this:</p>
 <blockquote>
 <p>docker run -it –rm –net stormnet baqend/storm  kill runningTopology</p>
 </blockquote>
 <p>The host argument -H … is not required here, because the statement stands on its own and has no file dependencies.</p>
-<p>#Topology Rebalance</p>
-<p>Topology rebalance can either be done via the Storm web UI interactively or, assuming the running topology is called runningTopology, like this:</p>
+<h1 id="Topology-Rebalance"><a href="#Topology-Rebalance" class="headerlink" title="Topology Rebalance"></a>Topology Rebalance</h1><p>Topology rebalance can either be done via the Storm web UI interactively or, assuming the running topology is called runningTopology, like this:</p>
 <blockquote>
 <p>docker run -it –rm –net stormnet baqend/storm  rebalance runningTopology -n arg</p>
 </blockquote>
@@ -296,8 +295,7 @@
 <p>docker exec -it nimbus storm rebalance runningTopology -n arg</p>
 </blockquote>
 <p>Of course , we need enough slot to support this operation.</p>
-<p>#Shutting down the storm cluster</p>
-<p>Since every Storm-related container is labelled with cluster=storm, you can kill all of them with the following statement:</p>
+<h1 id="Shutting-down-the-storm-cluster"><a href="#Shutting-down-the-storm-cluster" class="headerlink" title="Shutting down the storm cluster"></a>Shutting down the storm cluster</h1><p>Since every Storm-related container is labelled with cluster=storm, you can kill all of them with the following statement:</p>
 <blockquote>
 <p>docker rm -f $(docker ps -a –no-trunc –filter “label=cluster=storm”</p>
 </blockquote>
@@ -310,7 +308,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-01-23T16:03:36.057Z" itemprop="dateUpdated">2018-01-24 00:03:36</time>
+    最后更新时间：<time datetime="2018-01-24T02:37:11.499Z" itemprop="dateUpdated">2018-01-24 10:37:11</time>
 </span><br>
 
 
