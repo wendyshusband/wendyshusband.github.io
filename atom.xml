@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.tangkailin.cn/"/>
-  <updated>2018-01-24T02:37:11.491Z</updated>
+  <updated>2018-01-28T14:35:56.244Z</updated>
   <id>http://blog.tangkailin.cn/</id>
   
   <author>
@@ -14,6 +14,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>有些人是注定没有梦想的</title>
+    <link href="http://blog.tangkailin.cn/2018/01/27/%E6%9C%89%E4%BA%9B%E4%BA%BA%E6%98%AF%E6%B3%A8%E5%AE%9A%E6%B2%A1%E6%9C%89%E6%A2%A6%E6%83%B3%E7%9A%84/"/>
+    <id>http://blog.tangkailin.cn/2018/01/27/有些人是注定没有梦想的/</id>
+    <published>2018-01-27T12:36:59.000Z</published>
+    <updated>2018-01-28T14:35:56.244Z</updated>
+    
+    <content type="html"><![CDATA[<p>观《神秘巨星》。</p>
+<a id="more"></a>
+<p>有些人是注定没有梦想的，看到这句话，热泪盈眶。他们的梦想消磨在年复一年的承担责任；他们的梦想消磨在日复一日的照顾我们的日子里。有些道理，我们好像知道，却永远不会去重视；有些东西，我们心里知道，却永远不敢去面对和承认。面对我们的父母，我们心里知道要关心他们；知道要多陪伴他们；我们想到为他们买礼物；带他们做体检…… 却总会在某些时候去选择性的忽略他们。这是必须要面对的事实，只是你心里不敢承认。这或许是人性，人们总是同情弱者，崇拜强者。小时候我们崇拜父母，觉得他们是最强的依靠；长大后我们讨厌父母，觉得他们束缚了我们的翅膀；最终我们成为父母，才会知道父亲、母亲这两个称谓的分量。<br><br></p>
+
+<p>主人公所处的家庭似乎是个无解的局，家暴而独裁的父亲，懦弱的母亲，还小的弟弟，老迈的奶奶。这一切，就这么过着。父亲因为一串项链、一顿忘记放盐的饭就会暴打母亲，奶奶永远默不作声，弟弟还小，只有主人公和母亲来承受这一切。主人公希望和母亲逃跑，但母亲却他们却无法离开父亲，离开父亲似乎会失去生活的来源和支柱。但不离开父亲就要承受压抑的人生。这似乎是很多“凑活着过”的家庭的状态，这是一个死局，你的一生很可能就在这个局里面死去。母亲其实清楚的认识到了这个点，但是为了子女，她甘愿死在这个局里。这一切都由奶奶最后的一番话来点明，这段话也为最后母亲的爆发埋下了伏笔。整部电影都处于一种压制的状态，死局一直存在着，但也不乏一些注入夏提克和胶带粘电脑这样的欢快的桥段，其间分寸拿捏得很好。<br><br></p>
+
+<p>最后母亲的爆发，打破了死局。其实死局之所以成为死局，是因为局中的人。其实只要一点的努力，所有的局都是活局。母亲为了主人公入局，也为了主人公而出局。母亲注定没有梦想，她却成就了主人公的飞翔。热泪盈眶。</p>
+
+<p>父亲却还在局中，父亲每天工作17小时。兢兢业业的工程师，希望能够获得更好的社会地位。他逃不开社会这个局。社会给他压力，令他麻木。他活在自己的传统中，树立着虚无的威信。这些暴力手段才能让他感觉自己还活着。他陶醉于自己取得的可怜的成绩，却从不质疑自己哪方面做得不够。他嫌弃母亲没文化，自命清高，却比谁都要庸俗。这其实是这个社会大多数人的常态，我看到过太多这样的人。他们是这个社会的牺牲品，他们接收教育，用自己的知识来服务这个社会。通过出卖自己的服务，换取可怜的报酬。他们没有梦想，他们的所谓梦想是被社会压抑的畸形梦想。他们也是可怜人啊。</p>
+
+<p>阿米尔汗的电影，其实讲述的都是很简单的一个故事，反映一个好像大家都明白的道理。从印度这个包含了很多陈旧思想的国家的角度来说，实在是难能可贵。这部电影或许因为故事情节相对压抑的原因，感觉不如以前他的电影看着那么爽快 ，那么酣畅。但是，压抑的才是真实的人生啊。人生啊，就是由无数的遗憾组成的。<br><br></p>
+
+<p><br><br><strong><em>为什么我们能站得更高，看得更远。因为我们站在巨人的肩膀上！You raise me up.</em></strong><br><br></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;观《神秘巨星》。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="日常随笔" scheme="http://blog.tangkailin.cn/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="影评" scheme="http://blog.tangkailin.cn/tags/%E5%BD%B1%E8%AF%84/"/>
+    
+  </entry>
   
   <entry>
     <title>Running-mapreduce-job-into-Docker-container</title>
@@ -82,7 +116,7 @@
     <link href="http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/"/>
     <id>http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/</id>
     <published>2018-01-23T14:59:09.000Z</published>
-    <updated>2018-01-26T13:16:45.113Z</updated>
+    <updated>2018-01-26T14:43:28.311Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to contribute to  our <a href="https://github.com/ADSC-Resa/documentation" target="_blank" rel="external">documentation</a> on github.</p>
 <a id="more"></a>
@@ -219,7 +253,7 @@
     <link href="http://blog.tangkailin.cn/2018/01/20/Storm%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98/"/>
     <id>http://blog.tangkailin.cn/2018/01/20/Storm中的分布式缓存/</id>
     <published>2018-01-20T02:50:56.000Z</published>
-    <updated>2018-01-23T16:03:36.057Z</updated>
+    <updated>2018-01-26T14:43:28.311Z</updated>
     
     <content type="html"><![CDATA[<p> Storm中的分布式缓存<br><a id="more"></a></p>
 <p><br>原文地址：<a href="http://storm.apache.org/releases/1.1.1/distcache-blobstore.html" target="_blank" rel="external">http://storm.apache.org/releases/1.1.1/distcache-blobstore.html</a><br><br></p>
@@ -385,7 +419,7 @@
     <link href="http://blog.tangkailin.cn/2017/08/30/Storm,%20Flink%E5%92%8Cspark%20Streaming%E4%B8%AD%E7%9A%84backpressure%E6%9C%BA%E5%88%B6%E6%AF%94%E8%BE%83/"/>
     <id>http://blog.tangkailin.cn/2017/08/30/Storm, Flink和spark Streaming中的backpressure机制比较/</id>
     <published>2017-08-30T15:22:56.000Z</published>
-    <updated>2018-01-26T13:16:12.057Z</updated>
+    <updated>2018-01-26T14:43:28.311Z</updated>
     
     <content type="html"><![CDATA[<p> Storm, Spark streaming, Flink中的backpressure机制比较。<br><a id="more"></a></p>
 <p><br>backpressure是分布式流处理系统中一种有效的流量控制手段，为了防止负载过大，计算瓶颈等对整个系统带来的影响。backpressure基本上是每个流处理系统都应该考虑的一种流量控制手段。流量控制的方法有很多种，有兴趣的可以去看看网络中是怎么控制流量的。分布式流其实和网络流的本质是一样的。<br></p><br><p><br>本文先分别讨论各个系统的backpressure机制，然后再总结三者的异同。<br></p>
@@ -496,46 +530,6 @@
     
     
       <category term="影评" scheme="http://blog.tangkailin.cn/tags/%E5%BD%B1%E8%AF%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>spring学习笔记(1)-基本概念</title>
-    <link href="http://blog.tangkailin.cn/2017/08/17/Spring%E5%AD%A6%E4%B9%A0(1)/"/>
-    <id>http://blog.tangkailin.cn/2017/08/17/Spring学习(1)/</id>
-    <published>2017-08-17T04:43:56.000Z</published>
-    <updated>2017-09-01T07:57:09.982Z</updated>
-    
-    <content type="html"><![CDATA[<p>Spring基本概念<br><a id="more"></a></p>
-<h2 id="Inversion-of-Control-And-Dependency-Injection"><a href="#Inversion-of-Control-And-Dependency-Injection" class="headerlink" title="Inversion of Control And Dependency Injection"></a>Inversion of Control And Dependency Injection</h2><h3 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h3><p>IOC是一种设计的思想，在程序设计时并不直接在某个对象内部去new一个其他对象，而是使用一个IOC容器来创建这些对象。使用IOC容器来控制对象，主要控制外部资源的获取。</p>
-<p>所谓inversion，指的就是由容器来帮忙创建及注入依赖对象。依赖对象的获取由主动变为被动，这是一个反转。应用被动的等待IOC容器来创建注入它所需要的资源。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://sishuok.com/forum/upload/2012/2/19/6fdf1048726cc2edcac4fca685f050ac__2.JPG" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<h3 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h3><p>应用依赖于IOC容器。因为其需要IOC容器来提供外部资源。IOC将这些外部资源注入某个对象。</p>
-<p>其实依赖注入只是一种装配对象的手段，设计的类结构才是基础，如果设计的类结构不支持依赖注入，Spring IoC容器也注入不了任何东西。</p>
-<h4 id="循环依赖"><a href="#循环依赖" class="headerlink" title="循环依赖"></a>循环依赖</h4><p>很显然，循环依赖是指的，当创建A时，需要B，就去创建B，创建B时发现需要A。此时就有问题了，因为A还没创建完成，然后就去新建一个A，这样就会陷入死循环。</p>
-<h2 id="Aspect-Orient-Programming-面向切面编程"><a href="#Aspect-Orient-Programming-面向切面编程" class="headerlink" title="Aspect Orient Programming 面向切面编程"></a>Aspect Orient Programming 面向切面编程</h2><p><a href="http://jinnianshilongnian.iteye.com/blog/1418596" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1418596</a></p>
-<p>在进行OOP开发时，都是基于对组件（比如类）进行开发，然后对组件进行组合，OOP最大问题就是无法解耦组件进行开发，比如我们上边举例，而AOP就是为了克服这个问题而出现的，它来进行这种耦合的分离。AOP为开发者提供一种进行横切关注点。<br><em>（比如日志关注点横切了支付关注点）</em> 分离并织入的机制，把横切关注点分离，然后通过某种技术织入到系统中，从而无耦合的完成了我们的功能。</p>
-<p>关注点：可以认为是所关注的任何东西，比如上边的支付组件；<br>关注点分离：将问题细化从而单独部分，即可以理解为不可再分割的组件，如上边的日志组件和支付组件；<br>横切关注点：一个组件无法完成需要的功能，需要其他组件协作完成，如日志组件横切于支付组件；</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Spring基本概念&lt;br&gt;
-    
-    </summary>
-    
-      <category term="java学习总结" scheme="http://blog.tangkailin.cn/categories/java%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
-    
-    
-      <category term="spring" scheme="http://blog.tangkailin.cn/tags/spring/"/>
-    
-      <category term="java" scheme="http://blog.tangkailin.cn/tags/java/"/>
     
   </entry>
   
