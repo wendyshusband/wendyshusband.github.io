@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.tangkailin.cn/"/>
-  <updated>2018-01-28T15:08:07.723Z</updated>
+  <updated>2018-01-29T14:53:33.077Z</updated>
   <id>http://blog.tangkailin.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.tangkailin.cn/2018/01/28/%E6%8E%A8%E8%8D%90%E7%AB%99%E7%82%B9/"/>
     <id>http://blog.tangkailin.cn/2018/01/28/推荐站点/</id>
     <published>2018-01-28T15:36:59.000Z</published>
-    <updated>2018-01-28T15:08:07.723Z</updated>
+    <updated>2018-01-29T14:53:33.077Z</updated>
     
     <content type="html"><![CDATA[<p>一些站点推荐。</p>
 <a id="more"></a>
@@ -79,7 +79,7 @@
     <link href="http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/"/>
     <id>http://blog.tangkailin.cn/2018/01/23/Running-mapreduce-job-into-Docker-container/</id>
     <published>2018-01-23T15:02:58.000Z</published>
-    <updated>2018-01-24T02:37:11.491Z</updated>
+    <updated>2018-01-29T14:52:28.437Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to contribute to  our <a href="https://github.com/ADSC-Resa/documentation" target="_blank" rel="external">documentation</a> on github.</p>
 <a id="more"></a>
@@ -125,7 +125,7 @@
     
     </summary>
     
-      <category term="大数据学习总结" scheme="http://blog.tangkailin.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+      <category term="计算机科学与技术" scheme="http://blog.tangkailin.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF/"/>
     
     
       <category term="Distributed system" scheme="http://blog.tangkailin.cn/tags/Distributed-system/"/>
@@ -141,7 +141,7 @@
     <link href="http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/"/>
     <id>http://blog.tangkailin.cn/2018/01/23/deploy-storm-on-docker/</id>
     <published>2018-01-23T14:59:09.000Z</published>
-    <updated>2018-01-26T14:43:28.311Z</updated>
+    <updated>2018-01-29T14:52:18.629Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to contribute to  our <a href="https://github.com/ADSC-Resa/documentation" target="_blank" rel="external">documentation</a> on github.</p>
 <a id="more"></a>
@@ -262,7 +262,7 @@
     
     </summary>
     
-      <category term="Storm知识" scheme="http://blog.tangkailin.cn/categories/Storm%E7%9F%A5%E8%AF%86/"/>
+      <category term="计算机科学与技术" scheme="http://blog.tangkailin.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF/"/>
     
     
       <category term="Distributed system" scheme="http://blog.tangkailin.cn/tags/Distributed-system/"/>
@@ -278,7 +278,7 @@
     <link href="http://blog.tangkailin.cn/2018/01/20/Storm%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98/"/>
     <id>http://blog.tangkailin.cn/2018/01/20/Storm中的分布式缓存/</id>
     <published>2018-01-20T02:50:56.000Z</published>
-    <updated>2018-01-26T14:43:28.311Z</updated>
+    <updated>2018-01-29T14:53:19.113Z</updated>
     
     <content type="html"><![CDATA[<p> Storm中的分布式缓存<br><a id="more"></a></p>
 <p><br>原文地址：<a href="http://storm.apache.org/releases/1.1.1/distcache-blobstore.html" target="_blank" rel="external">http://storm.apache.org/releases/1.1.1/distcache-blobstore.html</a><br><br></p>
@@ -332,12 +332,14 @@
     
     </summary>
     
-      <category term="翻译" scheme="http://blog.tangkailin.cn/categories/%E7%BF%BB%E8%AF%91/"/>
+      <category term="计算机科学与技术" scheme="http://blog.tangkailin.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF/"/>
     
     
       <category term="Distributed system" scheme="http://blog.tangkailin.cn/tags/Distributed-system/"/>
     
       <category term="Apache Storm" scheme="http://blog.tangkailin.cn/tags/Apache-Storm/"/>
+    
+      <category term="翻译" scheme="http://blog.tangkailin.cn/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
@@ -346,7 +348,7 @@
     <link href="http://blog.tangkailin.cn/2018/01/16/%E5%85%B3%E4%BA%8EBig-data%E7%9A%84%E4%B8%80%E7%82%B9%E6%80%BB%E7%BB%93/"/>
     <id>http://blog.tangkailin.cn/2018/01/16/关于Big-data的一点总结/</id>
     <published>2018-01-16T15:48:59.000Z</published>
-    <updated>2018-01-24T02:37:11.498Z</updated>
+    <updated>2018-01-29T14:52:52.360Z</updated>
     
     <content type="html"><![CDATA[<p>关于Big-data的一点总结<br><a id="more"></a></p>
 <h2 id="大数据知识架构"><a href="#大数据知识架构" class="headerlink" title="大数据知识架构"></a>大数据知识架构</h2><p>大数据是一个被炒烂了的概念。但大数据到目前为止也没有一个很清晰的定义出现。这种现象在计算机科学中其实十分常见，许多常见的概念如数据结构等，都是没有清晰定义的。这是因为作为一个工科类的学科，许多概念并不需要像基础学科那样，给出严谨的定义；此外，由于从业人群基数大，五花八门的概念层出不穷，这些概念难免会出现重叠之处，这也是计算机学科概念难以定义的一个主要原因。大数据作为一个新出的概念，也避免不了这样的命运。本文希望能够基于我个人的理解以及知识储备，谈一谈我对大数据的简单理解。如果有不妥或者不当之处，希望各位指点，多多交流。</p><br><p>大数据时代的到来，最重要的还是人们意识到了数据的重要性。正如我们以前没有意识到古董价值时，可以拿明代的碗来下面吃一样，只是原来我们没有发现数据的价值，没有搜集数据的意识而已，并非到了如今这个时代，才有这么多的数据出现。此外，大数据包含了哪些东西，如下图所示，我认为大数据理应包含三个部分。<br><br>- 计算能力。<br>- ​ 计算方法。<br>- 其他辅助工具。<br><br>首先是计算能力。应对海量数据的处理。有强大的计算能力支撑是很重要的一环。你1PB数据要跑一年才能跑出结果，再大的数据量也失去了意义。计算能力体现在快速的进行复杂计算（如Deep Learning）和快速的处理海量数据（如Distributed system）。要做到这两点并不容易，现行的一些方法大体思路分为两块：一块是并行化处理，包括并行计算和分布式计算等方式；另一块是针对特定应用使用特定的硬件设计来进行优化，包括高层次综合（如FPGA）以及TPU，寒武纪等。当然，前沿的还有革命性的量子计算，打破冯诺依曼体系的现代计算机结构的新型计算机。<br><br>其次是计算方法，这里的计算方法指的是如何利用海量数据。我认为大数据量的出现和机器学习以及深度学习的大火是相辅相成的。有了大量数据，大规模的ML，DL才能得以实现；而有了DL和ML，海量数据的价值才能被充分的挖掘（希望未来能有更先进的技术挖掘出更多的信息。）<br><br>最后，是大数据相关的一些技术。包括数据采集技术，如爬虫，传感器等等；数据检索技术，如ELK等；数据仓库技术，用于存储海量数据（多说一句，个人认为OLAP与OLTP唯一的区别在于，一个是动态的，一个是静态的。静态的OLTP只能存储数据，而动态的OLAP可以动态的对数据进行复杂的分析）；数据安全，如差分隐私等；以及大规模系统的运维、管理、组织、部署，如DevOps，容器技术等；都是为了方便技术人员或者从业人员更好的利用数据，更好的、更方便的使用系统而诞生的。这些技术并不一定都是用于大数据领域。<br><br></p>
@@ -364,7 +366,7 @@
     
     </summary>
     
-      <category term="大数据学习总结" scheme="http://blog.tangkailin.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+      <category term="计算机科学与技术" scheme="http://blog.tangkailin.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF/"/>
     
     
       <category term="Big data" scheme="http://blog.tangkailin.cn/tags/Big-data/"/>
@@ -376,7 +378,7 @@
     <link href="http://blog.tangkailin.cn/2017/09/01/Serialize%20binary%20tree%20and%20Deserialize%20binary%20tree/"/>
     <id>http://blog.tangkailin.cn/2017/09/01/Serialize binary tree and Deserialize binary tree/</id>
     <published>2017-09-01T15:30:03.000Z</published>
-    <updated>2018-01-24T02:35:21.640Z</updated>
+    <updated>2018-01-29T14:52:30.944Z</updated>
     
     <content type="html"><![CDATA[<p>面试题一道。序列化与反序列化二叉树<br><a id="more"></a></p>
 <p><a href="https://www.nowcoder.com/questionTerminal/cf7e25aa97c04cc1a68c8f040e71fb84" target="_blank" rel="external">牛客网真题链接</a></p>
@@ -401,7 +403,7 @@
     
     </summary>
     
-      <category term="算法" scheme="http://blog.tangkailin.cn/categories/%E7%AE%97%E6%B3%95/"/>
+      <category term="计算机科学与技术" scheme="http://blog.tangkailin.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF/"/>
     
     
       <category term="Binary tree" scheme="http://blog.tangkailin.cn/tags/Binary-tree/"/>
@@ -413,7 +415,7 @@
     <link href="http://blog.tangkailin.cn/2017/09/01/leetcode-Letter%20Combinations%20of%20a%20Phone%20Number/"/>
     <id>http://blog.tangkailin.cn/2017/09/01/leetcode-Letter Combinations of a Phone Number/</id>
     <published>2017-09-01T09:12:38.000Z</published>
-    <updated>2018-01-24T02:35:10.850Z</updated>
+    <updated>2018-01-29T14:52:21.816Z</updated>
     
     <content type="html"><![CDATA[<p>很有意思的一道题。<br><a id="more"></a><br>leetcode 原题：<br>Given a digit string, return all possible letter combinations that the number could represent.</p>
 <p>A mapping of digit to letters (just like on the telephone buttons) is given below.</p>
@@ -430,7 +432,7 @@
     
     </summary>
     
-      <category term="算法" scheme="http://blog.tangkailin.cn/categories/%E7%AE%97%E6%B3%95/"/>
+      <category term="计算机科学与技术" scheme="http://blog.tangkailin.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF/"/>
     
     
       <category term="String" scheme="http://blog.tangkailin.cn/tags/String/"/>
@@ -444,7 +446,7 @@
     <link href="http://blog.tangkailin.cn/2017/08/30/Storm,%20Flink%E5%92%8Cspark%20Streaming%E4%B8%AD%E7%9A%84backpressure%E6%9C%BA%E5%88%B6%E6%AF%94%E8%BE%83/"/>
     <id>http://blog.tangkailin.cn/2017/08/30/Storm, Flink和spark Streaming中的backpressure机制比较/</id>
     <published>2017-08-30T15:22:56.000Z</published>
-    <updated>2018-01-26T14:43:28.311Z</updated>
+    <updated>2018-01-29T14:52:39.386Z</updated>
     
     <content type="html"><![CDATA[<p> Storm, Spark streaming, Flink中的backpressure机制比较。<br><a id="more"></a></p>
 <p><br>backpressure是分布式流处理系统中一种有效的流量控制手段，为了防止负载过大，计算瓶颈等对整个系统带来的影响。backpressure基本上是每个流处理系统都应该考虑的一种流量控制手段。流量控制的方法有很多种，有兴趣的可以去看看网络中是怎么控制流量的。分布式流其实和网络流的本质是一样的。<br></p><br><p><br>本文先分别讨论各个系统的backpressure机制，然后再总结三者的异同。<br></p>
@@ -470,7 +472,7 @@
     
     </summary>
     
-      <category term="Storm知识" scheme="http://blog.tangkailin.cn/categories/Storm%E7%9F%A5%E8%AF%86/"/>
+      <category term="计算机科学与技术" scheme="http://blog.tangkailin.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF/"/>
     
     
       <category term="Distributed system" scheme="http://blog.tangkailin.cn/tags/Distributed-system/"/>
@@ -488,7 +490,7 @@
     <link href="http://blog.tangkailin.cn/2017/08/23/leetcode-Longest%20Substring%20Without%20Repeating%20Characters/"/>
     <id>http://blog.tangkailin.cn/2017/08/23/leetcode-Longest Substring Without Repeating Characters/</id>
     <published>2017-08-23T14:53:38.000Z</published>
-    <updated>2018-01-24T02:37:11.497Z</updated>
+    <updated>2018-01-29T14:52:24.386Z</updated>
     
     <content type="html"><![CDATA[<p>寻找最长无重复子串的最优解法<br><a id="more"></a><br>leetcode 原题：<br>Given a string, find the length of the longest substring without repeating characters.</p>
 <p>Examples:</p>
@@ -515,7 +517,7 @@
     
     </summary>
     
-      <category term="算法" scheme="http://blog.tangkailin.cn/categories/%E7%AE%97%E6%B3%95/"/>
+      <category term="计算机科学与技术" scheme="http://blog.tangkailin.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF/"/>
     
     
       <category term="String" scheme="http://blog.tangkailin.cn/tags/String/"/>
