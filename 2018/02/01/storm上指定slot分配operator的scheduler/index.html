@@ -13,25 +13,25 @@
     
     
     
-    <title>推荐站点 | CollinT | 知我者，谓我心忧；不知我者，谓我何求。</title>
+    <title>storm上指定slot分配operator的scheduler | CollinT | 知我者，谓我心忧；不知我者，谓我何求。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#077060">
     
     
-    <meta name="keywords" content="推荐">
-    <meta name="description" content="一些站点推荐。">
-<meta name="keywords" content="推荐">
+    <meta name="keywords" content="Distributed system,Apache Storm,resource scheduling">
+    <meta name="description" content="storm上实现分配operator到指定slot的scheduler">
+<meta name="keywords" content="Distributed system,Apache Storm,resource scheduling">
 <meta property="og:type" content="article">
-<meta property="og:title" content="推荐站点">
-<meta property="og:url" content="http://blog.tangkailin.cn/2018/01/28/推荐站点/index.html">
+<meta property="og:title" content="storm上指定slot分配operator的scheduler">
+<meta property="og:url" content="http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/index.html">
 <meta property="og:site_name" content="CollinT">
-<meta property="og:description" content="一些站点推荐。">
+<meta property="og:description" content="storm上实现分配operator到指定slot的scheduler">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-01-30T01:58:28.325Z">
+<meta property="og:updated_time" content="2018-02-02T14:51:19.771Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="推荐站点">
-<meta name="twitter:description" content="一些站点推荐。">
+<meta name="twitter:title" content="storm上指定slot分配operator的scheduler">
+<meta name="twitter:description" content="storm上实现分配operator到指定slot的scheduler">
     
         <link rel="alternate" type="application/atom+xml" title="CollinT" href="/atom.xml">
     
@@ -129,7 +129,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">推荐站点</div>
+        <div class="flex-col header-title ellipsis">storm上指定slot分配operator的scheduler</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -151,11 +151,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">推荐站点</h1>
+        <h1 class="title">storm上指定slot分配operator的scheduler</h1>
         <h5 class="subtitle">
             
-                <time datetime="2018-01-28T15:36:59.000Z" itemprop="datePublished" class="page-time">
-  2018-01-28
+                <time datetime="2018-02-01T15:41:59.000Z" itemprop="datePublished" class="page-time">
+  2018-02-01
 </time>
 
 
@@ -176,17 +176,17 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#技术博客"><span class="post-toc-number">1.</span> <span class="post-toc-text">技术博客</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Test"><span class="post-toc-number">1.</span> <span class="post-toc-text">Test</span></a></li></ol>
         </nav>
     </aside>
     
-<article id="post-推荐站点"
+<article id="post-storm上指定slot分配operator的scheduler"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">推荐站点</h1>
+        <h1 class="post-card-title">storm上指定slot分配operator的scheduler</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-01-28 23:36:59" datetime="2018-01-28T15:36:59.000Z"  itemprop="datePublished">2018-01-28</time>
+            <time class="post-time" title="2018-02-01 23:41:59" datetime="2018-02-01T15:41:59.000Z"  itemprop="datePublished">2018-02-01</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/推荐/">推荐</a></li></ul>
@@ -201,10 +201,15 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>一些站点推荐。</p>
+            <p>storm上实现分配operator到指定slot的scheduler</p>
 <a id="more"></a>
-<h1 id="技术博客"><a href="#技术博客" class="headerlink" title="技术博客"></a>技术博客</h1><p>Linux及其他：<a href="https://blog.gushenzhou.com/" target="_blank" rel="external">觅风SuperShen</a></p>
-<p>PHP相关：<a href="http://blog.csdn.net/tc294682552" target="_blank" rel="external">tc294682552的博客</a></p>
+<p>##motivation</p>
+<p>在storm里，需要对多个不同的operator进行调度和资源分配。默认的调度器为EvenScheduler，也有一些其他的调度器如：Isolation Schduler, ResourceAwareScheduler，MultitenantScheduler等，具体参考官方文档。另外，简要介绍在<a href="https://www.jianshu.com/p/33639e2088be" target="_blank" rel="external">这里</a>。在我们的实验中，需要对网络功能进行一些测试和研究。因此希望能够实现slot和operator的绑定。而不是node和operator的绑定。在storm源码里没有这样的scheduler。github上，在<a href="https://github.com/linyiqun/storm-scheduler" target="_blank" rel="external">这里</a>有一个将指定operator分配到指定node的scheduler，基于linyiqun的工作，我们稍微进行了一些改进，实现了一个配operator到指定slot的scheduler –DirectToSlotScheduler，具体代码在<a href="https://github.com/wendyshusband/MyScheduler/tree/master/src/main/java/dmir/tkl/scheduler/DirectToSlot" target="_blank" rel="external">这里</a></p>
+
+<p>##design</p>
+<p><br><br>1. 根据用户指定的slot和operator的关系来分配资源。包括两个配置项：<br>   - assigned_flag : 绑定到topology，若为1 ，则该topology使用DirectToSlotScheduler。否则使用EvenScheduler<br>   - design_map： 绑定到topology，为一个map。key为operator名称，value为一个字符串–“host1:port1;host2:port2;…;hostN:portN”。slot之间用；分隔。<br>2.  operator包含的多个executor会均匀的分布到指定的slot上。假如指定的slot数量大于executor数，则报错。<br>3.  对于系统默认的bolt，如__ack，则是随机分配slot。<br><br></p>
+
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p><a href="https://github.com/wendyshusband/MyScheduler/blob/master/src/main/java/dmir/myscheduler/topology/direct/DirectTopology.java" target="_blank" rel="external">测试用例</a></p>
 
         </div>
 
@@ -212,12 +217,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-01-30T01:58:28.325Z" itemprop="dateUpdated">2018-01-30 09:58:28</time>
+    最后更新时间：<time datetime="2018-02-02T14:51:19.771Z" itemprop="dateUpdated">2018-02-02 22:51:19</time>
 </span><br>
 
 
         
-        原创文章，转载请注明出处。 本文链接：<a href="/2018/01/28/推荐站点/" target="_blank" rel="external">http://blog.tangkailin.cn/2018/01/28/推荐站点/</a>
+        原创文章，转载请注明出处。 本文链接：<a href="/2018/02/01/storm上指定slot分配operator的scheduler/" target="_blank" rel="external">http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/</a>
         
     </div>
     <footer>
@@ -237,7 +242,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/推荐/">推荐</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Apache-Storm/">Apache Storm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Distributed-system/">Distributed system</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/resource-scheduling/">resource scheduling</a></li></ul>
 
 
             
@@ -247,7 +252,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/01/28/推荐站点/&title=《推荐站点》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/&title=《storm上指定slot分配operator的scheduler》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -257,22 +262,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/01/28/推荐站点/&title=《推荐站点》 — CollinT&source=一些站点推荐。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/&title=《storm上指定slot分配operator的scheduler》 — CollinT&source=storm上实现分配operator到指定slot的scheduler" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.tangkailin.cn/2018/01/28/推荐站点/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《推荐站点》 — CollinT&url=http://blog.tangkailin.cn/2018/01/28/推荐站点/&via=http://blog.tangkailin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《storm上指定slot分配operator的scheduler》 — CollinT&url=http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/&via=http://blog.tangkailin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.tangkailin.cn/2018/01/28/推荐站点/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -295,18 +300,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2018/02/01/storm上指定slot分配operator的scheduler/" id="post-prev" class="post-nav-link">
+      <a href="/2018/02/02/Docker相关的一些关键概念/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">storm上指定slot分配operator的scheduler</h4>
+        <h4 class="title">Docker相关的一些关键概念</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/01/27/有些人是注定没有梦想的/" id="post-next" class="post-nav-link">
+      <a href="/2018/01/28/推荐站点/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">有些人是注定没有梦想的</h4>
+        <h4 class="title">推荐站点</h4>
       </a>
     </div>
   
@@ -408,7 +413,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/01/28/推荐站点/&title=《推荐站点》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/&title=《storm上指定slot分配operator的scheduler》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -418,22 +423,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/01/28/推荐站点/&title=《推荐站点》 — CollinT&source=一些站点推荐。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/&title=《storm上指定slot分配operator的scheduler》 — CollinT&source=storm上实现分配operator到指定slot的scheduler" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.tangkailin.cn/2018/01/28/推荐站点/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《推荐站点》 — CollinT&url=http://blog.tangkailin.cn/2018/01/28/推荐站点/&via=http://blog.tangkailin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《storm上指定slot分配operator的scheduler》 — CollinT&url=http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/&via=http://blog.tangkailin.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.tangkailin.cn/2018/01/28/推荐站点/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -444,7 +449,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://blog.tangkailin.cn/2018/01/28/推荐站点/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/" alt="微信分享二维码">
 </div>
 
 
