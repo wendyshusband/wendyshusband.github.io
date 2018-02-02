@@ -64,17 +64,15 @@
     <link href="http://blog.tangkailin.cn/2018/02/01/storm%E4%B8%8A%E6%8C%87%E5%AE%9Aslot%E5%88%86%E9%85%8Doperator%E7%9A%84scheduler/"/>
     <id>http://blog.tangkailin.cn/2018/02/01/storm上指定slot分配operator的scheduler/</id>
     <published>2018-02-01T15:41:59.000Z</published>
-    <updated>2018-02-02T14:51:19.771Z</updated>
+    <updated>2018-02-02T16:31:58.536Z</updated>
     
     <content type="html"><![CDATA[<p>storm上实现分配operator到指定slot的scheduler</p>
 <a id="more"></a>
-<p>##motivation</p>
-<p>在storm里，需要对多个不同的operator进行调度和资源分配。默认的调度器为EvenScheduler，也有一些其他的调度器如：Isolation Schduler, ResourceAwareScheduler，MultitenantScheduler等，具体参考官方文档。另外，简要介绍在<a href="https://www.jianshu.com/p/33639e2088be" target="_blank" rel="external">这里</a>。在我们的实验中，需要对网络功能进行一些测试和研究。因此希望能够实现slot和operator的绑定。而不是node和operator的绑定。在storm源码里没有这样的scheduler。github上，在<a href="https://github.com/linyiqun/storm-scheduler" target="_blank" rel="external">这里</a>有一个将指定operator分配到指定node的scheduler，基于linyiqun的工作，我们稍微进行了一些改进，实现了一个配operator到指定slot的scheduler –DirectToSlotScheduler，具体代码在<a href="https://github.com/wendyshusband/MyScheduler/tree/master/src/main/java/dmir/tkl/scheduler/DirectToSlot" target="_blank" rel="external">这里</a></p>
+<h1 id="motivation"><a href="#motivation" class="headerlink" title="motivation"></a>motivation</h1><p>在storm里，需要对多个不同的operator进行调度和资源分配。默认的调度器为EvenScheduler，也有一些其他的调度器如：Isolation Schduler, ResourceAwareScheduler，MultitenantScheduler等，具体参考官方文档。另外，简要介绍在<a href="https://www.jianshu.com/p/33639e2088be" target="_blank" rel="external">这里</a>。在我们的实验中，需要对网络功能进行一些测试和研究。因此希望能够实现slot和operator的绑定。而不是node和operator的绑定。在storm源码里没有这样的scheduler。github上，在<a href="https://github.com/linyiqun/storm-scheduler" target="_blank" rel="external">这里</a>有一个将指定operator分配到指定node的scheduler，基于linyiqun的工作，我们稍微进行了一些改进，实现了一个配operator到指定slot的scheduler –DirectToSlotScheduler，具体代码在<a href="https://github.com/wendyshusband/MyScheduler/tree/master/src/main/java/dmir/tkl/scheduler/DirectToSlot" target="_blank" rel="external">这里</a></p>
 
-<p>##design</p>
-<p><br><br>1. 根据用户指定的slot和operator的关系来分配资源。包括两个配置项：<br>   - assigned_flag : 绑定到topology，若为1 ，则该topology使用DirectToSlotScheduler。否则使用EvenScheduler<br>   - design_map： 绑定到topology，为一个map。key为operator名称，value为一个字符串–“host1:port1;host2:port2;…;hostN:portN”。slot之间用；分隔。<br>2.  operator包含的多个executor会均匀的分布到指定的slot上。假如指定的slot数量大于executor数，则报错。<br>3.  对于系统默认的bolt，如__ack，则是随机分配slot。<br><br></p>
+<h1 id="design"><a href="#design" class="headerlink" title="design"></a>design</h1><p><br><br>1. 根据用户指定的slot和operator的关系来分配资源。包括两个配置项：<br>   - assigned_flag : 绑定到topology，若为1 ，则该topology使用DirectToSlotScheduler。否则使用EvenScheduler<br>   - design_map： 绑定到topology，为一个map。key为operator名称，value为一个字符串–“host1:port1;host2:port2;…;hostN:portN”。slot之间用；分隔。<br>2. operator包含的多个executor会均匀的分布到指定的slot上。假如指定的slot数量大于executor数，则报错。<br>3. 对于系统默认的bolt，如__ack，则是随机分配slot。<br><br></p>
 
-<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p><a href="https://github.com/wendyshusband/MyScheduler/blob/master/src/main/java/dmir/myscheduler/topology/direct/DirectTopology.java" target="_blank" rel="external">测试用例</a></p>
+<h1 id="test"><a href="#test" class="headerlink" title="test"></a>test</h1><p><a href="https://github.com/wendyshusband/MyScheduler/blob/master/src/main/java/dmir/myscheduler/topology/direct/DirectTopology.java" target="_blank" rel="external">测试用例</a></p>
 ]]></content>
     
     <summary type="html">
@@ -208,11 +206,11 @@
       <category term="计算机科学与技术" scheme="http://blog.tangkailin.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="Docker" scheme="http://blog.tangkailin.cn/tags/Docker/"/>
-    
       <category term="Distributed system" scheme="http://blog.tangkailin.cn/tags/Distributed-system/"/>
     
       <category term="Map Reduce" scheme="http://blog.tangkailin.cn/tags/Map-Reduce/"/>
+    
+      <category term="Docker" scheme="http://blog.tangkailin.cn/tags/Docker/"/>
     
   </entry>
   
@@ -345,9 +343,9 @@
       <category term="计算机科学与技术" scheme="http://blog.tangkailin.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="Docker" scheme="http://blog.tangkailin.cn/tags/Docker/"/>
-    
       <category term="Distributed system" scheme="http://blog.tangkailin.cn/tags/Distributed-system/"/>
+    
+      <category term="Docker" scheme="http://blog.tangkailin.cn/tags/Docker/"/>
     
       <category term="Apache Storm" scheme="http://blog.tangkailin.cn/tags/Apache-Storm/"/>
     

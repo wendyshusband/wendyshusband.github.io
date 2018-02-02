@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="CollinT">
 <meta property="og:description" content="storm上实现分配operator到指定slot的scheduler">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-02T14:51:19.771Z">
+<meta property="og:updated_time" content="2018-02-02T16:31:58.536Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="storm上指定slot分配operator的scheduler">
 <meta name="twitter:description" content="storm上实现分配operator到指定slot的scheduler">
@@ -176,7 +176,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Test"><span class="post-toc-number">1.</span> <span class="post-toc-text">Test</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#motivation"><span class="post-toc-number">1.</span> <span class="post-toc-text">motivation</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#design"><span class="post-toc-number">2.</span> <span class="post-toc-text">design</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#test"><span class="post-toc-number">3.</span> <span class="post-toc-text">test</span></a></li></ol>
         </nav>
     </aside>
     
@@ -203,13 +203,11 @@
         <div class="post-content" id="post-content" itemprop="postContent">
             <p>storm上实现分配operator到指定slot的scheduler</p>
 <a id="more"></a>
-<p>##motivation</p>
-<p>在storm里，需要对多个不同的operator进行调度和资源分配。默认的调度器为EvenScheduler，也有一些其他的调度器如：Isolation Schduler, ResourceAwareScheduler，MultitenantScheduler等，具体参考官方文档。另外，简要介绍在<a href="https://www.jianshu.com/p/33639e2088be" target="_blank" rel="external">这里</a>。在我们的实验中，需要对网络功能进行一些测试和研究。因此希望能够实现slot和operator的绑定。而不是node和operator的绑定。在storm源码里没有这样的scheduler。github上，在<a href="https://github.com/linyiqun/storm-scheduler" target="_blank" rel="external">这里</a>有一个将指定operator分配到指定node的scheduler，基于linyiqun的工作，我们稍微进行了一些改进，实现了一个配operator到指定slot的scheduler –DirectToSlotScheduler，具体代码在<a href="https://github.com/wendyshusband/MyScheduler/tree/master/src/main/java/dmir/tkl/scheduler/DirectToSlot" target="_blank" rel="external">这里</a></p>
+<h1 id="motivation"><a href="#motivation" class="headerlink" title="motivation"></a>motivation</h1><p>在storm里，需要对多个不同的operator进行调度和资源分配。默认的调度器为EvenScheduler，也有一些其他的调度器如：Isolation Schduler, ResourceAwareScheduler，MultitenantScheduler等，具体参考官方文档。另外，简要介绍在<a href="https://www.jianshu.com/p/33639e2088be" target="_blank" rel="external">这里</a>。在我们的实验中，需要对网络功能进行一些测试和研究。因此希望能够实现slot和operator的绑定。而不是node和operator的绑定。在storm源码里没有这样的scheduler。github上，在<a href="https://github.com/linyiqun/storm-scheduler" target="_blank" rel="external">这里</a>有一个将指定operator分配到指定node的scheduler，基于linyiqun的工作，我们稍微进行了一些改进，实现了一个配operator到指定slot的scheduler –DirectToSlotScheduler，具体代码在<a href="https://github.com/wendyshusband/MyScheduler/tree/master/src/main/java/dmir/tkl/scheduler/DirectToSlot" target="_blank" rel="external">这里</a></p>
 
-<p>##design</p>
-<p><br><br>1. 根据用户指定的slot和operator的关系来分配资源。包括两个配置项：<br>   - assigned_flag : 绑定到topology，若为1 ，则该topology使用DirectToSlotScheduler。否则使用EvenScheduler<br>   - design_map： 绑定到topology，为一个map。key为operator名称，value为一个字符串–“host1:port1;host2:port2;…;hostN:portN”。slot之间用；分隔。<br>2.  operator包含的多个executor会均匀的分布到指定的slot上。假如指定的slot数量大于executor数，则报错。<br>3.  对于系统默认的bolt，如__ack，则是随机分配slot。<br><br></p>
+<h1 id="design"><a href="#design" class="headerlink" title="design"></a>design</h1><p><br><br>1. 根据用户指定的slot和operator的关系来分配资源。包括两个配置项：<br>   - assigned_flag : 绑定到topology，若为1 ，则该topology使用DirectToSlotScheduler。否则使用EvenScheduler<br>   - design_map： 绑定到topology，为一个map。key为operator名称，value为一个字符串–“host1:port1;host2:port2;…;hostN:portN”。slot之间用；分隔。<br>2. operator包含的多个executor会均匀的分布到指定的slot上。假如指定的slot数量大于executor数，则报错。<br>3. 对于系统默认的bolt，如__ack，则是随机分配slot。<br><br></p>
 
-<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p><a href="https://github.com/wendyshusband/MyScheduler/blob/master/src/main/java/dmir/myscheduler/topology/direct/DirectTopology.java" target="_blank" rel="external">测试用例</a></p>
+<h1 id="test"><a href="#test" class="headerlink" title="test"></a>test</h1><p><a href="https://github.com/wendyshusband/MyScheduler/blob/master/src/main/java/dmir/myscheduler/topology/direct/DirectTopology.java" target="_blank" rel="external">测试用例</a></p>
 
         </div>
 
@@ -217,7 +215,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-02-02T14:51:19.771Z" itemprop="dateUpdated">2018-02-02 22:51:19</time>
+    最后更新时间：<time datetime="2018-02-02T16:31:58.536Z" itemprop="dateUpdated">2018-02-03 00:31:58</time>
 </span><br>
 
 
