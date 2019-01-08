@@ -13,25 +13,25 @@
     
     
     
-    <title>storm上指定slot分配operator的scheduler | Kylin Tang | 海纳百川，有容乃大；壁立千仞，无欲则刚。</title>
+    <title>写给毕业后的自己 | Kylin Tang | 海纳百川，有容乃大；壁立千仞，无欲则刚。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#077060">
     
     
-    <meta name="keywords" content="Distributed system,Apache Storm,resource scheduling">
-    <meta name="description" content="storm上实现分配operator到指定slot的scheduler">
-<meta name="keywords" content="Distributed system,Apache Storm,resource scheduling">
+    <meta name="keywords" content="杂文">
+    <meta name="description" content="写给毕业后的自己。">
+<meta name="keywords" content="杂文">
 <meta property="og:type" content="article">
-<meta property="og:title" content="storm上指定slot分配operator的scheduler">
-<meta property="og:url" content="https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/index.html">
+<meta property="og:title" content="写给毕业后的自己">
+<meta property="og:url" content="https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/index.html">
 <meta property="og:site_name" content="Kylin Tang">
-<meta property="og:description" content="storm上实现分配operator到指定slot的scheduler">
+<meta property="og:description" content="写给毕业后的自己。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-02T16:31:58.536Z">
+<meta property="og:updated_time" content="2018-05-14T13:48:34.036Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="storm上指定slot分配operator的scheduler">
-<meta name="twitter:description" content="storm上实现分配operator到指定slot的scheduler">
+<meta name="twitter:title" content="写给毕业后的自己">
+<meta name="twitter:description" content="写给毕业后的自己。">
     
         <link rel="alternate" type="application/atom+xml" title="Kylin Tang" href="/atom.xml">
     
@@ -129,7 +129,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">storm上指定slot分配operator的scheduler</div>
+        <div class="flex-col header-title ellipsis">写给毕业后的自己</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -151,15 +151,15 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">storm上指定slot分配operator的scheduler</h1>
+        <h1 class="title">写给毕业后的自己</h1>
         <h5 class="subtitle">
             
-                <time datetime="2018-02-01T15:41:59.000Z" itemprop="datePublished" class="page-time">
-  2018-02-01
+                <time datetime="2018-05-14T13:12:59.000Z" itemprop="datePublished" class="page-time">
+  2018-05-14
 </time>
 
 
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/推荐/">推荐</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/日常随笔/">日常随笔</a></li></ul>
 
             
         </h5>
@@ -173,23 +173,16 @@
 
 <div class="container body-wrap">
     
-    <aside class="post-widget">
-        <nav class="post-toc-wrap" id="post-toc">
-            <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#motivation"><span class="post-toc-number">1.</span> <span class="post-toc-text">motivation</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#design"><span class="post-toc-number">2.</span> <span class="post-toc-text">design</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#test"><span class="post-toc-number">3.</span> <span class="post-toc-text">test</span></a></li></ol>
-        </nav>
-    </aside>
-    
-<article id="post-storm上指定slot分配operator的scheduler"
+<article id="post-写给毕业后的自己"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">storm上指定slot分配operator的scheduler</h1>
+        <h1 class="post-card-title">写给毕业后的自己</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-02-01 23:41:59" datetime="2018-02-01T15:41:59.000Z"  itemprop="datePublished">2018-02-01</time>
+            <time class="post-time" title="2018-05-14 21:12:59" datetime="2018-05-14T13:12:59.000Z"  itemprop="datePublished">2018-05-14</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/推荐/">推荐</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/日常随笔/">日常随笔</a></li></ul>
 
 
 
@@ -201,13 +194,14 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>storm上实现分配operator到指定slot的scheduler</p>
+            <p>写给毕业后的自己。</p>
 <a id="more"></a>
-<h1 id="motivation"><a href="#motivation" class="headerlink" title="motivation"></a>motivation</h1><p>在storm里，需要对多个不同的operator进行调度和资源分配。默认的调度器为EvenScheduler，也有一些其他的调度器如：Isolation Schduler, ResourceAwareScheduler，MultitenantScheduler等，具体参考官方文档。另外，简要介绍在<a href="https://www.jianshu.com/p/33639e2088be" target="_blank" rel="external">这里</a>。在我们的实验中，需要对网络功能进行一些测试和研究。因此希望能够实现slot和operator的绑定。而不是node和operator的绑定。在storm源码里没有这样的scheduler。github上，在<a href="https://github.com/linyiqun/storm-scheduler" target="_blank" rel="external">这里</a>有一个将指定operator分配到指定node的scheduler，基于linyiqun的工作，我们稍微进行了一些改进，实现了一个配operator到指定slot的scheduler –DirectToSlotScheduler，具体代码在<a href="https://github.com/wendyshusband/MyScheduler/tree/master/src/main/java/dmir/tkl/scheduler/DirectToSlot" target="_blank" rel="external">这里</a></p>
-
-<h1 id="design"><a href="#design" class="headerlink" title="design"></a>design</h1><p><br><br>1. 根据用户指定的slot和operator的关系来分配资源。包括两个配置项：<br>   - assigned_flag : 绑定到topology，若为1 ，则该topology使用DirectToSlotScheduler。否则使用EvenScheduler<br>   - design_map： 绑定到topology，为一个map。key为operator名称，value为一个字符串–“host1:port1;host2:port2;…;hostN:portN”。slot之间用；分隔。<br>2. operator包含的多个executor会均匀的分布到指定的slot上。假如指定的slot数量大于executor数，则报错。<br>3. 对于系统默认的bolt，如__ack，则是随机分配slot。<br><br></p>
-
-<h1 id="test"><a href="#test" class="headerlink" title="test"></a>test</h1><p><a href="https://github.com/wendyshusband/MyScheduler/blob/master/src/main/java/dmir/myscheduler/topology/direct/DirectTopology.java" target="_blank" rel="external">测试用例</a></p>
+<p>从1999到2018，19年的学生生涯很快将会在下个月结束。我不知道这算是结束，还是另一段旅程的开始。也许人生就是这样把，你会有许多个开始，也会有许多个结束，他们混在一起，无法分辨，就好像你无法分辨，你现在做的事情是否是正确的一样。是关于开始与结束的定义正如关于正确的定义一样显得太模糊，才导致这一情况的出现。每个人都定义着自己的开始与结束，正如每个人都会用自己的标准定义事情是否是正确的，这取决于你的内心。由于人类的过于愚昧与肤浅，以及整个自然的斑驳繁杂。大多数人做出的判断，往往都是片面而带有偏见的，好在因为大家都存在这一问题，所以反而也就显得不以为然了，我想这也就是大多数人都自以为是的原因吧。</p>
+<p>绝大部分人，天资、阅历、努力程度以及社会资源占有量都是差不多的，但为什么到后来会产生显著的差别呢？（不是差距）这取决于你对于社会的贡献。不管你是出于什么目的，为社会做出贡献，如果你的行为能够符合一部分人的利益诉求，那么在他们的帮助下，你自身的利益诉求将不断的得到满足。你满足别人的需求少，那么你得到的也就少，反之亦然。我想，这从某种程度上来说，也导致了人们总是过于看重他人对于自己的看法。这时候，人的利益诉求，变成了迎合他人的评判标准，进而满足自己满足他人看法的需求。这种诉求是可以理解也是可以接受的，这只是很多选择中的一种，是比较轻松的一种，也是大多数人选择的一种。</p>
+<p>所以，说这么多有的没的，到底是为了什么呢？只是希望你能够明白，自以为是不是多么丢人的事情，重要的是要明白，对事物做出判断时，仅仅去审视真相到底是什么，尽量的避免偏见。此外，在这个世界上，遵循自己的内心活着并不是多么难的事情。有些事情，你会选择妥协，有些事情你会坚持。这一切都是遵循自己内心的。你也许会为自己做出的某一个决定而后悔，但你不得不承认，这一决定是你根据内心去做出的选择。你说这是不得已而为之？不，没有什么不得已而为之的事情，当你做出决定的那一瞬间，你就会明白，你心里的天平究竟倾向了哪一边。</p>
+<p>这19年来，我的一切可以说还算顺利，但也只能说还算顺利。我得到了许多，也错过了许多。没有什么为之一生骄傲的事情，但却有许多为之一生悔恨的事情。太多的悔恨，与天生的乐观，就是这样一个矛盾的我，走过了这么多年的学生生涯。许多事情，当时不觉得有多么严重，但后来仔细想，却又无比的悔恨。悔恨不能补救，却能让人更加成长。人的一生只有一次，如果过程是不断悔恨的，是在不断与各种各样的东西斗争中的失败的，是无数次跌倒却仍然坚持走下去的，那么，我希望到最后我的结局会不那么后悔。我希望能坚守自身的荣誉感，做一个人格完整的人，不断的面对真实的自己，接受真实的自己，做正确的事情，而不是蝇营狗苟的一辈子。君子有所为，有所不为，做让自己开心的事情，做一个独立的自己，不卑不亢，云淡风轻。即使不能做到出类拔萃，但也一定要做到与众不同。说的话，要有价值，不猥琐， 别变成连自己都讨厌的模样。</p>
+<p>写得乱七八糟，明天来好好整理。</p>
+<p>天空是蓝色的，湖水是绿色的，樱花是粉色的，我骑着车穿过，是无色的。</p>
 
         </div>
 
@@ -215,12 +209,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-02-02T16:31:58.536Z" itemprop="dateUpdated">2018-02-03 00:31:58</time>
+    最后更新时间：<time datetime="2018-05-14T13:48:34.036Z" itemprop="dateUpdated">2018-05-14 21:48:34</time>
 </span><br>
 
 
         
-        原创文章，转载请注明出处。 本文链接：<a href="/2018/02/01/storm上指定slot分配operator的scheduler/" target="_blank" rel="external">https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/</a>
+        原创文章，转载请注明出处。 本文链接：<a href="/2018/05/14/写给毕业后的自己/" target="_blank" rel="external">https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/</a>
         
     </div>
     <footer>
@@ -240,7 +234,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Apache-Storm/">Apache Storm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Distributed-system/">Distributed system</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/resource-scheduling/">resource scheduling</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂文/">杂文</a></li></ul>
 
 
             
@@ -250,7 +244,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/&title=《storm上指定slot分配operator的scheduler》 — Kylin Tang&pic=https://wendyshusband.github.io/img/logo.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/&title=《写给毕业后的自己》 — Kylin Tang&pic=https://wendyshusband.github.io/img/logo.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -260,22 +254,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/&title=《storm上指定slot分配operator的scheduler》 — Kylin Tang&source=storm上实现分配operator到指定slot的scheduler" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/&title=《写给毕业后的自己》 — Kylin Tang&source=写给毕业后的自己。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《storm上指定slot分配operator的scheduler》 — Kylin Tang&url=https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/&via=https://wendyshusband.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《写给毕业后的自己》 — Kylin Tang&url=https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/&via=https://wendyshusband.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -295,21 +289,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2018/02/02/Docker相关的一些关键概念/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Docker相关的一些关键概念</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/01/28/推荐站点/" id="post-next" class="post-nav-link">
+      <a href="/2018/02/02/Docker相关的一些关键概念/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">推荐站点</h4>
+        <h4 class="title">Docker相关的一些关键概念</h4>
       </a>
     </div>
   
@@ -411,7 +398,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/&title=《storm上指定slot分配operator的scheduler》 — Kylin Tang&pic=https://wendyshusband.github.io/img/logo.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/&title=《写给毕业后的自己》 — Kylin Tang&pic=https://wendyshusband.github.io/img/logo.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -421,22 +408,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/&title=《storm上指定slot分配operator的scheduler》 — Kylin Tang&source=storm上实现分配operator到指定slot的scheduler" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/&title=《写给毕业后的自己》 — Kylin Tang&source=写给毕业后的自己。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《storm上指定slot分配operator的scheduler》 — Kylin Tang&url=https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/&via=https://wendyshusband.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《写给毕业后的自己》 — Kylin Tang&url=https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/&via=https://wendyshusband.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -447,7 +434,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://wendyshusband.github.io/2018/02/01/storm上指定slot分配operator的scheduler/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://wendyshusband.github.io/2018/05/14/写给毕业后的自己/" alt="微信分享二维码">
 </div>
 
 

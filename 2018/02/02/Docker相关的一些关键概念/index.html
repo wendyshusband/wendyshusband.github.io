@@ -13,7 +13,7 @@
     
     
     
-    <title>Docker相关的一些关键概念 | CollinT | 知我者，谓我心忧；不知我者，谓我何求。</title>
+    <title>Docker相关的一些关键概念 | Kylin Tang | 海纳百川，有容乃大；壁立千仞，无欲则刚。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#077060">
@@ -24,16 +24,16 @@
 <meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker相关的一些关键概念">
-<meta property="og:url" content="http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/index.html">
-<meta property="og:site_name" content="CollinT">
+<meta property="og:url" content="https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/index.html">
+<meta property="og:site_name" content="Kylin Tang">
 <meta property="og:description" content="关于Docker中的一些概念的个人理解。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-02T15:38:05.483Z">
+<meta property="og:updated_time" content="2018-02-03T16:16:49.375Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker相关的一些关键概念">
 <meta name="twitter:description" content="关于Docker中的一些概念的个人理解。">
     
-        <link rel="alternate" type="application/atom+xml" title="CollinT" href="/atom.xml">
+        <link rel="alternate" type="application/atom+xml" title="Kylin Tang" href="/atom.xml">
     
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/style.css?v=1.6.11">
@@ -54,7 +54,7 @@
           <img src="/img/logo.jpg">
         </a>
         <hgroup class="introduce">
-          <h5 class="nickname">CollinT</h5>
+          <h5 class="nickname">Kylin Tang</h5>
           <a href="mailto:tkl449@126.com" title="tkl449@126.com" class="mail">tkl449@126.com</a>
         </hgroup>
       </div>
@@ -105,7 +105,7 @@
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="http://blog.tangkailin.cn/2018/01/28/%E6%8E%A8%E8%8D%90%E7%AB%99%E7%82%B9/" target="_blank" >
+              <a href="https://wendyshusband.github.io/2018/01/28/%E6%8E%A8%E8%8D%90%E7%AB%99%E7%82%B9/" target="_blank" >
                 <i class="icon icon-lg icon-balance-scale"></i>
                 推荐站点
               </a>
@@ -219,7 +219,9 @@
 
 <p>以上。</p>
 
-<h1 id="Docker底层的三个关机技术"><a href="#Docker底层的三个关机技术" class="headerlink" title="Docker底层的三个关机技术"></a>Docker底层的三个关机技术</h1><h2 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h2><h2 id="control-group"><a href="#control-group" class="headerlink" title="control group"></a>control group</h2><h2 id="分层文件系统"><a href="#分层文件系统" class="headerlink" title="分层文件系统"></a>分层文件系统</h2><p>未完待续</p>
+<h1 id="Docker底层的三个关机技术"><a href="#Docker底层的三个关机技术" class="headerlink" title="Docker底层的三个关机技术"></a>Docker底层的三个关机技术</h1><h2 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h2><p>程序员理解namespace的概念应该很容易，说白了就是一种隔离机制，将某些东西，如进程编号，文件系统挂载点等进行隔离，避免任务之间的冲突啦。Linux中，同一个namespace下的进程可以相互感知到对方的存在，而不同namespace下的进程是不知道对方的存在的。namespace的类型如下表所示：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">|Namespace|系统调用参数|隔离内容|</div><div class="line">|:---|:---:|:---:|</div><div class="line">|UTS|CLONE_NEWUTS|主机名与域名|</div><div class="line">|IPC|CLONE_NEWIPC|信号量、消息队列和共享内存|</div><div class="line">|PID|CLONE_NEWPID|进程编号|</div><div class="line">|Network|CLONE_NEWNET|网络设备、网络栈、端口等|</div><div class="line">|Mount|CLONE_NEWNS|挂载点（文件系统）|</div><div class="line">|User|CLONE_NEWUSER|用户和用户组|</div></pre></td></tr></table></figure><br><br>Linux提供了一些API（包括clone()、setns()以及unshare()）来实现基于namespace的隔离。在使用这些API时，通常需要指定表格中的六个常数的一个或多个，通过|（位或）操作来实现。<br><br>更多细节参考<a href="http://www.infoq.com/cn/articles/docker-kernel-knowledge-namespace-resource-isolation" target="_blank" rel="external">这里</a>。<br><br></p>
+
+<h2 id="control-group"><a href="#control-group" class="headerlink" title="control group"></a>control group</h2><h2 id="分层文件系统"><a href="#分层文件系统" class="headerlink" title="分层文件系统"></a>分层文件系统</h2><p>未完待续</p>
 
 
 
@@ -230,18 +232,18 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-02-02T15:38:05.483Z" itemprop="dateUpdated">2018-02-02 23:38:05</time>
+    最后更新时间：<time datetime="2018-02-03T16:16:49.375Z" itemprop="dateUpdated">2018-02-04 00:16:49</time>
 </span><br>
 
 
         
-        原创文章，转载请注明出处。 本文链接：<a href="/2018/02/02/Docker相关的一些关键概念/" target="_blank" rel="external">http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/</a>
+        原创文章，转载请注明出处。 本文链接：<a href="/2018/02/02/Docker相关的一些关键概念/" target="_blank" rel="external">https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/</a>
         
     </div>
     <footer>
-        <a href="http://blog.tangkailin.cn">
-            <img src="/img/logo.jpg" alt="CollinT">
-            CollinT
+        <a href="https://wendyshusband.github.io">
+            <img src="/img/logo.jpg" alt="Kylin Tang">
+            Kylin Tang
         </a>
     </footer>
 </blockquote>
@@ -265,7 +267,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/&title=《Docker相关的一些关键概念》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/&title=《Docker相关的一些关键概念》 — Kylin Tang&pic=https://wendyshusband.github.io/img/logo.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -275,22 +277,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/&title=《Docker相关的一些关键概念》 — CollinT&source=关于Docker中的一些概念的个人理解。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/&title=《Docker相关的一些关键概念》 — Kylin Tang&source=关于Docker中的一些概念的个人理解。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Docker相关的一些关键概念》 — CollinT&url=http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/&via=http://blog.tangkailin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Docker相关的一些关键概念》 — Kylin Tang&url=https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/&via=https://wendyshusband.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -310,7 +312,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/05/14/写给毕业后的自己/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">写给毕业后的自己</h4>
+      </a>
+    </div>
   
 
   
@@ -400,7 +409,7 @@
         </p>
     </div>
     <div class="bottom">
-        <p><span>CollinT &copy; 2017 - 2018</span>
+        <p><span>Kylin Tang &copy; 2017 - 2019</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
@@ -419,7 +428,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/&title=《Docker相关的一些关键概念》 — CollinT&pic=http://blog.tangkailin.cn/img/logo.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/&title=《Docker相关的一些关键概念》 — Kylin Tang&pic=https://wendyshusband.github.io/img/logo.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -429,22 +438,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/&title=《Docker相关的一些关键概念》 — CollinT&source=关于Docker中的一些概念的个人理解。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/&title=《Docker相关的一些关键概念》 — Kylin Tang&source=关于Docker中的一些概念的个人理解。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Docker相关的一些关键概念》 — CollinT&url=http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/&via=http://blog.tangkailin.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Docker相关的一些关键概念》 — Kylin Tang&url=https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/&via=https://wendyshusband.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -455,7 +464,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://blog.tangkailin.cn/2018/02/02/Docker相关的一些关键概念/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://wendyshusband.github.io/2018/02/02/Docker相关的一些关键概念/" alt="微信分享二维码">
 </div>
 
 
